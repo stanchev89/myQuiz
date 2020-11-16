@@ -1,0 +1,48 @@
+<!-- <div id="navbar">
+    <nav>
+        <ul>
+            <li >
+                <a href="/">Home</a>
+            </li>
+            <li >
+                <a href="/rules">Rules</a>
+            </li>
+            <li >
+                <a href="/categories">Categories</a>
+            </li>
+            <li >
+                <a href="/login">Login</a>
+            </li>
+            <li >
+                <a href="/profile">Profile</a>
+            </li>
+            <li >
+                <a href="/logout">Logout</a>
+            </li>
+            
+        </ul>
+    </nav>
+</div> -->
+
+<ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+    <li [ngbNavItem]="1">
+      <a ngbNavLink href="/">Home</a>
+    </li>
+    <li [ngbNavItem]="2">
+      <a ngbNavLink href="/rules">Rules</a>
+    </li>
+    <li [ngbNavItem]="3">
+      <a ngbNavLink href="/categories">Categories</a>
+    </li>
+    <li [ngbNavItem]="4">
+        <a ngbNavLink href="/login">Login</a>
+    </li>
+    <li [ngbNavItem]="5">
+        <a ngbNavLink href="/profile">Profile</a>
+    </li>
+    <li [ngbNavItem]="6">
+        <a ngbNavLink href="/logout">Logout</a>
+    </li>
+  </ul>
+  
+  <div [ngbNavOutlet]="nav" class="mt-2"></div>

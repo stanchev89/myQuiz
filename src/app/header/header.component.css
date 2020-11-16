@@ -1,0 +1,8 @@
+.nav-tabs{
+  position: absolute;
+  top: 20px;
+  left: 30%;
+  right: 30%;
+  float: left;
+  overflow: hidden;
+}
