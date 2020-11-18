@@ -1,0 +1,19 @@
+.nav-tabs{
+ padding-left: auto;
+ padding-right: auto;
+ 
+}
+
+li {
+  float: left;
+}
+
+a {
+  display: block;
+  padding: 8px;
+  background-color: #dddddd;
+}
+.logo{
+  float: left;
+  display: inline;
+}

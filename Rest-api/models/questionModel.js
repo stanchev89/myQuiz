@@ -18,7 +18,7 @@ const questionSchema = new mongoose.Schema(
 			type: types.String,
 			required: true
 		},
-		incorrect_answets: {
+		incorrect_answers: {
 			type: [ types.String ],
 			required: true
 		},
