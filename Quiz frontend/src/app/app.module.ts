@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import {FormsModule} from '@angular/forms'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -11,6 +12,12 @@ import {RulesComponent} from './rules/rules.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { CategoriesListComponent } from './categories-list/categories-list.component';
 import {QuestionsService} from './questions.service'
+import { HttpClientModule } from '@angular/common/http';
+import { UserService } from './user.service';
+import { LoginFormComponent } from './login-form/login-form.component';
+import { RegisterFormComponent } from './register-form/register-form.component';
+
+
 
 @NgModule({
   declarations: [
@@ -20,14 +27,18 @@ import {QuestionsService} from './questions.service'
     MainImgComponent,
     RulesComponent,
     CategoriesComponent,
-    CategoriesListComponent
+    CategoriesListComponent,
+    LoginFormComponent,
+    RegisterFormComponent,
   ],
   imports: [
     BrowserModule,
+    NgbModule,
     AppRoutingModule,
-    NgbModule
+    HttpClientModule,
+    FormsModule
   ],
-  providers: [QuestionsService],
+  providers: [QuestionsService,UserService],
   bootstrap: [AppComponent,HeaderComponent,FooterComponent]
 })
 export class AppModule { }
