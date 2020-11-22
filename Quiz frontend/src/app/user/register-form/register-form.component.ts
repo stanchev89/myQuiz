@@ -1,23 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-register-form',
   templateUrl: './register-form.component.html',
   styleUrls: ['./register-form.component.css']
 })
-export class RegisterFormComponent implements OnInit {
+export class RegisterFormComponent {
   submitted = false;
-  constructor() { }
+  constructor(private userService:UserService) { }
   userModel = class{
     constructor(public username:string, public password:string, public repeatPassword:string){}
   }
   model = new this.userModel('','','');
-  ngOnInit(): void {
     
     
-  }
+  
   onSubmit(data){
-    console.log(data);
+    console.log(data.value);
+    
+    const {username,password} = data.value;
+    this.userService.register(username,password).subscribe(res=>console.log(res)
+    )
     
   }
   
