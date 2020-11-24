@@ -22,7 +22,7 @@ const questionSchema = new mongoose.Schema(
 			type: [ types.String ],
 			required: true
 		},
-		users_passed: {
+		users_answered: {
 			type: [ types.ObjectId ],
 			ref: "User"
 		}

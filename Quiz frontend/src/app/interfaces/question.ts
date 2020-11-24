@@ -8,6 +8,5 @@ export interface IQuestion extends IBase{
     title:string,
     correct_answer:string,
     incorrect_answers:string[],
-    users_passed:IUser[]
-
+    users_answered:IUser[]
 }

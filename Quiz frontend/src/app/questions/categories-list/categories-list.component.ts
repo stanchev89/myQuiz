@@ -12,7 +12,7 @@ export class CategoriesListComponent implements OnInit {
   questionsByCategory = {}
   categories = [];
   allQuestions:IQuestion[];
-  constructor(private questionService:QuestionsService) { }
+  constructor(private questionService:QuestionsService) { };
 
   ngOnInit(): void {
     this.questionService.loadAllQuestions()
@@ -20,10 +20,10 @@ export class CategoriesListComponent implements OnInit {
       this.allQuestions = questions;
       questions.map(question => {
         const{category:fullCategoryName} = question;
-        let category;
+        let category:string;
         fullCategoryName.includes(': ') ? category = fullCategoryName.split(': ')[1] : category = fullCategoryName;
         this.questionsByCategory[category] ? this.questionsByCategory[category].push(question) : this.questionsByCategory[category] = [question]
-      })
+      });
     
     })
     )
