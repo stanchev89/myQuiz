@@ -1,12 +1,12 @@
 <body>
 <h3>Register form</h3>
-<form (ngSubmit)="onSubmit(userForm)" #userForm="ngForm" >
+<form (ngSubmit)="onSubmit(userForm); userForm.reset()" #userForm="ngForm" >
     <label for="username">Username:</label>
     <input type="text" class="form-control" id="username"
        required minlength="5"
-       [(ngModel)]="model.username"
        name="username"
        #username="ngModel"
+       ngModel
        >
        <div *ngIf="username.invalid && (username.dirty || username.touched)"
        class="alert alert-danger">
@@ -20,10 +20,10 @@
    </div>
     <label for="password">Set new password:</label> 
     <input type="password" class="form-control" id="password"
-       required minlength="5"
-       [(ngModel)]="model.password"
-       name="password"
        #password="ngModel"
+       name="password"
+       required minlength="5"
+       ngModel
        >
        <div *ngIf="password.invalid && (password.dirty || password.touched)"
        class="alert alert-danger">
@@ -39,10 +39,10 @@
     <label for="repeatPassword">Repeat password:</label>
     <input type="password" class="form-control" id="repeatPassword"
        required
-       [(ngModel)]="model.repeatPassword"
        name="repeatPassword"
        #repeatPassword="ngModel"
        pattern = "{{password.value}}"
+       ngModel
        >       
        <div *ngIf="repeatPassword.invalid && (repeatPassword.dirty || repeatPassword.touched)"
        class="alert alert-danger">
@@ -57,6 +57,6 @@
         Passwords must be equals!
      </div>
      </div>
-       <button type="submit" class="btn btn-success" [disabled]="!userForm.form.valid">Submit</button>
+       <button class="btn btn-success" [disabled]="!userForm.valid">Submit</button>
     </form>
 </body>

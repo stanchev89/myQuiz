@@ -1,12 +1,12 @@
 <body>
     <h3>Login</h3>
-    <form  (ngSubmit)="onSubmit(userForm)" #userForm="ngForm">
+    <form  (ngSubmit)="onSubmit(userForm.value); userForm.reset()" #userForm="ngForm">
         <label for="username">Username:</label>
     <input type="text" class="form-control" id="username"
        required minlength="5"
-       [(ngModel)]="model.username"
-       name="username"
        #username="ngModel"
+       name="username"
+       ngModel
        >
        <div *ngIf="username.invalid && (username.dirty || username.touched)"
        class="alert alert-danger">
@@ -21,9 +21,9 @@
     <label for="password">Password:</label> 
     <input type="text" class="form-control" id="password"
        required minlength="5"
-       [(ngModel)]="model.password"
        name="password"
        #password="ngModel"
+       ngModel
        >
        <div *ngIf="password.invalid && (password.dirty || password.touched)"
        class="alert alert-danger">
@@ -35,7 +35,7 @@
         Password must be at least 5 characters long.
      </div>
      </div>
-     <button type="submit" class="btn btn-success" [disabled]="!userForm.form.valid">Submit</button>
+     <button class="btn btn-success" [disabled]="!userForm.valid">Submit</button>
 
     </form>
 

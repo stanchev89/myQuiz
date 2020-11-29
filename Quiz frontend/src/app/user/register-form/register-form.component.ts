@@ -17,12 +17,11 @@ export class RegisterFormComponent {
     
   
   onSubmit(data){
-    console.log(data.value);
-    
     const {username,password} = data.value;
-    this.userService.register(username,password).subscribe(res=>console.log(res)
+    this.userService.register(username,password).subscribe(res=>{
+      console.log(res);
+    }
     )
-    
   }
   
 
