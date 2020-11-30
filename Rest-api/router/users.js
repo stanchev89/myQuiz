@@ -1,7 +1,8 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const { authController } = require('../controllers');
-const { auth } = require('../utils');
+const { authController } = require("../controllers");
+const { auth } = require("../utils");
+const validator = require("../validators");
 
 // middleware that is specific to this router
 
@@ -10,14 +11,28 @@ const { auth } = require('../utils');
 //   res.send('login page')
 // })
 
-router.post('/register', authController.register);
-router.post('/login', authController.login);
-router.post('/logout', authController.logout);
+router.post(
+	"/register",
+	auth(false),
+	validator.checkMinLength(5, "username", "password"),
+	validator.onlyEnglishAndNumbers("username", "password"),
+	validator.checkUsernameExisting,
+	validator.handleValidationErrors,
+	authController.register
+);
+router.post(
+	"/login",
+	validator.checkMinLength(5, "username", "password"),
+	validator.onlyEnglishAndNumbers("username", "password"),
+	validator.handleValidationErrors,
+	authController.login
+);
+router.post("/logout", authController.logout);
 
-router.get('/profile', auth(),authController.getProfileInfo);
-router.put('/profile', auth(),authController.editProfileInfo);
+router.get("/profile", auth(), authController.getProfileInfo);
+router.put("/profile", auth(), authController.editProfileInfo);
 
 // router.get('/confirm-user', auth(false), authController.confirmUser);
 // router.get('/user/:id', authController.getUserInfo);
 
-module.exports = router
+module.exports = router;

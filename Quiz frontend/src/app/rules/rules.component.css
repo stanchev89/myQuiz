@@ -1,0 +1,15 @@
+body{
+    text-align: center;
+}
+h3{
+    text-align: center;
+    color:white;  
+    font-family: sans-serif;
+}
+.title{
+    background-color: rgb(21, 127, 251) ;
+    opacity: 25%;
+}
+.container{
+    width: 50%;
+}

@@ -9,17 +9,29 @@ export class UserService {
   currentUser:IUser | null;
   apiUrl = environment.apiUrl;
   constructor(private http: HttpClient) { }
-  register(username,password) {
+  register(username:string,password:string) {
     return this.http.post<IUser[]>(`${this.apiUrl}/users/register`,{username,password});
   }
 
-  login(username,password): Observable<IUser> {
-    return this.http.post<IUser>(`${this.apiUrl}/users/login`,[{username,password},{ withCredentials: true }]).pipe(
+  login(username:string,password:string): Observable<IUser> {
+    return this.http.post<IUser>(`${this.apiUrl}/users/login`,{username,password},{ withCredentials: true }).pipe(
       tap((user:IUser): void => {
         this.currentUser = user;
       }),catchError(()=> {
         this.currentUser = null ;
         return of (null);
+      })
+    )
+  }
+
+  logout():Observable<any>{
+    return this.http.post(`${this.apiUrl}/users/logout`,{},{withCredentials: true }).pipe(
+      tap(req => {
+        console.log(req);
+        
+      }),catchError((err) => {
+      console.log(err);
+        return err;
       })
     )
   }

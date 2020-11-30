@@ -1,5 +1,7 @@
 <body>
-<h3>Register form</h3>
+   <div class="title">
+      <h3>Register form</h3>
+   </div>
 <form (ngSubmit)="onSubmit(userForm); userForm.reset()" #userForm="ngForm" >
     <label for="username">Username:</label>
     <input type="text" class="form-control" id="username"

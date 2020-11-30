@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {IQuestion} from '../../interfaces'
+import { IQuestion } from '../../interfaces'
 import { QuestionsService } from '../../questions/questions.service';
-import {map} from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-categories-list',
@@ -12,6 +12,7 @@ export class CategoriesListComponent implements OnInit {
   questionsByCategory = {}
   categories = [];
   allQuestions:IQuestion[];
+  active = 'top';
   constructor(private questionService:QuestionsService) { };
 
   ngOnInit(): void {

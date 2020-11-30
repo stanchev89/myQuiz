@@ -6,7 +6,10 @@ import { RegisterFormComponent } from './register-form/register-form.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UserService } from './user.service';
 import { FormsModule}  from '@angular/forms';
-import { ProfileComponent } from './profile/profile.component'
+import { ProfileComponent } from './profile/profile.component';
+import { LogoutComponent } from './logout/logout.component'
+import { SharedModule } from '../shared/shared.module';
+import { PageTitleComponent } from '../shared/page-title/page-title.component';
 
 
 
@@ -17,9 +20,11 @@ import { ProfileComponent } from './profile/profile.component'
     LoginFormComponent,
     RegisterFormComponent,
     ProfileComponent,
+    LogoutComponent
   ],
   imports: [
     CommonModule,
+    SharedModule,
     FormsModule,
     NgbModule,
     UserRootingModule

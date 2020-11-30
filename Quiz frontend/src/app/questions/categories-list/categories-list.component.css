@@ -1,3 +1,5 @@
-a{
-    display: block;
+.list-group-item{
+    width: 25%;
+    text-align: center;
+    margin-left: 36%;
 }

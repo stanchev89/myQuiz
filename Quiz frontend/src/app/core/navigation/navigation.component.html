@@ -26,25 +26,31 @@
 <div class="logo">Logo</div>
 <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
     <li [ngbNavItem]="1">
-      <a routerLink="/">Home</a>
+      <a ngbNavLink routerLink="/">Home</a>
     </li>
     <li [ngbNavItem]="2">
-      <a routerLink="/rules">Rules</a>
+      <a ngbNavLink routerLink="/rules">Rules</a>
     </li>
     <li [ngbNavItem]="3">
-      <a routerLink="/categories">Categories</a>
+      <a ngbNavLink routerLink="/categories">Categories</a>
     </li>
     <li [ngbNavItem]="4">
-        <a routerLink="/login">Login</a>
+        <a ngbNavLink routerLink="/categories">Become a VIP!</a>
     </li>
     <li [ngbNavItem]="5">
-        <a routerLink="/register">Register</a>
+        <a ngbNavLink routerLink="/categories">Add new question</a>
     </li>
     <li [ngbNavItem]="6">
-        <a routerLink="/profile">Profile</a>
+        <a ngbNavLink routerLink="/login">Login</a>
     </li>
     <li [ngbNavItem]="7">
-        <a routerLink="/logout">Logout</a>
+        <a ngbNavLink routerLink="/register">Register</a>
+    </li>
+    <li [ngbNavItem]="8">
+        <a ngbNavLink routerLink="/profile">Profile</a>
+    </li>
+    <li [ngbNavItem]="9">
+        <a ngbNavLink routerLink="/logout">Logout</a>
     </li>
   </ul>
   

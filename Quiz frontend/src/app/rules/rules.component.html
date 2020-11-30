@@ -1,3 +1,22 @@
-<h1>Welcome to myQuiz!</h1>
-<h3>The rules are simple...</h3>
-<p>Playing here is absolutely free! If you want to collect a points and compete with other players just <a routerLink="/register">Register</a> in few clicks! If you are already registered just <a routerLink="/login">Login</a>. Every single correct answer gives you 1 point. If you want to play unlimited times each category of questions you must be VIP player. Become a VIP is available in you Profile section.   </p>
+<div class="title">
+    <h3>Rules:</h3>
+</div>
+<div class="container">
+    <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
+        <ngb-panel title="Game rules...">
+          <ng-template ngbPanelContent>
+              <p>Select a <a routerLink="/category">category</a> of questions which you want to play. Every correct answer gives you 1 point. You can reach points and compete with other players! Great way for family entertainment, friendly competition or just team building funny game!</p> 
+          </ng-template>
+        </ngb-panel>
+        <ngb-panel title="Why I need a registration?">
+            <ng-template ngbPanelContent>
+                <p>Of course you can play even without registration! But it's limited :( Non registered players can play in only 3 categories. Registered players can answer to each category questions! Also he plays for rating (points) and compete with registered players all over the world!</p>
+            </ng-template>
+          </ngb-panel>
+        <ngb-panel title="What is a VIP player?">
+          <ng-template ngbPanelContent>
+              <p>Being a VIP member is a great oportunity for you! You have unlimited access to all categories and you can play whenever you want! Only VIP players can add new questions to categories!</p>
+          </ng-template>
+        </ngb-panel>
+    </ngb-accordion>
+</div>
