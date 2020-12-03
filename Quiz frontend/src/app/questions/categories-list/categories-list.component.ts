@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IQuestion } from '../../interfaces'
+import { IQuestion } from '../../interfaces';
 import { QuestionsService } from '../../questions/questions.service';
 import { map } from 'rxjs/operators';
 
@@ -9,29 +9,31 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./categories-list.component.css']
 })
 export class CategoriesListComponent implements OnInit {
-  questionsByCategory = {}
+  questionsByCategory = {};
   categories = [];
-  allQuestions:IQuestion[];
+  allQuestions: IQuestion[];
   active = 'top';
-  constructor(private questionService:QuestionsService) { };
+  constructor(private questionService: QuestionsService) { }
 
   ngOnInit(): void {
     this.questionService.loadAllQuestions()
-    .pipe(map(questions=> {
+    .pipe(map(questions => {
       this.allQuestions = questions;
       questions.map(question => {
-        const{category:fullCategoryName} = question;
-        let category:string;
+        const{category: fullCategoryName} = question;
+        let category: string;
         fullCategoryName.includes(': ') ? category = fullCategoryName.split(': ')[1] : category = fullCategoryName;
-        this.questionsByCategory[category] ? this.questionsByCategory[category].push(question) : this.questionsByCategory[category] = [question]
+        this.questionsByCategory[category]
+            ? this.questionsByCategory[category].push(question)
+            : this.questionsByCategory[category] = [question];
       });
-    
+
     })
     )
     .subscribe(() => {
       this.categories = Object.keys(this.questionsByCategory);
-      this.categories.sort((a: string,b: string) => a.localeCompare(b));
-    })
+      this.categories.sort((a: string, b: string) => a.localeCompare(b));
+    });
   }
 
 }
