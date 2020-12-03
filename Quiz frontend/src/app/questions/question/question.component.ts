@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnChanges,  } from '@angular/core';
-import { IQuestion } from '../../interfaces'
+import { IQuestion } from '../../interfaces';
 
 @Component({
   selector: 'app-question',
@@ -19,7 +19,7 @@ export class QuestionComponent implements  OnChanges {
     this.answers = this.shuffleAnswers(this.answers);
   }
 
-  shuffleAnswers(arr: string[]) {
+  shuffleAnswers(arr: string[]): string[] {
     return arr.sort(() => Math.random() - 0.5);
   }
 
@@ -27,5 +27,4 @@ export class QuestionComponent implements  OnChanges {
     this.answers = [];
     this.sendGivenAnswer.emit(answer);
   }
-
 }
