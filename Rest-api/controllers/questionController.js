@@ -5,10 +5,9 @@ function getAllQuestions(req, res, next) {
 	questionModel.find().populate("userId").then((questions) => res.json(questions)).catch(next);
 }
 
-function getQuestion(req, res, next) {
-	const { themeId } = req.params;
-
-	themeModel.findById(themeId).populate("users_passed").then((theme) => res.json(theme)).catch(next);
+function getQuestionsByCategory(req, res, next) {
+	const { category } = req.params;
+	questionModel.find({category:{'$regex': `${category}`}}).then((questions) => res.json(questions)).catch(next)
 }
 
 // function createTheme(req, res, next) {
@@ -36,6 +35,6 @@ function answeredCorrectly(req, res, next) {
 
 module.exports = {
 	getAllQuestions,
-	getQuestion,
+	getQuestionsByCategory,
 	answeredCorrectly
 };

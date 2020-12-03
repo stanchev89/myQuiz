@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { IUser } from 'src/app/interfaces';
 import { UserService } from '../user.service';
 @Component({
@@ -7,16 +7,20 @@ import { UserService } from '../user.service';
   styleUrls: ['./login-form.component.css']
 })
 export class LoginFormComponent {
-
-  constructor(private userService:UserService) { }
-  pageTitle:string = 'Login form';
- 
+  pageTitle:string = 'Login';
+  
+  constructor(private userService:UserService) { 
+    
+  }
+  
+  ngOnInit(): void {
+    
+  }
 
   onSubmit(data:IUser):void{
     const {username,password} = data;
     this.userService.login(username,password).subscribe(res => console.log(res)
     )
-    
   }
 
 }

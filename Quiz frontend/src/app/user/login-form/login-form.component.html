@@ -1,5 +1,6 @@
-<app-page-title></app-page-title>
 <body>
+  <!-- {{isLogged}} -->
+  <app-page-title [pageTitle]="pageTitle"></app-page-title>
     <form  (ngSubmit)="onSubmit(userForm.value); userForm.reset()" #userForm="ngForm">
         <label for="username">Username:</label>
     <input type="text" class="form-control" id="username"

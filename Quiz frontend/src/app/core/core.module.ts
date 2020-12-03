@@ -5,6 +5,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavigationComponent } from './navigation/navigation.component';
 import { FooterComponent } from './footer/footer.component';
 import {RouterModule} from '@angular/router'
+import { UserService } from '../user/user.service';
 
 
 @NgModule({
@@ -12,6 +13,7 @@ import {RouterModule} from '@angular/router'
   imports: [
     CommonModule,NgbModule,RouterModule
   ],
+  providers:[UserService],
   exports:[NavigationComponent,FooterComponent]
 })
 export class CoreModule { }

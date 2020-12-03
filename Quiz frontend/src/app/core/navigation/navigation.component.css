@@ -1,0 +1,13 @@
+/* ul{
+    padding-left: 15%;
+} */
+.nav-bar{
+    text-align: center;
+
+}
+.nav-bar ul{
+    display: inline-flex;
+}
+/* .li:hover, .li:focus, .li:active, .li.active{
+    color:red
+} */

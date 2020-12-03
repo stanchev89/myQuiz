@@ -9,7 +9,7 @@ import { FormsModule}  from '@angular/forms';
 import { ProfileComponent } from './profile/profile.component';
 import { LogoutComponent } from './logout/logout.component'
 import { SharedModule } from '../shared/shared.module';
-import { PageTitleComponent } from '../shared/page-title/page-title.component';
+import { CoreModule } from '../core/core.module';
 
 
 
@@ -27,6 +27,7 @@ import { PageTitleComponent } from '../shared/page-title/page-title.component';
     SharedModule,
     FormsModule,
     NgbModule,
+    CoreModule,
     UserRootingModule
   ],providers:[
     UserService

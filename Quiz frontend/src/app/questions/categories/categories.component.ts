@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./categories.component.css']
 })
 export class CategoriesComponent implements OnInit {
-
+  pageTitle:string = "Questions Categories"
   constructor() { }
 
   ngOnInit(): void {

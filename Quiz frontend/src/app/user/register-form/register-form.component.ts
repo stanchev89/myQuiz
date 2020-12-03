@@ -8,14 +8,9 @@ import { UserService } from '../user.service';
 })
 export class RegisterFormComponent {
   submitted = false;
+  pageTitle="Register new user"
   constructor(private userService:UserService) { }
-  userModel = class{
-    constructor(public username:string, public password:string, public repeatPassword:string){}
-  }
-  model = new this.userModel('','','');
-    
-    
-  
+
   onSubmit(data){
     const {username,password} = data.value;
     this.userService.register(username,password).subscribe(res=>{

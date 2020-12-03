@@ -10,7 +10,7 @@ const questionSchema = new mongoose.Schema(
 		type: types.String,
 
 		difficulty: types.String,
-		title: {
+		question: {
 			type: types.String,
 			required: true
 		},

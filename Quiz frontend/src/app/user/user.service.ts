@@ -6,9 +6,12 @@ import {Observable,of} from 'rxjs';
 import { catchError,tap } from 'rxjs/operators';
 @Injectable()
 export class UserService {
+
   currentUser:IUser | null;
   apiUrl = environment.apiUrl;
+
   constructor(private http: HttpClient) { }
+
   register(username:string,password:string) {
     return this.http.post<IUser[]>(`${this.apiUrl}/users/register`,{username,password});
   }
@@ -27,12 +30,29 @@ export class UserService {
   logout():Observable<any>{
     return this.http.post(`${this.apiUrl}/users/logout`,{},{withCredentials: true }).pipe(
       tap(req => {
+        this.currentUser = null;
         console.log(req);
         
-      }),catchError((err) => {
+      }),
+      catchError((err) => {
       console.log(err);
         return err;
       })
     )
   }
+
+  getProfileInfo():Observable<any>{
+     return this.http.get<IUser>(`${this.apiUrl}/users/profile`,{withCredentials:true}).pipe(
+       tap(user =>  {
+         this.currentUser = user
+         return this.currentUser;
+        }),
+       catchError(() => {
+         this.currentUser =null;
+         return of(null);
+       })
+     );
+  }
 }
+
+

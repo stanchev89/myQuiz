@@ -7,7 +7,7 @@ const { questionController } = require("../controllers");
 
 router.get("/", questionController.getAllQuestions);
 
-router.get("/:questionId", questionController.getQuestion);
+router.get("/:category", questionController.getQuestionsByCategory);
 
 // router.get('/my-trips/:id/reservations', auth(), themeController.getReservations);
 

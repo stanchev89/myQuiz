@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-9">
+      <div class="card" style="width: 50rem;">
+        <div class="card-body">
+          <h1 class="card-title">{{questionData.question | fixHtmlSymbols}}</h1>
+          <div class="container">
+            <div class="row">
+              <div class="col-6">
+                <button  class="btn btn-primary" id="{{answers[0]}}" (click)="onSubmit(answers[0])">{{answers[0]}}</button>
+
+              </div>
+              <div class="col-6">
+                <button class="btn btn-primary " (click)="onSubmit(answers[1])">{{answers[1]}}</button>
+
+              </div>
+              <div class="w-100"></div>
+              <div class="col-6 mt-1">
+                <a *ngIf="answers[2]" class="btn btn-primary"  (click)="onSubmit(answers[2])">{{answers[2]}}</a>
+
+              </div>
+              <div class="col-6 mt-1">
+                <a *ngIf="answers[3]" class="btn btn-primary" (click)="onSubmit(answers[3])">{{answers[3]}}</a>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

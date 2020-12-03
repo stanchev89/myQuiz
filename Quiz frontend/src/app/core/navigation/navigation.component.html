@@ -24,6 +24,7 @@
     </nav>
 </div> -->
 <div class="logo">Logo</div>
+<div class="nav-bar">
 <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
     <li [ngbNavItem]="1">
       <a ngbNavLink routerLink="/">Home</a>
@@ -53,5 +54,6 @@
         <a ngbNavLink routerLink="/logout">Logout</a>
     </li>
   </ul>
+</div>
   
   <div [ngbNavOutlet]="nav" class="mt-2"></div>

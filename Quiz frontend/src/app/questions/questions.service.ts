@@ -10,10 +10,10 @@ import { catchError,tap } from 'rxjs/operators';
 export class QuestionsService {
   constructor(private http: HttpClient) { }
   allQuestions: IQuestion[] | null;
+  apiUrl = environment.apiUrl;
   
   loadAllQuestions(): Observable<IQuestion[]> {
-    const apiUrl = environment.apiUrl;
-    return this.http.get(`${apiUrl}/questions/`, { withCredentials: true })
+    return this.http.get(`${this.apiUrl}/questions/`, { withCredentials: true })
     .pipe(
       tap((questions:IQuestion[]):void => {
         this.allQuestions = questions;
@@ -22,6 +22,10 @@ export class QuestionsService {
         return of (null);
       })
     )
+  }
+  loadQuestionsByCategory(category:string): Observable<IQuestion[]> {
+    // TO DO: make request to DB, but first check for api response!
+    return this.http.get<IQuestion[]>(`${this.apiUrl}/questions/${category.split('_').join(' ')}`,{withCredentials:true})
   }
 
 }

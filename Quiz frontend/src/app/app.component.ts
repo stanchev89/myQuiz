@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import {NgbConfig} from '@ng-bootstrap/ng-bootstrap';
+import { UserService } from './user/user.service';
 
 
 @Component({
@@ -8,7 +9,6 @@ import {NgbConfig} from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor(ngbConfig: NgbConfig){}
+  constructor(ngbConfig: NgbConfig,private userService:UserService){}
   
-  title = 'quiz';
 }
