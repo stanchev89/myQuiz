@@ -9,6 +9,5 @@ import { UserService } from './user/user.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor(ngbConfig: NgbConfig,private userService:UserService){}
-  
+  constructor(ngbConfig: NgbConfig, private userService: UserService){}
 }

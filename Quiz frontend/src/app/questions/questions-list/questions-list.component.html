@@ -1,4 +1,4 @@
-<app-page-title [pageTitle]="selectedCategorie.split('_').join(' ') + ' questions'"></app-page-title>
+<app-page-title [pageTitle]="selectedCategory.split('_').join(' ') + ' questions'"></app-page-title>
 
 <!-- <div *ngIf="finished">
     <p>All questions in {{selectedCategorie}} category was displayed!</p>
@@ -9,7 +9,7 @@
     <div class="row justify-content-center">
         <div class="card" style="width: 20rem;">
             <div class="card-body">
-                <h3 class="card-title">All questions in {{selectedCategorie}} category was displayed!</h3>
+                <h3 class="card-title">All questions in {{selectedCategory}} category was displayed!</h3>
                 <p>Are you ready for the next challenge?</p>
                 <button class="btn btn-dark" routerLink="/categories">Categories</button>
             </div>
@@ -21,7 +21,7 @@
 <div *ngIf="!finished" class="container">
     <div class="row justify-content-center">
         <div class="timer">
-            <a>{{counter}}</a>
+            <a>{{timerForAnswering}}</a>
         </div>
     </div>
     <div class="row justify-content-center">

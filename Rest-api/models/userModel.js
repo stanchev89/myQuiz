@@ -33,7 +33,6 @@ const userSchema = new mongoose.Schema(
 				ref: "Question"
 			}
 		],
-		points: types.Number,
 		answered_questions: [
 			{
 				type: [ types.ObjectId ],

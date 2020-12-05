@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router'
+import {ActivatedRoute} from '@angular/router';
 import {IQuestion} from 'src/app/interfaces';
 import {QuestionsService} from '../questions.service';
 import {map} from 'rxjs/operators';
@@ -15,9 +15,9 @@ import {UserService} from 'src/app/user/user.service';
 export class QuestionsListComponent implements OnInit, OnDestroy {
     subscription: Subscription;
     questionCounter = 1;
-    counter = 15;
+    timerForAnswering = 15;
     finished = false;
-    selectedCategorie: string;
+    selectedCategory: string;
     questions: IQuestion[];
     currentQuestion: IQuestion;
 
@@ -25,17 +25,17 @@ export class QuestionsListComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.selectedCategorie = this.route.snapshot.params.categorie;
-        this.questionsService.loadQuestionsByCategory(this.selectedCategorie).pipe(
+        this.selectedCategory = this.route.snapshot.params.categorie;
+        this.questionsService.loadQuestionsByCategory(this.selectedCategory).pipe(
             map((q: IQuestion[]) => {
                 this.questions = q;
                 this.currentQuestion = this.questions[0];
             })
-        ).subscribe()
+        ).subscribe();
         const secondsCounter = interval(1000);
         this.subscription = secondsCounter.subscribe(sec => {
-            this.counter--;
-            if (this.counter === 0) {
+            this.timerForAnswering--;
+            if (this.timerForAnswering === 0) {
                 this.nextQuestion();
                 return;
             }
@@ -45,8 +45,8 @@ export class QuestionsListComponent implements OnInit, OnDestroy {
 
     nextQuestion(): void {
         this.currentQuestion = this.questions[this.questionCounter];
-        this.counter = 15;
-        if (this.questionCounter === this.questions.length - 1) {
+        this.timerForAnswering = 15;
+        if (this.questionCounter === this.questions.length) {
             this.finishCategoryQuestions();
             return;
         }
@@ -58,7 +58,14 @@ export class QuestionsListComponent implements OnInit, OnDestroy {
     }
 
     givenAnswerHandler(answer): void {
-        console.log(answer);
+        const userDataForUpdate = {
+            answered_question: this.currentQuestion,
+            correct_answer: null
+        };
+        if (this.currentQuestion.correct_answer === answer) {
+            userDataForUpdate.correct_answer = this.currentQuestion;
+        }
+        this.userService.answering(userDataForUpdate).subscribe();
         this.nextQuestion();
     }
 

@@ -9,11 +9,11 @@ import { UserService } from '../user.service';
 })
 export class LogoutComponent implements OnInit {
 
-  constructor(private userService:UserService, private router:Router) { }
+  constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit(): void {
-    this.userService.logout().subscribe(()=> {
-      this.router.navigate(['/login'])
+    this.userService.logout().subscribe(() => {
+      this.router.navigate(['/login']);
     });
   }
 

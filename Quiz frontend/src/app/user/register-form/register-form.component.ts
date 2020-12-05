@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { UserService } from '../user.service';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-register-form',
@@ -8,16 +9,20 @@ import { UserService } from '../user.service';
 })
 export class RegisterFormComponent {
   submitted = false;
-  pageTitle="Register new user"
-  constructor(private userService:UserService) { }
+  pageTitle = 'Register new user';
+  constructor(private userService: UserService, private router: Router) { }
 
-  onSubmit(data){
-    const {username,password} = data.value;
-    this.userService.register(username,password).subscribe(res=>{
-      console.log(res);
-    }
-    )
+  onSubmit(data): void{
+    const {username, password} = data.value;
+    this.userService.register(username, password).subscribe({
+          next: (res) => {
+            this.router.navigate(['/login']);
+            console.log(res);
+          },
+          error: (err) => {
+              console.log(err);
+          }
+        }
+    );
   }
-  
-
 }

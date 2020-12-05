@@ -5,19 +5,18 @@ import { RulesComponent } from './rules/rules.component';
 
 const routes: Routes = [
   {
-    path:'',
-    pathMatch:'full',
-    component:HomeComponent
+    path: '',
+    pathMatch: 'full',
+    component: HomeComponent
   },
   {
-    path:'rules',
-    component:RulesComponent
+    path: 'rules',
+    component: RulesComponent
   },
   {
-    path:'category',
-    component:CategoriesComponent
+    path: 'category',
+    component: CategoriesComponent
   }
 
 ];
-export const AppRoutingModule = RouterModule.forRoot(routes)
-
+export const AppRoutingModule = RouterModule.forRoot(routes);

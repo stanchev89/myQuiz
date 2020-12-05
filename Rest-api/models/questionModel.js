@@ -21,10 +21,6 @@ const questionSchema = new mongoose.Schema(
 		incorrect_answers: {
 			type: [ types.String ],
 			required: true
-		},
-		users_answered: {
-			type: [ types.ObjectId ],
-			ref: "User"
 		}
 	},
 	{ timestamps: { createdAt: "created_at" } }

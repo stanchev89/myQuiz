@@ -93,15 +93,27 @@ function getProfileInfo(req, res, next) {
 
 function editProfileInfo(req, res, next) {
 	const { _id: userId } = req.user;
-	const { username } = req.body;
-
-	userModel
-		.findOneAndUpdate({ _id: userId }, { username }, { runValidators: true, new: true })
-		.then((x) => {
-			res.status(200).json(x);
+	const { username, correct_answer, answered_question } = req.body;
+	const update = {
+		$addToSet:{}
+	};
+	if(username) {
+		update.username = username;
+	}
+	if(correct_answer) {
+		update.$addToSet.correct_answers = correct_answer._id;
+	}
+	if(answered_question) {
+		update.$addToSet.answered_questions = answered_question._id;
+	}
+	userModel.findOneAndUpdate({_id:userId}, update)
+		.then(user => {
+			res.status(200).json(user);
 		})
-		.catch(next);
-}
+		.catch(next)
+	}
+
+
 
 module.exports = {
 	login,

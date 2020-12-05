@@ -17,8 +17,6 @@ import { UserService } from './user/user.service';
 import { SharedModule } from './shared/shared.module';
 
 
-
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,8 +34,8 @@ import { SharedModule } from './shared/shared.module';
     UserModule,
     QuestionsModule
   ],
-  providers: [QuestionsService,UserService],
+  providers: [QuestionsService, UserService],
   bootstrap: [AppComponent]
 })
-export class AppModule { 
+export class AppModule {
 }
