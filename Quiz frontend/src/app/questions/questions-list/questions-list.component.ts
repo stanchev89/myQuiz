@@ -1,8 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {IQuestion} from 'src/app/interfaces';
+import {IQuestion, IUser} from 'src/app/interfaces';
 import {QuestionsService} from '../questions.service';
-import {map} from 'rxjs/operators';
+import {tap} from 'rxjs/operators';
 import {interval, Subscription} from 'rxjs';
 import {UserService} from 'src/app/user/user.service';
 
@@ -20,27 +20,39 @@ export class QuestionsListComponent implements OnInit, OnDestroy {
     selectedCategory: string;
     questions: IQuestion[];
     currentQuestion: IQuestion;
+    regularUserAvailableQuestions = true;
+    user: IUser;
 
-    constructor(private route: ActivatedRoute, private questionsService: QuestionsService, private userService: UserService) {
-    }
+    constructor(private route: ActivatedRoute, private questionsService: QuestionsService, private userService: UserService) {}
 
     ngOnInit(): void {
-        this.selectedCategory = this.route.snapshot.params.categorie;
-        this.questionsService.loadQuestionsByCategory(this.selectedCategory).pipe(
-            map((q: IQuestion[]) => {
-                this.questions = q;
-                this.currentQuestion = this.questions[0];
-            })
-        ).subscribe();
-        const secondsCounter = interval(1000);
-        this.subscription = secondsCounter.subscribe(sec => {
-            this.timerForAnswering--;
-            if (this.timerForAnswering === 0) {
-                this.nextQuestion();
-                return;
-            }
-
-        });
+        this.user = this.userService.currentUser;
+        if (this.user) {
+            this.selectedCategory = this.route.snapshot.params.category;
+            this.questionsService.loadQuestionsByCategory(this.selectedCategory).pipe(
+                tap((q: IQuestion[]) => {
+                    if (this.user.subscription === 'normal') {
+                        q = q.filter((question: IQuestion) =>  !this.user.answered_questions.includes(question._id));
+                    }
+                    this.questions = q;
+                    if (this.questions.length === 0) {
+                        this.regularUserAvailableQuestions = false;
+                        this.finishCategoryQuestions();
+                    }else {
+                        this.currentQuestion = this.questions[0];
+                    }
+                })
+            ).subscribe();
+            const secondsCounter = interval(1000);
+            this.subscription = secondsCounter.subscribe(sec => {
+                this.timerForAnswering--;
+                if (this.timerForAnswering === 0) {
+                    this.nextQuestion();
+                    return;
+                }
+            });
+            return;
+        }
     }
 
     nextQuestion(): void {

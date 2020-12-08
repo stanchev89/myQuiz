@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { auth } = require("../utils");
+const { auth, authVip } = require("../utils");
 const { questionController } = require("../controllers");
 
 // middleware that is specific to this router
@@ -8,6 +8,9 @@ const { questionController } = require("../controllers");
 router.get("/", questionController.getAllQuestions);
 
 router.get("/:category", questionController.getQuestionsByCategory);
+
+router.put("/add_new_question", auth(), authVip(), questionController.addNewQuestion);
+
 
 // router.get('/my-trips/:id/reservations', auth(), themeController.getReservations);
 

@@ -1,3 +1,4 @@
+
 global.__basedir = __dirname;
 require("dotenv").config();
 const dbConnector = require("./config/db");

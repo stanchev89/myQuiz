@@ -5,11 +5,13 @@ import { LoginFormComponent } from './login-form/login-form.component';
 import { RegisterFormComponent } from './register-form/register-form.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UserService } from './user.service';
-import { FormsModule}  from '@angular/forms';
+import { FormsModule }  from '@angular/forms';
 import { ProfileComponent } from './profile/profile.component';
 import { LogoutComponent } from './logout/logout.component'
 import { SharedModule } from '../shared/shared.module';
 import { CoreModule } from '../core/core.module';
+import { BecomeAVipComponent } from './become-a-vip/become-a-vip.component';
+import { AddNewQuestionComponent } from './add-new-question/add-new-question.component';
 
 
 
@@ -20,7 +22,9 @@ import { CoreModule } from '../core/core.module';
     LoginFormComponent,
     RegisterFormComponent,
     ProfileComponent,
-    LogoutComponent
+    LogoutComponent,
+    BecomeAVipComponent,
+    AddNewQuestionComponent
   ],
   imports: [
     CommonModule,

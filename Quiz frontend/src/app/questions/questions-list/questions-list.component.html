@@ -4,12 +4,18 @@
     <p>All questions in {{selectedCategorie}} category was displayed!</p>
     <p>Are you ready for <a type="button" routerLink="/categories">next</a> challenge?</p>
 </div> -->
+<div *ngIf="!regularUserAvailableQuestions">
+    <h3>
+        You answered all {{selectedCategory}} category questions.
+        If you want unlimited access to all questions Became a Vip member!
+    </h3>
+</div>
 
-<div *ngIf="finished" class="complete">
+<div *ngIf="finished && regularUserAvailableQuestions" class="complete">
     <div class="row justify-content-center">
         <div class="card" style="width: 20rem;">
             <div class="card-body">
-                <h3 class="card-title">All questions in {{selectedCategory}} category was displayed!</h3>
+                <h3 class="card-title">All questions in "{{selectedCategory | withSpaces}}" category was displayed!</h3>
                 <p>Are you ready for the next challenge?</p>
                 <button class="btn btn-dark" routerLink="/categories">Categories</button>
             </div>
@@ -18,11 +24,9 @@
 </div>
 
 
-<div *ngIf="!finished" class="container">
+<div *ngIf="!finished && regularUserAvailableQuestions" class="container">
     <div class="row justify-content-center">
-        <div class="timer">
-            <a>{{timerForAnswering}}</a>
-        </div>
+        <ngb-progressbar  max="15">sss</ngb-progressbar>
     </div>
     <div class="row justify-content-center">
         <button (click)="nextButtonHandler()" *ngIf="!finished" class="btn btn-primary">Next question</button>
@@ -30,4 +34,4 @@
 </div>
 
 <app-question (sendGivenAnswer)="givenAnswerHandler($event)" *ngIf="currentQuestion && !finished"
-              [questionData]="currentQuestion"></app-question>
+                  [questionData]="currentQuestion"></app-question>

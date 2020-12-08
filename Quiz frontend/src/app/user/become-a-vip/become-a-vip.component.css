@@ -1,0 +1,12 @@
+form{
+    display: inline-block;
+    width: 30%;
+}
+body{
+    text-align: center;
+}
+label {
+    color: rgb(21, 127, 251);
+    font-family: sans-serif;
+    font-weight: lighter;
+}

@@ -9,21 +9,22 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
 import { SharedModule } from '../shared/shared.module';
 import { QuestionsListComponent } from './questions-list/questions-list.component';
 import { QuestionComponent } from './question/question.component';
-import { FormsModule }  from '@angular/forms';
-
+import { FormsModule } from '@angular/forms';
+import { NgbProgressbar } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
-  declarations: [  CategoriesComponent,CategoriesListComponent, QuestionsListComponent, QuestionComponent],
+  declarations: [  CategoriesComponent, CategoriesListComponent, QuestionsListComponent, QuestionComponent],
   imports: [
     CommonModule,
     QuestionsRoutingModule,
     NgbModule,
     SharedModule,
-    FormsModule
+    FormsModule,
   ],
-  providers:[UserService,QuestionsService],
-  exports:[CategoriesListComponent]
+  providers: [UserService, QuestionsService, NgbProgressbar],
+  exports: [CategoriesListComponent, NgbProgressbar],
+  bootstrap: [ NgbProgressbar ]
 
 })
 export class QuestionsModule { }

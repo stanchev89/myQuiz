@@ -2,20 +2,26 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PageTitleComponent } from './page-title/page-title.component';
 import { FixHtmlSymbolsPipe } from './fix-html-symbols.pipe';
+import { WithSpacesPipe } from './with-spaces.pipe';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 
 @NgModule({
   declarations: [
     PageTitleComponent,
-    FixHtmlSymbolsPipe
+    FixHtmlSymbolsPipe,
+    WithSpacesPipe,
+    WithSpacesPipe,
   ],
   imports: [
-    CommonModule
+    CommonModule,
+      NgbModule
   ],
-  exports:[
+  exports: [
     PageTitleComponent,
-    FixHtmlSymbolsPipe
+    FixHtmlSymbolsPipe,
+    WithSpacesPipe,
   ]
 })
 export class SharedModule { }

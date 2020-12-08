@@ -12,10 +12,6 @@ const routes: Routes = [
   {
     path: 'rules',
     component: RulesComponent
-  },
-  {
-    path: 'category',
-    component: CategoriesComponent
   }
 
 ];

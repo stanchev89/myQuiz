@@ -19,14 +19,13 @@ function register(req, res, next) {
 		.then((createdUser) => {
 			createdUser = bsonToJson(createdUser);
 			createdUser = removePassword(createdUser);
-
 			const token = utils.jwt.createToken({ id: createdUser._id });
 			if (process.env.NODE_ENV === "production") {
 				res.cookie(authCookieName, token, { httpOnly: true, sameSite: "none", secure: true });
 			} else {
 				res.cookie(authCookieName, token, { httpOnly: true });
 			}
-			res.status(200).send(createdUser);
+			res.status(200).send('Successful registration');
 		})
 		.catch((err) => {
 			if (err.name === "MongoError" && err.code === 11000) {
@@ -93,10 +92,13 @@ function getProfileInfo(req, res, next) {
 
 function editProfileInfo(req, res, next) {
 	const { _id: userId } = req.user;
-	const { username, correct_answer, answered_question } = req.body;
+	const { username, correct_answer, answered_question, subscription } = req.body;
 	const update = {
 		$addToSet:{}
 	};
+	if(subscription) {
+		update.subscription = subscription;
+	}
 	if(username) {
 		update.username = username;
 	}

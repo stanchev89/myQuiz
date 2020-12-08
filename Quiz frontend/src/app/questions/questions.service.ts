@@ -4,13 +4,13 @@ import {environment} from '../../environments/environment';
 import {IQuestion} from '../interfaces';
 import {Observable, of} from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
+import { UserService } from '../user/user.service';
 
 
 @Injectable()
 export class QuestionsService {
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private userService: UserService) {
   }
-
   allQuestions: IQuestion[] | null;
   apiUrl = environment.apiUrl;
 
@@ -23,11 +23,10 @@ export class QuestionsService {
               this.allQuestions = null;
               return of(null);
             })
-        )
+        );
   }
 
   loadQuestionsByCategory(category: string): Observable<IQuestion[]> {
-    // TO DO: make request to DB, but first check for api response!
     return this.http.get<IQuestion[]>(`${this.apiUrl}/questions/${category.split('_').join(' ')}`, {withCredentials: true});
   }
 

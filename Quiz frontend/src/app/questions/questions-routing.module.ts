@@ -10,7 +10,7 @@ const routes: Routes = [
         canActivate: [AuthGuard]
     },
     {
-        path: 'categories/:categorie',
+        path: 'categories/:category',
         component: QuestionsListComponent,
         canActivate: [AuthGuard]
     }

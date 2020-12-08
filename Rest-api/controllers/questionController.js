@@ -10,17 +10,17 @@ function getQuestionsByCategory(req, res, next) {
 	questionModel.find({category:{'$regex': `${category}`}}).then((questions) => res.json(questions)).catch(next)
 }
 
-// function createTheme(req, res, next) {
-// 	const { themeName, postText } = req.body;
-// 	const { _id: userId } = req.user;
-
-// 	themeModel
-// 		.create({ themeName, userId, subscribers: [ userId ] })
-// 		.then((theme) => {
-// 			newPost(postText, userId, theme._id).then(([ _, updatedTheme ]) => res.status(200).json(updatedTheme));
-// 		})
-// 		.catch(next);
-// }
+function addNewQuestion(req, res, next) {
+	// const { themeName, postText } = req.body;
+	// const { _id: userId } = req.user;
+	//
+	// themeModel
+	// 	.create({ themeName, userId, subscribers: [ userId ] })
+	// 	.then((theme) => {
+	// 		newPost(postText, userId, theme._id).then(([ _, updatedTheme ]) => res.status(200).json(updatedTheme));
+	// 	})
+	// 	.catch(next);
+}
 
 function answeredCorrectly(req, res, next) {
 	const questionId = req.params.questionId;
@@ -36,5 +36,5 @@ function answeredCorrectly(req, res, next) {
 module.exports = {
 	getAllQuestions,
 	getQuestionsByCategory,
-	answeredCorrectly
+	addNewQuestion
 };
