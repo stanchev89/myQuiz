@@ -26,7 +26,9 @@
 
 <div *ngIf="!finished && regularUserAvailableQuestions" class="container">
     <div class="row justify-content-center">
-        <ngb-progressbar  max="15">sss</ngb-progressbar>
+        <div class="timer">
+            <a>{{timeForAnswering}}</a>
+        </div>
     </div>
     <div class="row justify-content-center">
         <button (click)="nextButtonHandler()" *ngIf="!finished" class="btn btn-primary">Next question</button>

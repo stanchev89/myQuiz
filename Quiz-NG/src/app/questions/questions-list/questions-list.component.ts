@@ -15,7 +15,7 @@ import {UserService} from 'src/app/user/user.service';
 export class QuestionsListComponent implements OnInit, OnDestroy {
     subscription: Subscription;
     questionCounter = 1;
-    timerForAnswering = 15;
+    timeForAnswering = 15;
     finished = false;
     selectedCategory: string;
     questions: IQuestion[];
@@ -45,8 +45,8 @@ export class QuestionsListComponent implements OnInit, OnDestroy {
             ).subscribe();
             const secondsCounter = interval(1000);
             this.subscription = secondsCounter.subscribe(sec => {
-                this.timerForAnswering--;
-                if (this.timerForAnswering === 0) {
+                this.timeForAnswering--;
+                if (this.timeForAnswering === 0) {
                     this.nextQuestion();
                     return;
                 }
@@ -57,7 +57,7 @@ export class QuestionsListComponent implements OnInit, OnDestroy {
 
     nextQuestion(): void {
         this.currentQuestion = this.questions[this.questionCounter];
-        this.timerForAnswering = 15;
+        this.timeForAnswering = 15;
         if (this.questionCounter === this.questions.length) {
             this.finishCategoryQuestions();
             return;
