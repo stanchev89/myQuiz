@@ -12,7 +12,6 @@ export class NavigationComponent {
 	active = 1;
 	isLogged = this.userService.isLogged$;
 	isVip = this.userService.isVip$;
-	isReady = this.userService.isReady$
 
 	constructor(private userService: UserService) {}
 
