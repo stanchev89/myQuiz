@@ -12,10 +12,11 @@ import { QuestionComponent } from './question/question.component';
 import { FormsModule } from '@angular/forms';
 import { NgbProgressbar } from '@ng-bootstrap/ng-bootstrap';
 import {QuestionsResolver} from "../core/resolvers/questions-resolver";
+import { AddNewQuestionComponent } from './add-new-question/add-new-question.component';
 
 
 @NgModule({
-  declarations: [  CategoriesComponent, CategoriesListComponent, QuestionsListComponent, QuestionComponent],
+  declarations: [  CategoriesComponent, CategoriesListComponent, QuestionsListComponent, QuestionComponent, AddNewQuestionComponent],
   imports: [
     CommonModule,
     QuestionsRoutingModule,

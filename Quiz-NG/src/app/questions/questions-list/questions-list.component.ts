@@ -26,7 +26,6 @@ export class QuestionsListComponent implements OnInit, OnDestroy {
     constructor(private route: ActivatedRoute, private questionsService: QuestionsService, private userService: UserService) {
         this.route.data.subscribe((data) => {
             this.questions = data.questions;
-            this.currentQuestion = this.questions[0];
             return this.questions
         } );
         this.selectedCategory = this.route.snapshot.params.category;
@@ -37,13 +36,17 @@ export class QuestionsListComponent implements OnInit, OnDestroy {
             next:((user:IUser) => {
                 if (user) {
                     this.user = user;
-                    if (!this.user.is_vip) {
-                        this.questions = this.questions.filter((question: IQuestion) =>  !this.user.answered_questions.includes(question._id));
-                    }
-
                 }
             })
         })
+        if (!this.user.is_vip) {
+            this.questions = this.questions.filter((question: IQuestion) =>  !this.user.answered_questions.includes(question._id));
+        }
+        if(this.questions.length === 0) {
+            this.regularUserAvailableQuestions = false;
+            return this.finishCategoryQuestions()
+        }
+        this.currentQuestion = this.questions[0];
         const secondsCounter = interval(1000);
         this.subscription = secondsCounter.subscribe(sec => {
             this.timeForAnswering--;
@@ -77,15 +80,18 @@ export class QuestionsListComponent implements OnInit, OnDestroy {
         if (this.currentQuestion.correct_answer === answer) {
             userDataForUpdate.correct_answer = this.currentQuestion;
         }
-        this.userService.answering(userDataForUpdate).subscribe();
-        this.nextQuestion();
+        this.userService.answering(userDataForUpdate).subscribe(
+            ()=>{
+                this.nextQuestion();
+            }
+        );
     }
 
     finishCategoryQuestions(): void {
         this.finished = true;
         this.questionCounter = 0;
         console.log('All questions was displayed!');
-        this.subscription.unsubscribe();
+        this.subscription?.unsubscribe();
     }
 
     ngOnDestroy(): void {
