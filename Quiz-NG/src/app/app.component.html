@@ -1,4 +1,14 @@
-<app-navigation></app-navigation>
-<router-outlet></router-outlet>
-<app-footer></app-footer>
-<!-- {{isLogged}} -->
+
+<ng-template #content>
+    <app-navigation></app-navigation>
+    <router-outlet></router-outlet>
+    <app-footer></app-footer>
+</ng-template>
+
+
+<ng-template #loading>
+    <div>LOADING...</div>
+</ng-template>
+
+
+<ng-container *ngTemplateOutlet="(isReady$ | async) ? content : loading"></ng-container>

@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import {UserService} from "../user.service";
+import {IUser} from "../../interfaces";
+import {Router} from "@angular/router";
+import {map} from 'rxjs/operators'
 
 @Component({
   selector: 'app-become-a-vip',
@@ -7,12 +11,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BecomeAVipComponent implements OnInit {
   pageTitle = 'Joining to our VIP club';
-  constructor() { }
+  constructor(public userService: UserService, private router: Router) {}
 
   ngOnInit(): void {
   }
 
-  onSubmit(value): void {
+  onSubmit(data): void {
+    this.userService.switchToVip().subscribe({
+      next: (user:IUser)=> {
+
+          this.router.navigate(['/'])
+      },
+      error: (err => {
+        console.log(err);
+      })
+    });
   }
 
 }

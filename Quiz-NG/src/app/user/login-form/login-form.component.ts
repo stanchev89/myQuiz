@@ -22,7 +22,6 @@ export class LoginFormComponent {
           console.log('Invalid username or password!')
         }else{
           this.router.navigate(['/']);
-
         }
 
       },

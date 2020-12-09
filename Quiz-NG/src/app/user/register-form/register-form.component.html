@@ -10,7 +10,7 @@
        >
        <div *ngIf="username.invalid && (username.dirty || username.touched)"
        class="alert alert-danger">
-   
+
      <div *ngIf="username.errors.required">
        Username is required.
      </div>
@@ -18,7 +18,7 @@
         Username must be at least 5 characters long.
      </div>
    </div>
-    <label for="password">Set new password:</label> 
+    <label for="password">Set new password:</label>
     <input type="password" class="form-control" id="password"
        #password="ngModel"
        name="password"
@@ -27,7 +27,7 @@
        >
        <div *ngIf="password.invalid && (password.dirty || password.touched)"
        class="alert alert-danger">
-   
+
      <div *ngIf="password.errors.required">
        Password is required.
      </div>
@@ -35,7 +35,7 @@
         Password must be at least 5 characters long.
      </div>
      </div>
-    
+
     <label for="repeatPassword">Repeat password:</label>
     <input type="password" class="form-control" id="repeatPassword"
        required
@@ -43,20 +43,23 @@
        #repeatPassword="ngModel"
        pattern = "{{password.value}}"
        ngModel
-       >       
+       >
        <div *ngIf="repeatPassword.invalid && (repeatPassword.dirty || repeatPassword.touched)"
        class="alert alert-danger">
-   
-     <div *ngIf="repeatPassword.errors.required">
-       Repeat password is required.
-     </div>
-     <div *ngIf="repeatPassword.errors.minlength">
-        Repeat password must be at least 4 characters long.
-     </div>
-     <div *ngIf="repeatPassword.errors.pattern">
-        Passwords must be equals!
-     </div>
-     </div>
+
+             <div *ngIf="repeatPassword.errors.required">
+                 Repeat password is required.
+             </div>
+
+             <div *ngIf="repeatPassword.errors.minlength">
+                Repeat password must be at least 4 characters long.
+             </div>
+
+             <div *ngIf="repeatPassword.errors.pattern">
+                Passwords must be equals!
+             </div>
+
+       </div>
        <button class="btn btn-success" [disabled]="!userForm.valid">Submit</button>
     </form>
 </body>

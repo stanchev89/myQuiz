@@ -33,10 +33,10 @@ import { AddNewQuestionComponent } from './add-new-question/add-new-question.com
     NgbModule,
     CoreModule,
     UserRootingModule
-  ],providers:[
+  ], providers: [
     UserService
   ]
-  ,exports:[
+  , exports: [
     LoginFormComponent,
     RegisterFormComponent,
   ]

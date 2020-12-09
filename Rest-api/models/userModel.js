@@ -23,9 +23,9 @@ const userSchema = new mongoose.Schema(
 			required: true,
 			minlength: [ 5, "Password should be at least 5 characters" ]
 		},
-		subscription: {
-			type: types.String,
-			default: "normal"
+		is_vip: {
+			type: types.Boolean,
+			default: false
 		},
 		correct_answers: [
 			{

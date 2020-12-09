@@ -9,5 +9,6 @@ import { UserService } from './user/user.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  isReady$ = this.userService.isReady$;
   constructor(ngbConfig: NgbConfig, private userService: UserService){}
 }

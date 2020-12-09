@@ -1,59 +1,36 @@
-<!-- <div id="navbar">
-    <nav>
-        <ul>
-            <li >
-                <a href="/">Home</a>
+<div *ngIf="isReady | async">
+    <div class="logo">Logo</div>
+    <div  class="nav-bar">
+        <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+            <li [ngbNavItem]="1">
+                <a ngbNavLink routerLink="/">Home</a>
             </li>
-            <li >
-                <a href="/rules">Rules</a>
+            <li [ngbNavItem]="2">
+                <a ngbNavLink routerLink="/rules">Rules</a>
             </li>
-            <li >
-                <a href="/categories">Categories</a>
+            <li [ngbNavItem]="3">
+                <a ngbNavLink routerLink="/categories">Categories</a>
             </li>
-            <li >
-                <a href="/login">Login</a>
+            <li *ngIf="(isVip | async) === false" [ngbNavItem]="4">
+                <a ngbNavLink routerLink="/vip">Become a VIP!</a>
             </li>
-            <li >
-                <a href="/profile">Profile</a>
+            <li *ngIf="(isVip | async)" [ngbNavItem]="5">
+                <a ngbNavLink routerLink="/add_new_question">Add new question</a>
             </li>
-            <li >
-                <a href="/logout">Logout</a>
+            <li *ngIf="!(isLogged | async)" [ngbNavItem]="6">
+                <a ngbNavLink routerLink="/login">Login</a>
             </li>
-
+            <li *ngIf="!(isLogged | async)" [ngbNavItem]="7">
+                <a ngbNavLink routerLink="/register">Register</a>
+            </li>
+            <li *ngIf="(isLogged | async)" [ngbNavItem]="8">
+                <a ngbNavLink routerLink="/profile">Profile</a>
+            </li>
+            <li *ngIf="(isLogged | async)" [ngbNavItem]="9">
+                <a ngbNavLink routerLink="/logout">Logout</a>
+            </li>
         </ul>
-    </nav>
-</div> -->
-<div class="logo">Logo</div>
-<div class="nav-bar">
-<ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
-    <li [ngbNavItem]="1">
-      <a ngbNavLink routerLink="/">Home</a>
-    </li>
-    <li [ngbNavItem]="2">
-      <a ngbNavLink routerLink="/rules">Rules</a>
-    </li>
-    <li [ngbNavItem]="3">
-      <a ngbNavLink routerLink="/categories">Categories</a>
-    </li>
-    <li [ngbNavItem]="4">
-        <a ngbNavLink routerLink="/vip">Become a VIP!</a>
-    </li>
-    <li [ngbNavItem]="5">
-        <a ngbNavLink routerLink="/add_new_question">Add new question</a>
-    </li>
-    <li [ngbNavItem]="6">
-        <a ngbNavLink routerLink="/login">Login</a>
-    </li>
-    <li [ngbNavItem]="7">
-        <a ngbNavLink routerLink="/register">Register</a>
-    </li>
-    <li [ngbNavItem]="8">
-        <a ngbNavLink routerLink="/profile">Profile</a>
-    </li>
-    <li [ngbNavItem]="9">
-        <a ngbNavLink routerLink="/logout">Logout</a>
-    </li>
-  </ul>
-</div>
+    </div>
 
-  <div [ngbNavOutlet]="nav" class="mt-2"></div>
+    <div [ngbNavOutlet]="nav" class="mt-2"></div>
+</div>

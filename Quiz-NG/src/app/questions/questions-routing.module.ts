@@ -2,6 +2,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { CategoriesComponent } from './categories/categories.component';
 import { QuestionsListComponent } from './questions-list/questions-list.component';
 import {AuthGuard} from '../core/auth.guard';
+import {QuestionsResolver} from "../core/resolvers/questions-resolver";
 
 const routes: Routes = [
     {
@@ -12,7 +13,13 @@ const routes: Routes = [
     {
         path: 'categories/:category',
         component: QuestionsListComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
+        resolve: {
+            questions:QuestionsResolver
+        },
+        data: {
+            mustBeLoggedIn: true
+        }
     }
 ];
 

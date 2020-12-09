@@ -1,8 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, ActivatedRouteSnapshot} from '@angular/router';
 import {IQuestion, IUser} from 'src/app/interfaces';
 import {QuestionsService} from '../questions.service';
-import {tap} from 'rxjs/operators';
+import {tap, map} from 'rxjs/operators';
 import {interval, Subscription} from 'rxjs';
 import {UserService} from 'src/app/user/user.service';
 
@@ -18,41 +18,41 @@ export class QuestionsListComponent implements OnInit, OnDestroy {
     timeForAnswering = 15;
     finished = false;
     selectedCategory: string;
-    questions: IQuestion[];
     currentQuestion: IQuestion;
+    questions: IQuestion[];
     regularUserAvailableQuestions = true;
     user: IUser;
 
-    constructor(private route: ActivatedRoute, private questionsService: QuestionsService, private userService: UserService) {}
+    constructor(private route: ActivatedRoute, private questionsService: QuestionsService, private userService: UserService) {
+        this.route.data.subscribe((data) => {
+            this.questions = data.questions;
+            this.currentQuestion = this.questions[0];
+            return this.questions
+        } );
+        this.selectedCategory = this.route.snapshot.params.category;
+    }
 
     ngOnInit(): void {
-        this.user = this.userService.currentUser;
-        if (this.user) {
-            this.selectedCategory = this.route.snapshot.params.category;
-            this.questionsService.loadQuestionsByCategory(this.selectedCategory).pipe(
-                tap((q: IQuestion[]) => {
-                    if (this.user.subscription === 'normal') {
-                        q = q.filter((question: IQuestion) =>  !this.user.answered_questions.includes(question._id));
+        this.userService.currentUser$.subscribe({
+            next:((user:IUser) => {
+                if (user) {
+                    this.user = user;
+                    if (!this.user.is_vip) {
+                        this.questions = this.questions.filter((question: IQuestion) =>  !this.user.answered_questions.includes(question._id));
                     }
-                    this.questions = q;
-                    if (this.questions.length === 0) {
-                        this.regularUserAvailableQuestions = false;
-                        this.finishCategoryQuestions();
-                    }else {
-                        this.currentQuestion = this.questions[0];
-                    }
-                })
-            ).subscribe();
-            const secondsCounter = interval(1000);
-            this.subscription = secondsCounter.subscribe(sec => {
-                this.timeForAnswering--;
-                if (this.timeForAnswering === 0) {
-                    this.nextQuestion();
-                    return;
+
                 }
-            });
-            return;
-        }
+            })
+        })
+        const secondsCounter = interval(1000);
+        this.subscription = secondsCounter.subscribe(sec => {
+            this.timeForAnswering--;
+            if (this.timeForAnswering === 0) {
+                this.nextQuestion();
+                return;
+            }
+        });
+
     }
 
     nextQuestion(): void {
@@ -89,6 +89,6 @@ export class QuestionsListComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        this.subscription.unsubscribe();
+        this.subscription?.unsubscribe();
     }
 }

@@ -11,6 +11,7 @@ import { QuestionsListComponent } from './questions-list/questions-list.componen
 import { QuestionComponent } from './question/question.component';
 import { FormsModule } from '@angular/forms';
 import { NgbProgressbar } from '@ng-bootstrap/ng-bootstrap';
+import {QuestionsResolver} from "../core/resolvers/questions-resolver";
 
 
 @NgModule({
@@ -22,7 +23,7 @@ import { NgbProgressbar } from '@ng-bootstrap/ng-bootstrap';
     SharedModule,
     FormsModule,
   ],
-  providers: [UserService, QuestionsService, NgbProgressbar],
+  providers: [UserService, QuestionsService, NgbProgressbar,QuestionsResolver],
   exports: [CategoriesListComponent, NgbProgressbar],
   bootstrap: [ NgbProgressbar ]
 
