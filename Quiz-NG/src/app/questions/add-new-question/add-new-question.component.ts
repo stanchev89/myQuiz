@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./add-new-question.component.css']
 })
 export class AddNewQuestionComponent implements OnInit {
+  pageTitle = 'Add new question';
 
   constructor() { }
 

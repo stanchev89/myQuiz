@@ -11,7 +11,6 @@ import { LogoutComponent } from './logout/logout.component'
 import { SharedModule } from '../shared/shared.module';
 import { CoreModule } from '../core/core.module';
 import { BecomeAVipComponent } from './become-a-vip/become-a-vip.component';
-import { AddNewQuestionComponent } from './add-new-question/add-new-question.component';
 
 
 
@@ -23,8 +22,7 @@ import { AddNewQuestionComponent } from './add-new-question/add-new-question.com
     RegisterFormComponent,
     ProfileComponent,
     LogoutComponent,
-    BecomeAVipComponent,
-    AddNewQuestionComponent
+    BecomeAVipComponent
   ],
   imports: [
     CommonModule,
