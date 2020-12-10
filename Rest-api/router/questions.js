@@ -9,7 +9,7 @@ router.get("/", questionController.getAllQuestions);
 
 router.get("/:category", questionController.getQuestionsByCategory);
 
-router.put("/add_new_question", auth(), authVip(), questionController.addNewQuestion);
+router.post("/add-new-question", auth(), authVip(), questionController.addNewQuestion);
 
 
 // router.get('/my-trips/:id/reservations', auth(), themeController.getReservations);

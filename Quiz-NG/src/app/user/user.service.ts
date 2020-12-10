@@ -53,7 +53,6 @@ export class UserService {
       })
     );
   }
-    //TO DO after this nav-bar doesn't change!
   switchToVip(): Observable<any> {
       return this.answering({is_vip:true});
   }

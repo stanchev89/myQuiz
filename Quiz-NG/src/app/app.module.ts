@@ -7,7 +7,6 @@ import {CoreModule} from './core/core.module';
 import { UserModule } from './user/user.module';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
 import { HomeComponent } from './home/home.component';
 import {RulesComponent} from './rules/rules.component';
 import {QuestionsService} from './questions/questions.service'

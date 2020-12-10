@@ -25,10 +25,14 @@ export class QuestionsListComponent implements OnInit, OnDestroy {
 
     constructor(private route: ActivatedRoute, private questionsService: QuestionsService, private userService: UserService) {
         this.route.data.subscribe((data) => {
-            this.questions = data.questions;
+            this.questions = this.shuffleQuestions(data.questions);
             return this.questions
         } );
         this.selectedCategory = this.route.snapshot.params.category;
+    }
+
+    shuffleQuestions(arr: IQuestion[]): IQuestion[] {
+        return arr.sort(() => Math.random() - 0.5);
     }
 
     ngOnInit(): void {

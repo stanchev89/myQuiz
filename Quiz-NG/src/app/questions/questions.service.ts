@@ -11,23 +11,8 @@ import { UserService } from '../user/user.service';
 export class QuestionsService {
   constructor(private http: HttpClient, private userService: UserService) {
   }
-  allQuestions: IQuestion[] | null;
-  apiUrl = environment.apiUrl;
-
-  loadAllQuestions(): Observable<IQuestion[]> {
-    return this.http.get(`${this.apiUrl}/questions/`)
-        .pipe(
-            tap((questions: IQuestion[]): void => {
-              this.allQuestions = questions;
-            }), catchError(() => {
-              this.allQuestions = null;
-              return of(null);
-            })
-        );
-  }
-
   loadCategories(): Observable<any> {
-      return  this.http.get<IQuestion[]>(`${this.apiUrl}/questions/`).pipe(
+      return  this.http.get<IQuestion[]>('/questions/').pipe(
           map((questions:IQuestion[])=> {
              const categories =  questions.reduce((acc:{},curr:IQuestion) => {
                  const rawCategoryName = curr.category;
@@ -43,7 +28,11 @@ export class QuestionsService {
   }
 
   loadQuestionsByCategory(category: string): Observable<IQuestion[]> {
-    return this.http.get<IQuestion[]>(`${this.apiUrl}/questions/${category.split('_').join(' ')}`);
+    return this.http.get<IQuestion[]>(`/questions/${category.split('_').join(' ')}`);
+  }
+
+  addNewQuestion(newQuestion): Observable<any> {
+    return this.http.post<IQuestion>('/questions/add-new-question', newQuestion);
   }
 
 }

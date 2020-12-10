@@ -2,13 +2,26 @@
 
 <app-page-title [pageTitle]="pageTitle"></app-page-title>
 
-<form (ngSubmit)="onSubmit(questionForm); questionForm.reset()" #questionForm="ngForm" >
-    <label for="selectCategory">Choose category:</label>
-    <select id="selectCategory">
+<form (ngSubmit)="onSubmit([questionForm,category]); questionForm.reset()" #questionForm="ngForm" >
+    <label for="category">Choose category:</label>
+    <select id="category" #category>
         <option *ngFor="let category of categories" [ngValue]="category">
             {{ category }}
         </option>
     </select>
+
+<!--    <div class="row">-->
+<!--        <div class="col">-->
+<!--            <div ngbDropdown class="d-inline-block">-->
+<!--                <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Toggle dropdown</button>-->
+<!--                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">-->
+<!--                    <button ngbDropdownItem>Action - 1</button>-->
+<!--                    <button ngbDropdownItem>Another Action</button>-->
+<!--                    <button ngbDropdownItem>Something else is here</button>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
 
     <label for="question">Question:</label>
     <input type="text" class="form-control" id="question"
@@ -63,16 +76,16 @@
         </div>
     </div>
 
-    <label for="incorrectAnswer3">Set 2 incorrect answer:</label>
+    <label for="incorrectAnswer2">Set 2 incorrect answer:</label>
+    <input type="text" class="form-control" id="incorrectAnswer2"
+           #incorrectAnswer1="ngModel"
+           name="incorrectAnswer2"
+           ngModel
+    >
+    <label for="incorrectAnswer3">Set 3 incorrect answer:</label>
     <input type="text" class="form-control" id="incorrectAnswer3"
            #incorrectAnswer1="ngModel"
            name="incorrectAnswer3"
-           ngModel
-    >
-    <label for="incorrectAnswer4">Set 3 incorrect answer:</label>
-    <input type="text" class="form-control" id="incorrectAnswer4"
-           #incorrectAnswer1="ngModel"
-           name="incorrectAnswer4"
            ngModel
     >
 

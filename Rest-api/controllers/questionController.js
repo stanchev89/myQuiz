@@ -11,27 +11,31 @@ function getQuestionsByCategory(req, res, next) {
 }
 
 function addNewQuestion(req, res, next) {
-	// const { themeName, postText } = req.body;
-	// const { _id: userId } = req.user;
-	//
-	// themeModel
-	// 	.create({ themeName, userId, subscribers: [ userId ] })
-	// 	.then((theme) => {
-	// 		newPost(postText, userId, theme._id).then(([ _, updatedTheme ]) => res.status(200).json(updatedTheme));
-	// 	})
-	// 	.catch(next);
+	const newQuestion = req.body;
+	questionModel.find({question:newQuestion.question})
+		.then(question => {
+			if(question) {
+				return Promise.reject({message:'Question already exist!'})
+			}
+			questionModel.create(newQuestion)
+				.then(() => {
+					res.status(200).send({message:'Successful added question!'})
+				}).catch(err => {
+				if (err.name === "MongoError" && err.code === 11000) {
+					let field = err.message.split("index: ")[1];
+					field = field.split(" dup key")[0];
+					field = field.substring(0, field.lastIndexOf("_"));
+
+					res.status(409).send({ message: `This ${field} is already registered!` });
+					return;
+				}
+				next(err);
+			})
+
+		}).catch(next)
+
 }
 
-function answeredCorrectly(req, res, next) {
-	const questionId = req.params.questionId;
-	const { _id: userId } = req.user;
-	questionModel
-		.findByIdAndUpdate({ _id: questionId }, { $addToSet: { users_passed: userId } }, { new: true })
-		.then((updatedQuestion) => {
-			res.status(200).json(updatedQuestion);
-		})
-		.catch(next);
-}
 
 module.exports = {
 	getAllQuestions,

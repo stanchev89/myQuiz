@@ -4,8 +4,8 @@ function errorHandler(err, req, res, next) {
 	}
 	if (err.status === 333) {
 		res.status(333).json({ message: "ErrorHandler: not allowed!" });
-	} else if (err.msg) {
-		res.status(400).json({ message: `${err.msg}` });
+	} else if (err.msg || err.message) {
+		res.status(400).json({ message: `${err.msg ? err.msg : err.message}` });
 	} else {
 		console.error(err.stack);
 		// console.log(err)
