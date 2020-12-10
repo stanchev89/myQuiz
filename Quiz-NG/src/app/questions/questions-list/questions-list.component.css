@@ -9,12 +9,12 @@
 .btn-primary {
     background-color: white;
     color: rgb(52, 145, 250);
-    border-color: darkblue;
+    border-color: rgb(52, 145, 250);
     border-radius: 50%;
 }
 
 .btn-primary:hover, .btn-primary:active {
-    background-color: sandybrown;
+    background-color: red;
     color: white;
     border-color: white;
     border-style: solid;

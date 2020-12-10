@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {QuestionsService} from "../questions.service";
 
 @Component({
   selector: 'app-add-new-question',
@@ -7,10 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddNewQuestionComponent implements OnInit {
   pageTitle = 'Add new question';
+  categories:[]
 
-  constructor() { }
+
+  constructor(private questionsService: QuestionsService) {
+    this.questionsService.loadCategories().subscribe(c => this.categories = c);
+  }
 
   ngOnInit(): void {
+  }
+
+  onSubmit(data){
+
   }
 
 }

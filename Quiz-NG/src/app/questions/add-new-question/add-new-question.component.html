@@ -1,2 +1,82 @@
+<body>
+
 <app-page-title [pageTitle]="pageTitle"></app-page-title>
-<p>add-new-question works!</p>
+
+<form (ngSubmit)="onSubmit(questionForm); questionForm.reset()" #questionForm="ngForm" >
+    <label for="selectCategory">Choose category:</label>
+    <select id="selectCategory">
+        <option *ngFor="let category of categories" [ngValue]="category">
+            {{ category }}
+        </option>
+    </select>
+
+    <label for="question">Question:</label>
+    <input type="text" class="form-control" id="question"
+           required
+           minlength="10"
+           name="question"
+           pattern=".+[\\?]$"
+           #question="ngModel"
+           ngModel
+    >
+    <div *ngIf="question.invalid && (question.dirty || question.touched)"
+         class="alert alert-danger">
+
+        <div *ngIf="question.errors.required">
+            Question is required.
+        </div>
+        <div *ngIf="question.errors.minlength">
+            Question must be at least 10 characters long.
+        </div>
+
+        <div *ngIf="question.errors.pattern">
+            Question must be finished with "?".
+        </div>
+    </div>
+    <label for="correctAnswer">Set correct answer:</label>
+    <input type="text" class="form-control" id="correctAnswer"
+           #correctAnswer="ngModel"
+           name="correctAnswer"
+           required
+           ngModel
+    >
+    <div *ngIf="correctAnswer.invalid && (correctAnswer.dirty || correctAnswer.touched)"
+         class="alert alert-danger">
+
+        <div *ngIf="correctAnswer.errors.required">
+            Correct answer is required!
+        </div>
+    </div>
+
+    <label for="incorrectAnswer1">Set 1 incorrect answer:</label>
+    <input type="text" class="form-control" id="incorrectAnswer1"
+           #incorrectAnswer1="ngModel"
+           name="incorrectAnswer1"
+           required
+           ngModel
+    >
+    <div *ngIf="incorrectAnswer1.invalid && (incorrectAnswer1.dirty || incorrectAnswer1.touched)"
+         class="alert alert-danger">
+
+        <div *ngIf="incorrectAnswer1.errors.required">
+            Correct answer is required!
+        </div>
+    </div>
+
+    <label for="incorrectAnswer3">Set 2 incorrect answer:</label>
+    <input type="text" class="form-control" id="incorrectAnswer3"
+           #incorrectAnswer1="ngModel"
+           name="incorrectAnswer3"
+           ngModel
+    >
+    <label for="incorrectAnswer4">Set 3 incorrect answer:</label>
+    <input type="text" class="form-control" id="incorrectAnswer4"
+           #incorrectAnswer1="ngModel"
+           name="incorrectAnswer4"
+           ngModel
+    >
+
+    <button class="btn btn-success" [disabled]="!questionForm.valid">Submit</button>
+</form>
+
+</body>
