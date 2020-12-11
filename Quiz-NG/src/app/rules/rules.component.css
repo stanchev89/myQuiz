@@ -3,13 +3,10 @@ body{
 }
 h3{
     text-align: center;
-    color:white;  
+    color:white;
     font-family: sans-serif;
 }
-.title{
-    background-color: rgb(21, 127, 251) ;
+.title {
+    background-color: rgb(21, 127, 251);
     opacity: 25%;
-}
-.container{
-    width: 50%;
 }

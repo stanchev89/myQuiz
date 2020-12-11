@@ -1,1 +1,51 @@
-<p>profile works!</p>
+<app-page-title [pageTitle]="pageTitle"></app-page-title>
+
+
+<ng-template #defaultMode>
+    <div class="flex">
+        <p>Username: </p>
+        <p>{{currentUser.username}}</p>
+    </div>
+    <div class="flex">
+        <p>Points: </p>
+        <p>{{currentUser.correct_answers.length}}</p>
+    </div>
+    <div class="flex">
+        <p>Status: </p>
+        <p>{{currentUser.is_vip ? "VIP member" : "Regular user"}}</p>
+    </div>
+    <div class="flex">
+        <p>Registered before: </p>
+        <p>{{registeretBefore}}</p>
+    </div>
+    <button class="edit-button" (click)="toggleEditMode()">Change username</button>
+</ng-template>
+
+<ng-template #editMode>
+    <form #f="ngForm" (ngSubmit)="onSubmit(f.value)">
+        <div class="flex">
+            <p>Username: </p>
+            <input type="text" name="username" id="username" [ngModel]="currentUser.username">
+        </div>
+        <div class="flex">
+            <p>Points: </p>
+            <p>{{currentUser.correct_answers.length}}</p>
+        </div>
+        <div class="flex">
+            <p>Status: </p>
+            <p>{{currentUser.is_vip ? "VIP member" : "Regular user"}}</p>
+        </div>
+        <div class="flex">
+            <p>Registered before: </p>
+            <p>{{registeretBefore}}</p>
+        </div>
+        <button type="button" class="red-button" (click)="toggleEditMode()">Cancel</button>
+        <button class="green-button">Save</button>
+    </form>
+</ng-template>
+
+<div class="profile">
+    <img src="/assets/profile.png" alt="default user">
+    <h3>{{(currentUser.username | uppercase)}} Info:</h3>
+    <ng-container *ngTemplateOutlet="inEditMode ? editMode : defaultMode"></ng-container>
+</div>

@@ -53,11 +53,8 @@ export class UserService {
       })
     );
   }
-  switchToVip(): Observable<any> {
-      return this.answering({is_vip:true});
-  }
 
-  answering(userDataForUpdate): Observable<any> {
+  updateProfileData(userDataForUpdate): Observable<any> {
       const body = {};
       for (const key in userDataForUpdate) {
           if (userDataForUpdate[key]){

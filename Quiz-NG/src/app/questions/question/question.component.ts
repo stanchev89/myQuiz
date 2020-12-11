@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnChanges,  } from '@angular/core';
 import { IQuestion } from '../../interfaces';
+import {UserService} from "../../user/user.service";
 
 @Component({
   selector: 'app-question',
@@ -7,8 +8,8 @@ import { IQuestion } from '../../interfaces';
   styleUrls: ['./question.component.css']
 })
 export class QuestionComponent implements  OnChanges {
-
-  constructor() { }
+  isLogged = this.userService.isLogged$;
+  constructor(private userService: UserService) { }
   @Input() questionData: IQuestion;
   @Output() sendGivenAnswer = new EventEmitter<string>();
 

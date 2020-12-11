@@ -1,8 +1,10 @@
 
-<div class="list-group">
+<div class="container">
     <ul>
+        <div class="row row-cols-2">
         <li type="button" class="list-group-item list-group-item-action" *ngFor="let categorie of categories">
             <a routerLink="/categories/{{categorie.split(' ').join('_')}}">{{categorie}}</a>
         </li>
+        </div>
     </ul>
   </div>

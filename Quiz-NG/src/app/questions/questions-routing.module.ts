@@ -18,9 +18,9 @@ const routes: Routes = [
         resolve: {
             questions:QuestionsResolver
         },
-        data: {
-            mustBeLoggedIn: true
-        }
+        // data: {
+        //     mustBeLoggedIn: true
+        // }
     },
     {
         path: 'add_new_question',

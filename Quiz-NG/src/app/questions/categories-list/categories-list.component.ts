@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { QuestionsService } from '../../questions/questions.service';
+import {UserService} from "../../user/user.service";
+import {IUser} from "../../interfaces";
 
 @Component({
   selector: 'app-categories-list',
@@ -8,12 +10,17 @@ import { QuestionsService } from '../../questions/questions.service';
 })
 export class CategoriesListComponent implements OnInit {
   categories = [];
-  constructor(private questionService: QuestionsService) { }
+  isLogged = this.userService.isLogged$;
+  constructor(private questionService: QuestionsService, private userService:UserService) {
+
+  }
 
   ngOnInit(): void {
-    this.questionService.loadCategories().subscribe((categories:string[]) => {
-      this.categories = categories;
-    });
+    if(this.isLogged){
+      this.questionService.loadCategories().subscribe((categories:string[]) => {
+        this.categories = categories;
+      });
+    }
   }
 
 }

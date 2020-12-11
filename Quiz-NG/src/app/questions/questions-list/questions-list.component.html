@@ -1,39 +1,44 @@
 <app-page-title [pageTitle]="selectedCategory?.split('_').join(' ') + ' questions'"></app-page-title>
 
-<!-- <div *ngIf="finished">
-    <p>All questions in {{selectedCategorie}} category was displayed!</p>
-    <p>Are you ready for <a type="button" routerLink="/categories">next</a> challenge?</p>
-</div> -->
-<div *ngIf="!regularUserAvailableQuestions">
-    <h3>
-        You answered all {{selectedCategory}} category questions.
-        If you want unlimited access to all questions Became a Vip member!
-    </h3>
+<div class="container" *ngIf="!isLogged">
+
+    <p>You must be <a routerLink="/login">logged in</a> to answer the questions!
+        If you don't have registration <a routerLink="/register">click</a> here.
+    </p>
+
 </div>
 
-<div *ngIf="finished && regularUserAvailableQuestions" class="complete">
-    <div class="row justify-content-center">
-        <div class="card" style="width: 20rem;">
-            <div class="card-body">
-                <h3 class="card-title">All questions in "{{selectedCategory | withSpaces}}" category was displayed!</h3>
-                <p>Are you ready for the next challenge?</p>
-                <button class="btn btn-dark" routerLink="/categories">Categories</button>
+<div class="question" *ngIf="isLogged">
+    <div *ngIf="!regularUserAvailableQuestions" class="container">
+        <h4>
+            You answered all {{selectedCategory}} category questions.
+            If you want unlimited access to all questions <a routerLink="/vip">Became a Vip member</a>!
+        </h4>
+    </div>
+
+    <div *ngIf="finished && regularUserAvailableQuestions" class="complete">
+        <div class="container">
+                <div class="card-body">
+                    <h3 class="card-title">All questions in "{{selectedCategory | withSpaces}}" category was displayed!</h3>
+                    <p>Are you ready for the <a type="button" routerLink="/categories">next</a> challenge?</p>
+                    <button class="btn btn-dark" routerLink="/categories">Categories</button>
+                </div>
+        </div>
+    </div>
+
+
+    <div *ngIf="!finished && regularUserAvailableQuestions" class="container">
+        <div class="row justify-content-center">
+            <div class="timer">
+                <a>{{timeForAnswering}}</a>
             </div>
         </div>
-    </div>
-</div>
-
-
-<div *ngIf="!finished && regularUserAvailableQuestions" class="container">
-    <div class="row justify-content-center">
-        <div class="timer">
-            <a>{{timeForAnswering}}</a>
+        <div class="row justify-content-center">
+            <button class="next-button" (click)="nextButtonHandler()" *ngIf="!finished" class="btn btn-primary">Next question</button>
         </div>
     </div>
-    <div class="row justify-content-center">
-        <button class="next-button" (click)="nextButtonHandler()" *ngIf="!finished" class="btn btn-primary">Next question</button>
-    </div>
-</div>
 
-<app-question (sendGivenAnswer)="givenAnswerHandler($event)" *ngIf="currentQuestion && !finished"
+    <app-question (sendGivenAnswer)="givenAnswerHandler($event)" *ngIf="currentQuestion && !finished"
                   [questionData]="currentQuestion"></app-question>
+
+</div>

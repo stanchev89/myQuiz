@@ -17,7 +17,7 @@ export class BecomeAVipComponent implements OnInit {
   }
 
   onSubmit(data): void {
-    this.userService.switchToVip().subscribe({
+    this.userService.updateProfileData({is_vip:true}).subscribe({
       next: (user:IUser)=> {
 
           this.router.navigate(['/'])

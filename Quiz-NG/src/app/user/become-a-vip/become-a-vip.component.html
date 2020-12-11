@@ -1,7 +1,7 @@
 <body>
 <app-page-title [pageTitle]="pageTitle"></app-page-title>
-
-<h3>Just subscribe to our newsletter and special offers and be a Vip member!</h3>
+<div class="container">
+<h3>Just subscribe for our newsletter or special offers and get your VIP status!</h3>
 
 <form  (ngSubmit)="onSubmit(emailForm.value); emailForm.reset()" #emailForm="ngForm">
     <label for="email">Email:</label>
@@ -25,5 +25,6 @@
 
 </form>
 
+</div>
 
 </body>

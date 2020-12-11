@@ -22,13 +22,19 @@ export class QuestionsListComponent implements OnInit, OnDestroy {
     questions: IQuestion[];
     regularUserAvailableQuestions = true;
     user: IUser;
+    isLogged$ = this.userService.isLogged$;
+    isLogged:boolean;
 
     constructor(private route: ActivatedRoute, private questionsService: QuestionsService, private userService: UserService) {
+        this.isLogged$.subscribe((loggedIn)=> {
+            this.isLogged = loggedIn;
+        })
         this.route.data.subscribe((data) => {
             this.questions = this.shuffleQuestions(data.questions);
             return this.questions
         } );
         this.selectedCategory = this.route.snapshot.params.category;
+
     }
 
     shuffleQuestions(arr: IQuestion[]): IQuestion[] {
@@ -36,29 +42,32 @@ export class QuestionsListComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.userService.currentUser$.subscribe({
-            next:((user:IUser) => {
-                if (user) {
-                    this.user = user;
-                }
+        if(this.isLogged){
+            this.userService.currentUser$.subscribe({
+                next:((user:IUser) => {
+                    if (user) {
+                        this.user = user;
+                    }
+                })
             })
-        })
-        if (!this.user.is_vip) {
-            this.questions = this.questions.filter((question: IQuestion) =>  !this.user.answered_questions.includes(question._id));
-        }
-        if(this.questions.length === 0) {
-            this.regularUserAvailableQuestions = false;
-            return this.finishCategoryQuestions()
-        }
-        this.currentQuestion = this.questions[0];
-        const secondsCounter = interval(1000);
-        this.subscription = secondsCounter.subscribe(sec => {
-            this.timeForAnswering--;
-            if (this.timeForAnswering === 0) {
-                this.nextQuestion();
-                return;
+            if (!this.user.is_vip) {
+                this.questions = this.questions.filter((question: IQuestion) =>  !this.user.answered_questions.includes(question._id));
             }
-        });
+            if(this.questions.length === 0) {
+                this.regularUserAvailableQuestions = false;
+                return this.finishCategoryQuestions()
+            }
+            this.currentQuestion = this.questions[0];
+            const secondsCounter = interval(1000);
+            this.subscription = secondsCounter.subscribe(sec => {
+                this.timeForAnswering--;
+                if (this.timeForAnswering === 0) {
+                    this.nextQuestion();
+                    return;
+                }
+            });
+
+        }
 
     }
 
@@ -84,7 +93,7 @@ export class QuestionsListComponent implements OnInit, OnDestroy {
         if (this.currentQuestion.correct_answer === answer) {
             userDataForUpdate.correct_answer = this.currentQuestion;
         }
-        this.userService.answering(userDataForUpdate).subscribe(
+        this.userService.updateProfileData(userDataForUpdate).subscribe(
             ()=>{
                 this.nextQuestion();
             }
