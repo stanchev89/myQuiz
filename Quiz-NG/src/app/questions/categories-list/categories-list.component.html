@@ -1,9 +1,9 @@
 
-<div class="container">
+<div class="container question-list overflow-auto">
     <ul>
         <div class="row row-cols-2">
-        <li type="button" class="list-group-item list-group-item-action" *ngFor="let categorie of categories">
-            <a routerLink="/categories/{{categorie.split(' ').join('_')}}">{{categorie}}</a>
+        <li type="button" class="list-group-item list-group-item-action" *ngFor="let category of categories">
+            <a routerLink="/categories/{{category.split(' ').join('_')}}">{{category}}</a>
         </li>
         </div>
     </ul>

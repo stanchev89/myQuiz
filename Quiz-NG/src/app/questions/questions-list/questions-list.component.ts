@@ -15,7 +15,7 @@ import {UserService} from 'src/app/user/user.service';
 export class QuestionsListComponent implements OnInit, OnDestroy {
     subscription: Subscription;
     questionCounter = 1;
-    timeForAnswering = 15;
+    timeForAnswering = 0;
     finished = false;
     selectedCategory: string;
     currentQuestion: IQuestion;
@@ -58,10 +58,10 @@ export class QuestionsListComponent implements OnInit, OnDestroy {
                 return this.finishCategoryQuestions()
             }
             this.currentQuestion = this.questions[0];
-            const secondsCounter = interval(1000);
+            const secondsCounter = interval(100);
             this.subscription = secondsCounter.subscribe(sec => {
-                this.timeForAnswering--;
-                if (this.timeForAnswering === 0) {
+                this.timeForAnswering++;
+                if (this.timeForAnswering === 200) {
                     this.nextQuestion();
                     return;
                 }
@@ -73,7 +73,7 @@ export class QuestionsListComponent implements OnInit, OnDestroy {
 
     nextQuestion(): void {
         this.currentQuestion = this.questions[this.questionCounter];
-        this.timeForAnswering = 15;
+        this.timeForAnswering = 0;
         if (this.questionCounter === this.questions.length) {
             this.finishCategoryQuestions();
             return;
@@ -103,7 +103,6 @@ export class QuestionsListComponent implements OnInit, OnDestroy {
     finishCategoryQuestions(): void {
         this.finished = true;
         this.questionCounter = 0;
-        console.log('All questions was displayed!');
         this.subscription?.unsubscribe();
     }
 

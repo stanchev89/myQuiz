@@ -3,7 +3,7 @@
 <div class="container" *ngIf="!isLogged">
 
     <p>You must be <a routerLink="/login">logged in</a> to answer the questions!
-        If you don't have registration <a routerLink="/register">click</a> here.
+        If you don't have registration click <a routerLink="/register">here.</a>
     </p>
 
 </div>
@@ -26,13 +26,16 @@
         </div>
     </div>
 
-
     <div *ngIf="!finished && regularUserAvailableQuestions" class="container">
-        <div class="row justify-content-center">
             <div class="timer">
-                <a>{{timeForAnswering}}</a>
+                <p>
+                <ngb-progressbar type="primary" [value]="timeForAnswering"
+                                 height="10px"
+                                 [max]="200"
+                                 appProgressBarColor
+                ></ngb-progressbar>
+                </p>
             </div>
-        </div>
         <div class="row justify-content-center">
             <button class="next-button" (click)="nextButtonHandler()" *ngIf="!finished" class="btn btn-primary">Next question</button>
         </div>

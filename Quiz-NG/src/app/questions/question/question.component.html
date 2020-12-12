@@ -3,17 +3,17 @@
           <h1 class="card-title">{{questionData.question | fixHtmlSymbols}}</h1>
             <div class="row">
               <div class="col-6">
-                <a  class="btn btn-primary" id="{{answers[0]}}" (click)="onSubmit(answers[0])">{{answers[0]}}</a>
+                <a appButtonColor [questionData]="questionData" (sendGivenAnswer)="onSubmit($event)"  class="btn btn-primary">{{answers[0]}}</a>
               </div>
               <div class="col-6">
-                <a class="btn btn-primary " (click)="onSubmit(answers[1])">{{answers[1]}}</a>
+                <a appButtonColor [questionData]="questionData" (sendGivenAnswer)="onSubmit($event)"  class="btn btn-primary">{{answers[1]}}</a>
               </div>
               <div class="w-100"></div>
               <div class="col-6 mt-1">
-                <a *ngIf="answers[2]" class="btn btn-primary"  (click)="onSubmit(answers[2])">{{answers[2]}}</a>
+                <a *ngIf="answers[2]" appButtonColor [questionData]="questionData" (sendGivenAnswer)="onSubmit($event)"  class="btn btn-primary">{{answers[2]}}</a>
               </div>
               <div class="col-6 mt-1">
-                <a *ngIf="answers[3]" class="btn btn-primary" (click)="onSubmit(answers[3])">{{answers[3]}}</a>
+                <a *ngIf="answers[3]" appButtonColor [questionData]="questionData" (sendGivenAnswer)="onSubmit($event)"  class="btn btn-primary">{{answers[3]}}</a>
               </div>
             </div>
         </div>

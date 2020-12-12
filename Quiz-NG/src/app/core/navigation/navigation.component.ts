@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from '../../user/user.service';
-import {IUser} from "../../interfaces";
+import {BehaviorSubject} from "rxjs";
+import {map} from "rxjs/operators";
+
 
 
 @Component({
@@ -9,7 +11,9 @@ templateUrl: './navigation.component.html',
 styleUrls: [ './navigation.component.css' ]
 })
 export class NavigationComponent {
-	active = 1;
+	active$:  BehaviorSubject<number | string | undefined> = new BehaviorSubject(1);
+	active = this.active$.pipe(map(n => n));
+
 	isLogged = this.userService.isLogged$;
 	isVip = this.userService.isVip$;
 

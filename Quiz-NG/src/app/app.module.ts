@@ -14,6 +14,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { QuestionsModule } from './questions/questions.module';
 import { UserService } from './user/user.service';
 import { SharedModule } from './shared/shared.module';
+// import { MDBBootstrapModule } from 'angular-bootstrap-md';
+
 
 
 @NgModule({
@@ -32,6 +34,7 @@ import { SharedModule } from './shared/shared.module';
     CoreModule,
     UserModule,
     QuestionsModule
+    // MDBBootstrapModule.forRoot()
   ],
   providers: [QuestionsService, UserService],
   bootstrap: [AppComponent]

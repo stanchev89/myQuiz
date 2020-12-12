@@ -7,7 +7,7 @@ export class FixHtmlSymbolsPipe implements PipeTransform {
 
   transform(text: string): string {
 
-    return text.split('&quot;').join('"').split('&#039;').join(`'`);
+    return text.split('&quot;').join('"').split('&#039;').join(`'`).split('&amp;').join('&');
   }
 
 }

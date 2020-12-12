@@ -3,7 +3,7 @@
 <footer class="footer">
 
     <!-- Footer Elements -->
-    <div class="container" *ngIf="!(isLogged$ | async)">
+    <div  *ngIf="!(isLogged$ | async)">
 
         <!-- Call to action -->
         <ul class="list-unstyled list-inline text-center py-1">
@@ -19,7 +19,7 @@
     <!-- Footer Elements -->
 
     <!-- Copyright -->
-    <div class="footer-copyright text-center py-3">© 2020 Copyright:
+    <div class="footer-copyright float-right py-3">© 2020 Copyright:
         <a routerLink="localhost:4200"> myQuiz.com</a>
     </div>
     <!-- Copyright -->

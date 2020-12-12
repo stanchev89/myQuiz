@@ -10,8 +10,6 @@ import { SharedModule } from '../shared/shared.module';
 import { QuestionsListComponent } from './questions-list/questions-list.component';
 import { QuestionComponent } from './question/question.component';
 import { FormsModule } from '@angular/forms';
-import { NgbProgressbar } from '@ng-bootstrap/ng-bootstrap';
-import {NgbDropdown} from '@ng-bootstrap/ng-bootstrap'
 import {QuestionsResolver} from "../core/resolvers/questions-resolver";
 import { AddNewQuestionComponent } from './add-new-question/add-new-question.component';
 
@@ -27,7 +25,7 @@ import { AddNewQuestionComponent } from './add-new-question/add-new-question.com
   ],
   providers: [UserService, QuestionsService, QuestionsResolver],
   exports: [CategoriesListComponent],
-  bootstrap: [ ]
+  bootstrap: []
 
 })
 export class QuestionsModule { }

@@ -14,7 +14,7 @@ import {QuestionsResolver} from './resolvers/questions-resolver'
   imports: [
     CommonModule, NgbModule, RouterModule
   ],
-  providers: [ UserService, appInterceptorProvider, QuestionsResolver ],
+  providers: [ UserService, appInterceptorProvider, QuestionsResolver],
   exports: [ NavigationComponent, FooterComponent ],
   bootstrap: [NavigationComponent]
 })

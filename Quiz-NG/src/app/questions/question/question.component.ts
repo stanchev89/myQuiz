@@ -1,4 +1,10 @@
-import { Component, Input, Output, EventEmitter, OnChanges,  } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  OnChanges,
+  EventEmitter
+} from '@angular/core';
 import { IQuestion } from '../../interfaces';
 import {UserService} from "../../user/user.service";
 
@@ -11,8 +17,7 @@ export class QuestionComponent implements  OnChanges {
   isLogged = this.userService.isLogged$;
   constructor(private userService: UserService) { }
   @Input() questionData: IQuestion;
-  @Output() sendGivenAnswer = new EventEmitter<string>();
-
+  @Output() sendGivenAnswer = new EventEmitter();
   answers: string[];
 
   ngOnChanges(): void {
@@ -24,8 +29,9 @@ export class QuestionComponent implements  OnChanges {
     return arr.sort(() => Math.random() - 0.5);
   }
 
-  onSubmit(answer): void {
-    this.answers = [];
-    this.sendGivenAnswer.emit(answer);
+  onSubmit(givenAnswer): void {
+
+      this.sendGivenAnswer.emit(givenAnswer);
+
   }
 }
