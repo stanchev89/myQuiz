@@ -6,13 +6,16 @@ import { FooterComponent } from './footer/footer.component';
 import {RouterModule} from '@angular/router';
 import { UserService } from '../user/user.service';
 import {appInterceptorProvider} from './app.interceptor';
-import {QuestionsResolver} from './resolvers/questions-resolver'
+import {QuestionsResolver} from './resolvers/questions-resolver';
+import { AboutComponent } from './about/about.component';
+import { ContactsComponent } from './contacts/contacts.component'
+import {SharedModule} from "../shared/shared.module";
 
 
 @NgModule({
-  declarations: [NavigationComponent, FooterComponent],
+  declarations: [NavigationComponent, FooterComponent, AboutComponent, ContactsComponent],
   imports: [
-    CommonModule, NgbModule, RouterModule
+    CommonModule, NgbModule, RouterModule, SharedModule
   ],
   providers: [ UserService, appInterceptorProvider, QuestionsResolver],
   exports: [ NavigationComponent, FooterComponent ],
