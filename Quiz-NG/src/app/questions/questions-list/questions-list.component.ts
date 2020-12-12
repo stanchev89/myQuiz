@@ -24,6 +24,8 @@ export class QuestionsListComponent implements OnInit, OnDestroy {
     user: IUser;
     isLogged$ = this.userService.isLogged$;
     isLogged:boolean;
+    currentSessionCorrectAnswers = 0;
+    currentSessionIncorrectAnswers = 0;
 
     constructor(private route: ActivatedRoute, private questionsService: QuestionsService, private userService: UserService) {
         this.isLogged$.subscribe((loggedIn)=> {
@@ -92,6 +94,9 @@ export class QuestionsListComponent implements OnInit, OnDestroy {
         };
         if (this.currentQuestion.correct_answer === answer) {
             userDataForUpdate.correct_answer = this.currentQuestion;
+            this.currentSessionCorrectAnswers++;
+        }else {
+            this.currentSessionIncorrectAnswers++;
         }
         this.userService.updateProfileData(userDataForUpdate).subscribe(
             ()=>{

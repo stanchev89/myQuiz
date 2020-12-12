@@ -27,3 +27,11 @@
 .complete {
     padding-top: 100px;
 }
+a.correct{
+    color:green;
+    font-weight: bolder;
+}
+a.incorrect{
+    color:red;
+    font-weight: bolder;
+}

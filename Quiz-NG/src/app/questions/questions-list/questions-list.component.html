@@ -20,8 +20,9 @@
         <div class="container">
                 <div class="card-body">
                     <h3 class="card-title">All questions in "{{selectedCategory | withSpaces}}" category was displayed!</h3>
-                    <p>Are you ready for the <a type="button" routerLink="/categories">next</a> challenge?</p>
-                    <button class="btn btn-dark" routerLink="/categories">Categories</button>
+                    <p>Correct answers: <a class="correct">{{currentSessionCorrectAnswers}}</a>.</p>
+                    <p>Incorrect answers: <a class="incorrect">{{currentSessionIncorrectAnswers}}</a>.</p>
+                    <button class="btn btn-dark" routerLink="/categories">Are you ready for next challenge?</button>
                 </div>
         </div>
     </div>

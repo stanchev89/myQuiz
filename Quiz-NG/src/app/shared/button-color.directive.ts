@@ -20,7 +20,7 @@ export class ButtonColorDirective{
   onClick() {
     const givenAnswer = this.elementRef.nativeElement.text;
     const buttonColorMustBe = givenAnswer === this.questionData.correct_answer ? 'green' : 'red';
-    const pause = timer(1000);
+    const pause = timer(700);
     this.elementRef.nativeElement.style.backgroundColor = buttonColorMustBe;
     pause.subscribe(() => {
       this.sendGivenAnswer.emit(givenAnswer);
