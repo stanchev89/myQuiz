@@ -10,3 +10,16 @@ label {
     font-family: sans-serif;
     font-weight: lighter;
 }
+select{
+    width: 300px;
+    text-align-last:center;
+    display: block;
+    align-content: center;
+    text-align: center;
+    padding: 8px 16px;
+}
+
+
+.select-selected {
+    background-color: DodgerBlue;
+}

@@ -10,11 +10,20 @@ import { Router} from "@angular/router";
 })
 export class AddNewQuestionComponent implements OnInit {
   pageTitle = 'Add new question';
-  categories:[]
+
+  // This is hardcode in case of empty Database to be able to add new question
+  categories:['Animals','Cartoon & Animations','Computers', 'Geography', 'Books',
+    'Comics', 'Film', 'History', 'Music', 'Mythology','Politics','Sports','Vehicles','Video Games'
+  ]
 
 
   constructor(private questionsService: QuestionsService, private route: Router) {
-    this.questionsService.loadCategories().subscribe(c => this.categories = c);
+    this.questionsService.loadCategories().subscribe(c =>  {
+      if(c.length > 0){
+        // If database is not empty rewrite the categories array
+        this.categories = c;
+      }
+    });
   }
 
   ngOnInit(): void {
