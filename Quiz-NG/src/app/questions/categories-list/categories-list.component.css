@@ -6,6 +6,8 @@
 .question-list{
     max-width: 500px;
     margin-bottom: 10rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
 }
 ul{
     padding: 10px;

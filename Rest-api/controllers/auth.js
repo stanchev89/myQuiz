@@ -71,6 +71,29 @@ function logout(req, res) {
 		.catch((err) => res.send(err));
 }
 
+function changeUserPassword(req,res,next) {
+	const { _id: userId } = req.user;
+	const {oldPassword,newPassword} = req.body;
+	userModel.findOne({_id:userId}).then(user => {
+		user.matchPassword(oldPassword).then(equal => {
+			if(!equal) {
+				const err = {errorMessage: 'Invalid password!'};
+				res.status(401).send(err);
+				return;
+			}
+			user.password = newPassword;
+			user.save()
+			res.clearCookie(authCookieName).status(200).send(user);
+		})
+
+	}).catch(next);
+
+	// userModel.findOneAndUpdate({_id: userId},{password: newPassword})
+	// 	.then((user) => {
+	// 		res.clearCookie(authCookieName).status(200).send(user);
+	// 	}).catch(next);
+}
+
 function getProfileInfo(req, res, next) {
 	const { _id: userId } = req.user;
 
@@ -115,5 +138,6 @@ module.exports = {
 	register,
 	logout,
 	getProfileInfo,
-	editProfileInfo
+	editProfileInfo,
+	changeUserPassword
 };

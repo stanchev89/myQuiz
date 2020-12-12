@@ -30,7 +30,6 @@ export class AddNewQuestionComponent implements OnInit {
   }
 
   onSubmit(data){
-    console.log(data);
     const [formData,selectOption] = data;
     const category = this.categories[+selectOption.selectedIndex];
     const {question,correctAnswer,incorrectAnswer1,incorrectAnswer2,incorrectAnswer3} = formData.form.value;

@@ -14,7 +14,7 @@ function addNewQuestion(req, res, next) {
 	const newQuestion = req.body;
 	questionModel.find({question:newQuestion.question})
 		.then(question => {
-			if(question) {
+			if(question.length > 0) {
 				return Promise.reject({message:'Question already exist!'})
 			}
 			questionModel.create(newQuestion)

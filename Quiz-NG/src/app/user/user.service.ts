@@ -64,12 +64,17 @@ export class UserService {
       return this.http.put<{}>(`/users/profile`, {...body}).pipe(
         tap((user: IUser) => {
             this._currentUser.next(user);
-        }),
-        catchError((err) => {
-            console.log(err);
-            return err;
+            return;
         })
     );
+  }
+
+  changeUserPassword(oldPassword,newPassword): Observable<any> {
+      return this.http.post<{}>('/users/change_password',{oldPassword,newPassword}).pipe(
+          tap((user: IUser) => {
+              this._currentUser.next(null);
+              return
+      }));
   }
 
   getProfileInfo(): Observable<any>{

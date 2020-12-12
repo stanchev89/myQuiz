@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {UserService} from "../user.service";
 import {IUser} from "../../interfaces";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-profile',
@@ -10,10 +11,11 @@ import {IUser} from "../../interfaces";
 export class ProfileComponent implements OnInit {
   currentUser: IUser;
   inEditMode = false;
+  inChangePasswordMode = false;
   pageTitle = 'My profile';
   registeretBefore:string;
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -25,10 +27,32 @@ export class ProfileComponent implements OnInit {
 
   toggleEditMode() {
     this.inEditMode = !this.inEditMode;
+    if(this.inChangePasswordMode) {
+      this.inChangePasswordMode = !this.inChangePasswordMode;
+    }
+  }
+  toggleEditPasswordMode() {
+    this.inChangePasswordMode = !this.inEditMode;
+    this.inEditMode = !this.inEditMode;
   }
 
   onSubmit(data:{}) {
     this.userService.updateProfileData(data).subscribe(() => this.inEditMode = false)
+  }
+
+  submitChangePassword(data) {
+    const {newPassword,oldPassword} = data;
+    this.userService.changeUserPassword(oldPassword,newPassword).subscribe({
+      next: () => {
+        this.toggleEditMode();
+        if(this.inChangePasswordMode) {
+          this.toggleEditPasswordMode();
+        }
+        this.router.navigate(['login']);
+      }, error: (err) => {
+        console.error(err);
+      }
+    });
   }
 
   calculateRegisteredBefore(dateString) {

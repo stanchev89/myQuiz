@@ -19,13 +19,17 @@
         <p>{{registeretBefore}}</p>
     </div>
     <button class="edit-button" (click)="toggleEditMode()">Change username</button>
+    <button class="edit-button" (click)="toggleEditPasswordMode()">Change password</button>
 </ng-template>
 
 <ng-template #editMode>
+    <div *ngIf="!inChangePasswordMode">
     <form #f="ngForm" (ngSubmit)="onSubmit(f.value)">
         <div class="flex">
             <p>Username: </p>
-            <input type="text" name="username" id="username" [ngModel]="currentUser.username">
+            <input type="text" name="username" id="username" [ngModel]="currentUser.username"
+            required  minlength="5"  #username="ngModel"  ngModel
+            >
         </div>
         <div class="flex">
             <p>Points: </p>
@@ -39,9 +43,82 @@
             <p>Registered before: </p>
             <p>{{registeretBefore}}</p>
         </div>
+
+        <div *ngIf="username.invalid && (username.dirty || username.touched)"
+             class="alert alert-danger">
+
+            <div *ngIf="username.errors.required">
+                Username is required.
+            </div>
+            <div *ngIf="username.errors.minlength">
+                Username must be at least 5 characters long.
+            </div>
+        </div>
         <button type="button" class="red-button" (click)="toggleEditMode()">Cancel</button>
-        <button class="green-button">Save</button>
+        <button class="green-button" [disabled]="!f.valid"> Save </button>
     </form>
+    </div>
+
+    <div *ngIf="inChangePasswordMode">
+
+        <form #f="ngForm" (ngSubmit)="submitChangePassword(f.value)">
+            <div class="flex">
+                <p>Old password: </p>
+                <input type="password" name="oldPassword" id="oldPassword"
+                required  minlength="5"  #oldPassword="ngModel"  ngModel
+                >
+            </div>
+            <div class="flex">
+                <p>Set new password: </p>
+                <input type="password" name="newPassword" id="newPassword"
+                required  minlength="5"  #newPassword="ngModel"  ngModel
+                >
+            </div>
+            <div class="flex">
+                <p>Repeat new password: </p>
+                <input type="password" name="repeatNewPassword" id="repeatNewPassword"
+                 required  minlength="5"  pattern="{{newPassword.value}}" #repeatOldPassword="ngModel"  ngModel
+                >
+            </div>
+
+            <div *ngIf="oldPassword.invalid && (oldPassword.dirty || oldPassword.touched)"
+                 class="alert alert-danger">
+
+                <div *ngIf="oldPassword.errors.required">
+                    Old password is required.
+                </div>
+                <div *ngIf="oldPassword.errors.minlength">
+                    Old password must be at least 5 characters long.
+                </div>
+            </div>
+
+            <div *ngIf="newPassword.invalid && (newPassword.dirty || newPassword.touched)"
+                 class="alert alert-danger">
+
+                <div *ngIf="newPassword.errors.required">
+                    New password is required.
+                </div>
+                <div *ngIf="newPassword.errors.minlength">
+                    New password must be at least 5 characters long.
+                </div>
+            </div>
+
+            <div *ngIf="repeatOldPassword.invalid && (repeatOldPassword.dirty || repeatOldPassword.touched)"
+                 class="alert alert-danger">
+                <div *ngIf="repeatOldPassword.errors.required">
+                    Repeat new password is required.
+                </div>
+                <div *ngIf="repeatOldPassword.errors.pattern">
+                    Passwords don't match.
+                </div>
+            </div>
+
+            <button type="button" class="red-button" (click)="toggleEditMode()">Cancel</button>
+            <button class="green-button" [disabled]="!f.valid">Confirm</button>
+        </form>
+
+    </div>
+
 </ng-template>
 
 <div class="profile">

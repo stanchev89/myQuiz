@@ -1,6 +1,6 @@
 form{
     display: inline-block;
-    width: 30%;
+    width: 50%;
 }
 body{
     text-align: center;
@@ -11,12 +11,15 @@ label {
     font-weight: lighter;
 }
 select{
-    width: 300px;
+    width: 100%;
     text-align-last:center;
     display: block;
     align-content: center;
     text-align: center;
     padding: 8px 16px;
+}
+.container{
+    width:500px;
 }
 
 

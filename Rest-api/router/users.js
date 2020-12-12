@@ -30,8 +30,15 @@ router.post(
 router.post("/logout", authController.logout);
 
 router.get("/profile", auth(), authController.getProfileInfo);
-router.put("/profile", auth(), authController.editProfileInfo);
+router.put("/profile", auth(),
+	authController.editProfileInfo);
 
+router.post('/change_password',
+	auth(),
+	validator.checkMinLength(5,'oldPassword', 'newPassword'),
+	validator.handleValidationErrors,
+	authController.changeUserPassword
+);
 
 
 
