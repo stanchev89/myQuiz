@@ -4,6 +4,7 @@ import { RulesComponent } from './rules/rules.component';
 import {AuthGuard} from "./core/auth.guard";
 import {AboutComponent} from "./core/about/about.component";
 import {ContactsComponent} from "./core/contacts/contacts.component";
+import {NoResponseComponent} from './core/no-response/no-response.component'
 
 const routes: Routes = [
   {
@@ -25,6 +26,11 @@ const routes: Routes = [
   {
     path: 'contacts',
     component: ContactsComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: '**',
+    component: NoResponseComponent,
     canActivate: [AuthGuard]
   }
 

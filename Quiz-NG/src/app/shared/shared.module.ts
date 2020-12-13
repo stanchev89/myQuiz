@@ -5,9 +5,7 @@ import { FixHtmlSymbolsPipe } from './fix-html-symbols.pipe';
 import { WithSpacesPipe } from './with-spaces.pipe';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ButtonColorDirective } from './button-color.directive';
-import { RankComponent } from './rank/rank.component';
 import { GetTimerClassPipe } from './get-timer-class.pipe';
-import { PersonalRankComponent } from './personal-rank/personal-rank.component';
 
 
 
@@ -18,9 +16,7 @@ import { PersonalRankComponent } from './personal-rank/personal-rank.component';
     WithSpacesPipe,
     WithSpacesPipe,
     ButtonColorDirective,
-    RankComponent,
     GetTimerClassPipe,
-    PersonalRankComponent,
   ],
   imports: [
     CommonModule,
@@ -31,9 +27,7 @@ import { PersonalRankComponent } from './personal-rank/personal-rank.component';
     FixHtmlSymbolsPipe,
     WithSpacesPipe,
     ButtonColorDirective,
-    RankComponent,
     GetTimerClassPipe,
-    PersonalRankComponent
   ]
 })
 export class SharedModule { }

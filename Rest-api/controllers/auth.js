@@ -88,11 +88,7 @@ function changeUserPassword(req,res,next) {
 
 	}).catch(next);
 
-	// userModel.findOneAndUpdate({_id: userId},{password: newPassword})
-	// 	.then((user) => {
-	// 		res.clearCookie(authCookieName).status(200).send(user);
-	// 	}).catch(next);
-}
+
 
 function getProfileInfo(req, res, next) {
 	const { _id: userId } = req.user;

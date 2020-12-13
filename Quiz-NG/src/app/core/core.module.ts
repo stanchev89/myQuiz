@@ -10,10 +10,11 @@ import {QuestionsResolver} from './resolvers/questions-resolver';
 import { AboutComponent } from './about/about.component';
 import { ContactsComponent } from './contacts/contacts.component'
 import {SharedModule} from "../shared/shared.module";
+import { NoResponseComponent } from './no-response/no-response.component';
 
 
 @NgModule({
-  declarations: [NavigationComponent, FooterComponent, AboutComponent, ContactsComponent],
+  declarations: [NavigationComponent, FooterComponent, AboutComponent, ContactsComponent, NoResponseComponent],
   imports: [
     CommonModule, NgbModule, RouterModule, SharedModule
   ],
