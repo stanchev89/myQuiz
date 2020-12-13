@@ -4,12 +4,6 @@ const { authController } = require("../controllers");
 const { auth } = require("../utils");
 const validator = require("../validators");
 
-// middleware that is specific to this router
-
-// define the home page route
-// router.get('/login', function (req, res) {
-//   res.send('login page')
-// })
 
 router.post(
 	"/register",
@@ -40,9 +34,5 @@ router.post('/change_password',
 	authController.changeUserPassword
 );
 
-
-
-// router.get('/confirm-user', auth(false), authController.confirmUser);
-// router.get('/user/:id', authController.getUserInfo);
 
 module.exports = router;

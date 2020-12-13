@@ -72,11 +72,11 @@ function logout(req, res) {
 }
 
 function changeUserPassword(req,res,next) {
-	const { _id: userId } = req.user;
-	const {oldPassword,newPassword} = req.body;
-	userModel.findOne({_id:userId}).then(user => {
+	const {_id: userId} = req.user;
+	const {oldPassword, newPassword} = req.body;
+	userModel.findOne({_id: userId}).then(user => {
 		user.matchPassword(oldPassword).then(equal => {
-			if(!equal) {
+			if (!equal) {
 				const err = {errorMessage: 'Invalid password!'};
 				res.status(401).send(err);
 				return;
@@ -87,8 +87,7 @@ function changeUserPassword(req,res,next) {
 		})
 
 	}).catch(next);
-
-
+}
 
 function getProfileInfo(req, res, next) {
 	const { _id: userId } = req.user;
@@ -102,31 +101,31 @@ function getProfileInfo(req, res, next) {
 }
 
 function editProfileInfo(req, res, next) {
-	const { _id: userId } = req.user;
-	const { username, correct_answer, answered_question, is_vip } = req.body;
+	const {_id: userId} = req.user;
+	const {username, correct_answer, answered_question, is_vip} = req.body;
 	const update = {
-		$addToSet:{},
-		$set:{}
+		$addToSet: {},
+		$set: {}
 	};
-	if(is_vip) {
+	if (is_vip) {
 		update.$set.is_vip = !!is_vip;
 	}
-	if(username) {
+	if (username) {
 		update.$set.username = username;
 	}
-	if(correct_answer) {
+	if (correct_answer) {
 		update.$addToSet.correct_answers = correct_answer._id;
 	}
-	if(answered_question) {
+	if (answered_question) {
 		update.$addToSet.answered_questions = answered_question._id;
 	}
-	userModel.findOneAndUpdate({_id:userId}, update,{new:true})
+	userModel.findOneAndUpdate({_id: userId}, update, {new: true})
 		.then(user => {
 			res.status(200).json(user);
 		})
 		.catch(next)
-	}
 
+}
 
 
 module.exports = {

@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$USER_HOME$/Downloads/Sofia-Property-Rent-main/.idea/Sofia-Property-Rent-main.iml" filepath="$USER_HOME$/Downloads/Sofia-Property-Rent-main/.idea/Sofia-Property-Rent-main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/myQuiz.iml" filepath="$PROJECT_DIR$/.idea/myQuiz.iml" />
     </modules>
   </component>

@@ -50,7 +50,7 @@ export class QuestionsListComponent implements OnInit, OnDestroy {
 
     setProgressbarColor(time) {
         if (time <= 8) {
-            return "success striped";
+            return "success";
         }
 
         if (time <= 15) {
