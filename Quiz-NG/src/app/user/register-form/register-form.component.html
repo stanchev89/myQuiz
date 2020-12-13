@@ -64,6 +64,11 @@
 
        </div>
        <button class="btn btn-success" [disabled]="!userForm.valid">Submit</button>
+
+    <div class="alert alert-danger" role="alert" *ngIf="isError.message">
+        {{this.isError.message}}
+    </div>
+
     </form>
    </div>
 </body>

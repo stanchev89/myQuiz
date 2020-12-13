@@ -10,7 +10,9 @@ import {Router} from '@angular/router';
 })
 export class LoginFormComponent {
   pageTitle = 'Login';
-
+  isError = {
+    message:null
+  }
   constructor(private userService: UserService, private router: Router) {
   }
 
@@ -19,7 +21,7 @@ export class LoginFormComponent {
     this.userService.login(username, password).subscribe({
       next: (user) => {
         if (user === null) {
-          console.log('Invalid username or password!')
+          this.isError.message = 'Invalid username or password!';
         }else{
           this.router.navigate(['/']);
         }

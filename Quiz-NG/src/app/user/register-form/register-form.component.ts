@@ -10,6 +10,9 @@ import {Router} from "@angular/router";
 export class RegisterFormComponent {
   submitted = false;
   pageTitle = 'Register new user';
+  isError = {
+      message:null
+  }
   constructor(private userService: UserService, private router: Router) { }
 
   onSubmit(data): void{
@@ -19,7 +22,7 @@ export class RegisterFormComponent {
             this.router.navigate(['/login']);
           },
           error: (err) => {
-              console.log(err);
+              this.isError.message = err.error.message
           }
         }
     );
