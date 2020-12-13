@@ -29,8 +29,12 @@
 
     <div *ngIf="!finished && regularUserAvailableQuestions" class="container">
             <div class="timer">
+                <span [class]="inSeconds(timeForAnswering) | getTimerClass"> {{inSeconds(reverseTimer)}}</span>
                 <p>
-                <ngb-progressbar type="primary" [value]="timeForAnswering"
+                <ngb-progressbar [type]="setProgressbarColor(inSeconds(timeForAnswering))"
+                                 [value]="timeForAnswering"
+                                 [striped]="true"
+                                 [animated]="true"
                                  height="10px"
                                  [max]="200"
                                  appProgressBarColor

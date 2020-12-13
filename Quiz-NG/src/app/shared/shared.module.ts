@@ -4,8 +4,10 @@ import { PageTitleComponent } from './page-title/page-title.component';
 import { FixHtmlSymbolsPipe } from './fix-html-symbols.pipe';
 import { WithSpacesPipe } from './with-spaces.pipe';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { ProgressBarColorDirective } from './progress-bar-color.directive';
 import { ButtonColorDirective } from './button-color.directive';
+import { RankComponent } from './rank/rank.component';
+import { GetTimerClassPipe } from './get-timer-class.pipe';
+import { PersonalRankComponent } from './personal-rank/personal-rank.component';
 
 
 
@@ -15,8 +17,10 @@ import { ButtonColorDirective } from './button-color.directive';
     FixHtmlSymbolsPipe,
     WithSpacesPipe,
     WithSpacesPipe,
-    ProgressBarColorDirective,
     ButtonColorDirective,
+    RankComponent,
+    GetTimerClassPipe,
+    PersonalRankComponent,
   ],
   imports: [
     CommonModule,
@@ -26,8 +30,10 @@ import { ButtonColorDirective } from './button-color.directive';
     PageTitleComponent,
     FixHtmlSymbolsPipe,
     WithSpacesPipe,
-    ProgressBarColorDirective,
-    ButtonColorDirective
+    ButtonColorDirective,
+    RankComponent,
+    GetTimerClassPipe,
+    PersonalRankComponent
   ]
 })
 export class SharedModule { }

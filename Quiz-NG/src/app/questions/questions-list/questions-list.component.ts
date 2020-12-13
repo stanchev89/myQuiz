@@ -16,6 +16,7 @@ export class QuestionsListComponent implements OnInit, OnDestroy {
     subscription: Subscription;
     questionCounter = 1;
     timeForAnswering = 0;
+    reverseTimer = 200;
     finished = false;
     selectedCategory: string;
     currentQuestion: IQuestion;
@@ -43,6 +44,24 @@ export class QuestionsListComponent implements OnInit, OnDestroy {
         return arr.sort(() => Math.random() - 0.5);
     }
 
+    inSeconds(ms) {
+        return Math.round(ms / 10);
+    }
+
+    setProgressbarColor(time) {
+        if (time <= 8) {
+            return "success striped";
+        }
+
+        if (time <= 15) {
+            return "primary";
+        }
+
+        if (time >= 15) {
+            return "danger";
+        }
+    }
+
     ngOnInit(): void {
         if(this.isLogged){
             this.userService.currentUser$.subscribe({
@@ -63,6 +82,7 @@ export class QuestionsListComponent implements OnInit, OnDestroy {
             const secondsCounter = interval(100);
             this.subscription = secondsCounter.subscribe(sec => {
                 this.timeForAnswering++;
+                this.reverseTimer--;
                 if (this.timeForAnswering === 200) {
                     this.nextQuestion();
                     return;
@@ -76,6 +96,7 @@ export class QuestionsListComponent implements OnInit, OnDestroy {
     nextQuestion(): void {
         this.currentQuestion = this.questions[this.questionCounter];
         this.timeForAnswering = 0;
+        this.reverseTimer = 200;
         if (this.questionCounter === this.questions.length) {
             this.finishCategoryQuestions();
             return;

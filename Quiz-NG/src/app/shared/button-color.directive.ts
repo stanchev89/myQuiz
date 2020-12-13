@@ -1,7 +1,6 @@
 import {Directive, ElementRef, EventEmitter, HostListener, Output, Input} from '@angular/core';
 import {IQuestion} from "../interfaces";
-import {interval, timer} from 'rxjs'
-import {takeUntil} from "rxjs/operators";
+import { timer} from 'rxjs'
 
 
 
@@ -20,11 +19,13 @@ export class ButtonColorDirective{
   onClick() {
     const givenAnswer = this.elementRef.nativeElement.text;
     const buttonColorMustBe = givenAnswer === this.questionData.correct_answer ? 'green' : 'red';
-    const pause = timer(700);
+    const pause = timer(1000);
     this.elementRef.nativeElement.style.backgroundColor = buttonColorMustBe;
+    this.elementRef.nativeElement.style.color = 'white';
     pause.subscribe(() => {
       this.sendGivenAnswer.emit(givenAnswer);
       this.elementRef.nativeElement.style.backgroundColor = '';
+      this.elementRef.nativeElement.style.color = '';
     })
   }
 

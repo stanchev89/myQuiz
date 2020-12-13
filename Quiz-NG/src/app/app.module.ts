@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Title } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {FormsModule} from '@angular/forms'
 
@@ -14,7 +14,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { QuestionsModule } from './questions/questions.module';
 import { UserService } from './user/user.service';
 import { SharedModule } from './shared/shared.module';
-// import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
 
 
@@ -36,7 +35,7 @@ import { SharedModule } from './shared/shared.module';
     QuestionsModule
     // MDBBootstrapModule.forRoot()
   ],
-  providers: [QuestionsService, UserService],
+  providers: [QuestionsService, UserService,Title],
   bootstrap: [AppComponent]
 })
 export class AppModule {
