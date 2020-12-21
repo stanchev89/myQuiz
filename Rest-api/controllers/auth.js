@@ -100,6 +100,14 @@ function getProfileInfo(req, res, next) {
 		.catch(next);
 }
 
+function getAllUsers(req,res,next) {
+	userModel.find({},{password: 0, __v: 0})
+		.then((users) => {
+		res.status(200).send(users);
+	}).
+		catch(next)
+}
+
 function editProfileInfo(req, res, next) {
 	const {_id: userId} = req.user;
 	const {username, correct_answer, answered_question, is_vip} = req.body;
@@ -134,5 +142,6 @@ module.exports = {
 	logout,
 	getProfileInfo,
 	editProfileInfo,
-	changeUserPassword
+	changeUserPassword,
+	getAllUsers
 };

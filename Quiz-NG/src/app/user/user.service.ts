@@ -90,4 +90,8 @@ export class UserService {
      );
   }
 
+  getAllUsers(): Observable<any> {
+      return this.http.get<any>('/users/all-users');
+  }
+
 }

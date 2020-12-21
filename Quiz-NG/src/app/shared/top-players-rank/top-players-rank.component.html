@@ -1,0 +1,23 @@
+<div class="container">
+
+    <p>Top players:</p>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Username</th>
+            <th scope="col">Points</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let user of topFiveUsers; index as i">
+            <th scope="row">{{ i + 1 }}</th>
+            <td>
+                {{ user.username }}
+            </td>
+            <td>{{ user.correct_answers.length | number }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>

@@ -10,16 +10,24 @@ import {IUser} from "../../interfaces";
 })
 export class CategoriesListComponent implements OnInit {
   categories = [];
-  isLogged = this.userService.isLogged$;
+  currentUser = this.userService.currentUser$;
+  allUsers:IUser[];
+  topFiveUsers:IUser[];
   constructor(private questionService: QuestionsService, private userService:UserService) {
 
   }
 
   ngOnInit(): void {
-    if(this.isLogged){
+    if(this.currentUser){
       this.questionService.loadCategories().subscribe((categories:string[]) => {
         this.categories = categories;
       });
+
+      this.userService.getAllUsers().subscribe(users => {
+        this.allUsers = users;
+        this.topFiveUsers = this.allUsers.sort((a,b) => b.correct_answers.length - a.correct_answers.length)
+            .slice(0,5);
+      })
     }
   }
 

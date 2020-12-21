@@ -13,7 +13,8 @@ export class ProfileComponent implements OnInit {
   inEditMode = false;
   inChangePasswordMode = false;
   pageTitle = 'My profile';
-  registeretBefore:string;
+  registeredBefore:string;
+  myRank:number;
 
   constructor(private userService: UserService, private router: Router) {
   }
@@ -21,7 +22,11 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     this.userService.currentUser$.subscribe(user => {
       this.currentUser = user;
-      this.registeretBefore = (this.calculateRegisteredBefore(user?.created_at));
+      this.registeredBefore = (this.calculateRegisteredBefore(user?.created_at));
+    });
+    this.userService.getAllUsers().subscribe(users => {
+        users = users.sort((a,b) => b.correct_answers.length - a.correct_answers.length);
+        this.myRank = users.findIndex((curUser) => curUser.username === this.currentUser.username) + 1;
     })
   }
 

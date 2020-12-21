@@ -11,12 +11,16 @@
         <p>{{currentUser.correct_answers.length}}</p>
     </div>
     <div class="flex">
+        <p>Rank: </p>
+        <p>{{myRank}}</p>
+    </div>
+    <div class="flex">
         <p>Status: </p>
         <p>{{currentUser.is_vip ? "VIP member" : "Regular user"}}</p>
     </div>
     <div class="flex">
         <p>Registered before: </p>
-        <p>{{registeretBefore}}</p>
+        <p>{{registeredBefore}}</p>
     </div>
     <button class="edit-button" (click)="toggleEditMode()">Change username</button>
     <button class="edit-button" (click)="toggleEditPasswordMode()">Change password</button>
@@ -34,6 +38,10 @@
         <div class="flex">
             <p>Points: </p>
             <p>{{currentUser.correct_answers.length}}</p>
+        </div>
+        <div class="flex">
+            <p>Rank: </p>
+            <p>{{myRank}}</p>
         </div>
         <div class="flex">
             <p>Status: </p>

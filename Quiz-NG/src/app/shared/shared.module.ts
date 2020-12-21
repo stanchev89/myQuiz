@@ -6,6 +6,8 @@ import { WithSpacesPipe } from './with-spaces.pipe';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ButtonColorDirective } from './button-color.directive';
 import { GetTimerClassPipe } from './get-timer-class.pipe';
+import { TopPlayersRankComponent } from './top-players-rank/top-players-rank.component';
+import { PersonalRankComponent } from './personal-rank/personal-rank.component';
 
 
 
@@ -17,17 +19,21 @@ import { GetTimerClassPipe } from './get-timer-class.pipe';
     WithSpacesPipe,
     ButtonColorDirective,
     GetTimerClassPipe,
+    TopPlayersRankComponent,
+    PersonalRankComponent,
   ],
   imports: [
     CommonModule,
       NgbModule
   ],
-  exports: [
-    PageTitleComponent,
-    FixHtmlSymbolsPipe,
-    WithSpacesPipe,
-    ButtonColorDirective,
-    GetTimerClassPipe,
-  ]
+    exports: [
+        PageTitleComponent,
+        FixHtmlSymbolsPipe,
+        WithSpacesPipe,
+        ButtonColorDirective,
+        GetTimerClassPipe,
+        PersonalRankComponent,
+        TopPlayersRankComponent,
+    ]
 })
 export class SharedModule { }
