@@ -8,6 +8,7 @@ import { ButtonColorDirective } from './button-color.directive';
 import { GetTimerClassPipe } from './get-timer-class.pipe';
 import { TopPlayersRankComponent } from './top-players-rank/top-players-rank.component';
 import { PersonalRankComponent } from './personal-rank/personal-rank.component';
+import { NumberRankingPipe } from './number-ranking.pipe';
 
 
 
@@ -21,6 +22,7 @@ import { PersonalRankComponent } from './personal-rank/personal-rank.component';
     GetTimerClassPipe,
     TopPlayersRankComponent,
     PersonalRankComponent,
+    NumberRankingPipe,
   ],
   imports: [
     CommonModule,
