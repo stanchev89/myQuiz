@@ -3,17 +3,17 @@
         <h1 class="card-title mb-5">{{questionData.question | fixHtmlSymbols}}</h1>
         <div class="row">
           <div class="col-6 mb-2">
-            <a appButtonColor [questionData]="questionData" (sendGivenAnswer)="onSubmit($event)"  class="btn btn-primary">{{answers[0]}}</a>
+            <a appButtonColor [questionData]="questionData" (sendGivenAnswer)="onSubmit($event)"  class="btn btn-primary">{{answers[0] | fixHtmlSymbols}}</a>
           </div>
           <div class="col-6">
-            <a appButtonColor [questionData]="questionData" (sendGivenAnswer)="onSubmit($event)"  class="btn btn-primary">{{answers[1]}}</a>
+            <a appButtonColor [questionData]="questionData" (sendGivenAnswer)="onSubmit($event)"  class="btn btn-primary">{{answers[1] | fixHtmlSymbols}}</a>
           </div>
           <div class="w-100"></div>
           <div class="col-6 mt-1">
-            <a *ngIf="answers[2]" appButtonColor [questionData]="questionData" (sendGivenAnswer)="onSubmit($event)"  class="btn btn-primary">{{answers[2]}}</a>
+            <a *ngIf="answers[2]" appButtonColor [questionData]="questionData" (sendGivenAnswer)="onSubmit($event)"  class="btn btn-primary">{{answers[2] | fixHtmlSymbols}}</a>
           </div>
           <div class="col-6 mt-1">
-            <a *ngIf="answers[3]" appButtonColor [questionData]="questionData" (sendGivenAnswer)="onSubmit($event)"  class="btn btn-primary">{{answers[3]}}</a>
+            <a *ngIf="answers[3]" appButtonColor [questionData]="questionData" (sendGivenAnswer)="onSubmit($event)"  class="btn btn-primary">{{answers[3] | fixHtmlSymbols}}</a>
           </div>
         </div>
       </div>
