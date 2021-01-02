@@ -6,7 +6,7 @@ import {
   EventEmitter
 } from '@angular/core';
 import { IQuestion } from '../../interfaces';
-import {UserService} from "../../user/user.service";
+import {UserService} from '../../user/user.service';
 
 @Component({
   selector: 'app-question',
