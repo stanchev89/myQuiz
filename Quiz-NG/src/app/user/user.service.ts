@@ -29,7 +29,7 @@ export class UserService {
     currentUser$ = this.store.select((state: AppRootState) => state.auth.currentUser);
     isLogged$ = this.currentUser$.pipe(map(currentUser => currentUser !== null));
     isVip$ = this.currentUser$.pipe(map(currentUser => currentUser?.is_vip));
-    isReady$ = this.currentUser$.pipe(map(currentUser => true));
+    isReady$ = this.currentUser$.pipe(map(currentUser => currentUser !== undefined));
 
     constructor(private http: HttpClient, private store: Store<AppRootState>) {
 

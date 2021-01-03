@@ -23,7 +23,7 @@ router.post(
 );
 router.post("/logout", authController.logout);
 
-router.get("/profile", auth(), authController.getProfileInfo);
+router.get("/profile", auth(false), authController.getProfileInfo);
 router.put("/profile", auth(),
 	authController.editProfileInfo);
 
