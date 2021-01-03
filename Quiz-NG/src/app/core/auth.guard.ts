@@ -4,6 +4,8 @@ import { Observable, of } from 'rxjs';
 import {map, switchMap, tap, first} from 'rxjs/operators';
 import { IUser } from '../interfaces';
 import { UserService } from '../user/user.service';
+import {Store} from "@ngrx/store";
+import {AppRootState} from "../+store";
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +13,7 @@ import { UserService } from '../user/user.service';
 export class AuthGuard implements CanActivate {
   constructor(
     private userService: UserService,
+    private store: Store<AppRootState>,
     private router: Router)
     { }
   canActivate(
@@ -18,7 +21,7 @@ export class AuthGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean>{
 
     return this.userService.currentUser$.pipe(
-        switchMap(user => user === undefined ? this.userService.getProfileInfo() : [user]),
+        switchMap(user => !user ? this.userService.getProfileInfo() : [user]),
         map((user:IUser) => {
             const mustBeLoggedIn = route.data.mustBeLoggedIn;
             if (typeof route.data.mustBeVip === 'boolean'){

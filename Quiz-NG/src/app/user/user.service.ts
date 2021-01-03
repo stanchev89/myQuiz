@@ -1,31 +1,39 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {environment} from '../../environments/environment';
 import {IUser} from '../interfaces';
-import {BehaviorSubject, Observable, of} from 'rxjs';
+import { Observable, of} from 'rxjs';
 import { catchError, tap, map } from 'rxjs/operators';
+import {Store} from "@ngrx/store";
+import {AppRootState} from "../+store";
+import {login, logout} from "./+store/actions";
 @Injectable()
 export class UserService {
-    private _currentUser: BehaviorSubject<IUser | null> = new BehaviorSubject(undefined);
-    currentUser$: Observable<IUser | null> = this._currentUser.asObservable();
-    isReady$ = this.currentUser$.pipe(map(user => user !== undefined));
+    // private _currentUser: BehaviorSubject<IUser | null> = new BehaviorSubject(undefined);
+    // currentUser$: Observable<IUser | null> = this._currentUser.asObservable();
+    // isReady$ = this.currentUser$.pipe(map(user => user !== undefined));
+    //
+    // isLogged$ = this.currentUser$.pipe(
+    //     map(user => !!user),
+    //     catchError(err => {
+    //         console.log(err);
+    //         return of(null);
+    //     })
+    //     );
+    // isVip$ = this.currentUser$.pipe(
+    //     map(user => user?.is_vip),
+    //     catchError(err => {
+    //         console.log(err);
+    //         return of(null);
+    //     })
+    // );
+    currentUser$ = this.store.select((state: AppRootState) => state.auth.currentUser);
+    isLogged$ = this.currentUser$.pipe(map(currentUser => currentUser !== null));
+    isVip$ = this.currentUser$.pipe(map(currentUser => currentUser?.is_vip));
+    isReady$ = this.currentUser$.pipe(map(currentUser => currentUser !== undefined));
 
-    isLogged$ = this.currentUser$.pipe(
-        map(user => !!user),
-        catchError(err => {
-            console.log(err);
-            return of(null);
-        })
-        );
-    isVip$ = this.currentUser$.pipe(
-        map(user => user?.is_vip),
-        catchError(err => {
-            console.log(err);
-            return of(null);
-        })
-    );
+    constructor(private http: HttpClient, private store: Store<AppRootState>) {
 
-  constructor(private http: HttpClient) { }
+  }
 
   register(username: string, password: string): Observable<any> {
     return this.http.post<IUser[]>(`/users/register`, { username, password});
@@ -34,9 +42,8 @@ export class UserService {
   login(username: string, password: string): Observable<IUser> {
     return this.http.post<IUser>(`/users/login`, { username, password}).pipe(
       tap((user: IUser): void => {
-        this._currentUser.next(user);
+        this.store.dispatch(login({currentUser: user}));
       }), catchError(() => {
-        this._currentUser.next(null);
         return of (null);
       })
     );
@@ -45,7 +52,7 @@ export class UserService {
   logout(): Observable<any>{
     return this.http.post(`/users/logout`, {}, ).pipe(
       tap(req => {
-        this._currentUser.next(null);
+        this.store.dispatch(logout());
       }),
       catchError((err) => {
       console.log(err);
@@ -63,7 +70,7 @@ export class UserService {
       }
       return this.http.put<{}>(`/users/profile`, {...body}).pipe(
         tap((user: IUser) => {
-            this._currentUser.next(user);
+            this.store.dispatch(login({currentUser:user}));
             return;
         })
     );
@@ -72,7 +79,7 @@ export class UserService {
   changeUserPassword(oldPassword,newPassword): Observable<any> {
       return this.http.post<{}>('/users/change_password',{oldPassword,newPassword}).pipe(
           tap((user: IUser) => {
-              this._currentUser.next(null);
+              this.store.dispatch(logout());
               return
       }));
   }
@@ -80,11 +87,11 @@ export class UserService {
   getProfileInfo(): Observable<any>{
      return this.http.get<IUser>(`/users/profile`).pipe(
        tap(user =>  {
-         this._currentUser.next(user);
+           this.store.dispatch(login({currentUser:user}));
          return user;
         }),
        catchError(() => {
-         this._currentUser.next(null);
+         this.store.dispatch(logout());
          return of(null);
        })
      );

@@ -90,6 +90,10 @@ function changeUserPassword(req,res,next) {
 }
 
 function getProfileInfo(req, res, next) {
+	if(!req.user) {
+		res.status(200).send('Successful guest user request...');
+		return;
+	}
 	const { _id: userId } = req.user;
 
 	userModel
