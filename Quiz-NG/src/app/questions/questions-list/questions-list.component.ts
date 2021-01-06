@@ -1,9 +1,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {IQuestion, IUser} from 'src/app/interfaces';
+import {IQuestion} from 'src/app/interfaces';
 import {QuestionsService} from '../questions.service';
 import {interval, Subscription} from 'rxjs';
-import {first, map, tap} from 'rxjs/operators';
+import {first, map} from 'rxjs/operators';
 import {UserService} from 'src/app/user/user.service';
 import {Store} from "@ngrx/store";
 import {AppRootState} from "../../+store";
@@ -24,17 +24,12 @@ export class QuestionsListComponent implements OnInit, OnDestroy {
     categoryQuestions:Subscription;
     regularUserAvailableQuestions = true;
     user$ = this.userService.currentUser$;
-    user:IUser;
     availableQuestions: IQuestion[];
     isVip = this.user$.pipe(map(user => user?.is_vip));
     currentSessionCorrectAnswers = 0;
     currentSessionIncorrectAnswers = 0;
 
-    constructor(private route: ActivatedRoute, private questionsService: QuestionsService, private userService: UserService, private store:Store<AppRootState>) {
-        this.user$.pipe(tap(user => {
-            this.user = user;
-        }));
-    }
+    constructor(private route: ActivatedRoute, private questionsService: QuestionsService, private userService: UserService, private store:Store<AppRootState>) {}
 
     shuffleQuestions(arr: IQuestion[]): IQuestion[] {
             const copy = arr.slice();
@@ -88,7 +83,6 @@ export class QuestionsListComponent implements OnInit, OnDestroy {
                 };
                 return output;
             }
-
         }).pipe(first()).subscribe((questions: IQuestion[]) => {
             if(questions?.length > 0) {
                 this.startPlaying(questions)
@@ -101,7 +95,7 @@ export class QuestionsListComponent implements OnInit, OnDestroy {
         this.availableQuestions = questions;
         this.currentQuestion = this.availableQuestions[this.questionCounter];
         this.questionCounter++;
-        this.userService.updateProfileData({answered_question:this.currentQuestion}).subscribe();
+        this.userService.updateProfileData({answered_question:this.currentQuestion}).pipe(first()).subscribe();
         const secondsCounter = interval(100);
         this.subscription = secondsCounter.subscribe(sec => {
             this.timeForAnswering++;
