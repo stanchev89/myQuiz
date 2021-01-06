@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {UserService} from "../user.service";
 import {IUser} from "../../interfaces";
 import {Router} from "@angular/router";
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-profile',
@@ -16,10 +17,15 @@ export class ProfileComponent implements OnInit {
   registeredBefore:string;
   myRank:number;
 
-  constructor(private userService: UserService, private router: Router) {
+  constructor(private userService: UserService, private router: Router, private titleService: Title) {
+  }
+
+  public setTitle(newTitle: string) {
+    this.titleService.setTitle(newTitle);
   }
 
   ngOnInit(): void {
+    this.setTitle('myQuiz-Profile');
     this.userService.currentUser$.subscribe(user => {
       this.currentUser = user;
       this.registeredBefore = (this.calculateRegisteredBefore(user?.created_at));

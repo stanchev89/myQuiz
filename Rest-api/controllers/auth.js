@@ -117,6 +117,7 @@ function editProfileInfo(req, res, next) {
 	const {username, correct_answer, answered_question, is_vip} = req.body;
 	const update = {
 		$addToSet: {},
+		$push:{},
 		$set: {}
 	};
 	if (is_vip) {
@@ -126,10 +127,12 @@ function editProfileInfo(req, res, next) {
 		update.$set.username = username;
 	}
 	if (correct_answer) {
-		update.$addToSet.correct_answers = correct_answer._id;
+		update.$addToSet = {'correct_answers':correct_answer._id};
+
 	}
 	if (answered_question) {
-		update.$addToSet.answered_questions = answered_question._id;
+		update.$addToSet = {'answered_questions': answered_question._id};
+
 	}
 	userModel.findOneAndUpdate({_id: userId}, update, {new: true})
 		.then(user => {

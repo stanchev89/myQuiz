@@ -4,12 +4,12 @@ import {IUser} from "../../interfaces";
 
 export interface IUserState {
     currentUser: IUser | null | undefined;
-    errorMessage: string | null | undefined;
+    errorMessage: string | undefined;
 }
 
 const initialState: IUserState = {
     currentUser: null,
-    errorMessage: null
+    errorMessage: ''
 };
 
 
@@ -31,10 +31,10 @@ export const reducers = createReducer<IUserState>(
     initialState,
     on(userActions.login, login),
     on(userActions.logout, logout),
-    on(userActions.error,(state => {
+    on(userActions.error,((state: IUserState,action) => {
         return {
             ...state,
-            errorMessage: state.errorMessage
+            errorMessage: action.errorMessage
         }
     }))
 )

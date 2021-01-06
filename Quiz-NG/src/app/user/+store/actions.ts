@@ -6,9 +6,9 @@ export const LOGIN = `${userNamespace} Login`;
 export const LOGOUT = `${userNamespace} Logout`;
 export const ERROR = `${userNamespace} Error`;
 
-export const login = createAction(LOGIN, props<{ currentUser: IUser }>());
+export const login = createAction(LOGIN, props<{ currentUser: IUser}>());
 export const logout = createAction(LOGOUT);
-export const error = createAction(ERROR, props<{errorMessage: string}>());
+export const error = createAction(ERROR, props<{ errorMessage: string }>());
 
 
 // export class Login implements Action {

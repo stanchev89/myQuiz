@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-rules',
@@ -6,9 +7,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./rules.component.css']
 })
 export class RulesComponent implements OnInit {
-  constructor() { }
-  pageTitle = 'Rules';
+  constructor(private titleService: Title) { }
+
+  public setTitle(newTitle: string) {
+    this.titleService.setTitle(newTitle);
+  }
   ngOnInit(): void {
+    this.setTitle('myQuiz-Rules');
   }
 
 }

@@ -64,8 +64,16 @@ export class UserService {
   updateProfileData(userDataForUpdate): Observable<any> {
       const body = {};
       for (const key in userDataForUpdate) {
-          if (userDataForUpdate[key]){
-              body[key] = userDataForUpdate[key];
+          if (userDataForUpdate[key] !== undefined){
+              if(userDataForUpdate[key].length > 0) {
+                  if(body[key]) {
+                      body[key].push(userDataForUpdate[key]);
+                  }else {
+                      body[key] = userDataForUpdate[key];
+                  }
+              }else {
+                  body[key] = userDataForUpdate[key];
+              }
           }
       }
       return this.http.put<{}>(`/users/profile`, {...body}).pipe(

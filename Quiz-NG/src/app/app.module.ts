@@ -4,6 +4,7 @@ import {FormsModule} from '@angular/forms';
 
 import {StoreModule} from '@ngrx/store';
 import { reducers } from './+store'
+import {StoreDevtoolsModule} from '@ngrx/store-devtools'
 
 import {AppRoutingModule} from './app-routing.module';
 import {CoreModule} from './core/core.module';
@@ -17,6 +18,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {QuestionsModule} from './questions/questions.module';
 import {UserService} from './user/user.service';
 import {SharedModule} from './shared/shared.module';
+import { environment } from '../environments/environment';
 
 
 @NgModule({
@@ -35,7 +37,8 @@ import {SharedModule} from './shared/shared.module';
         FormsModule,
         CoreModule,
         UserModule,
-        QuestionsModule
+        QuestionsModule,
+        StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
         // MDBBootstrapModule.forRoot()
     ],
     providers: [QuestionsService, UserService, Title],

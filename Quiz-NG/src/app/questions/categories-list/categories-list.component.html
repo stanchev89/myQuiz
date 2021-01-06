@@ -4,7 +4,7 @@
         <div class="container question-list overflow-auto">
             <ul>
                 <div class="row row-cols-2">
-                    <li type="button" class="list-group-item list-group-item-action" *ngFor="let category of categories">
+                    <li type="button" class="list-group-item list-group-item-action" *ngFor="let category of (categories | async)">
                         <a routerLink="/categories/{{category.split(' ').join('_')}}">{{category}}</a>
                     </li>
                 </div>

@@ -2,31 +2,31 @@
 
 <div  class="nav-bar">
         <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
-            <li [ngbNavItem]="1">
+            <li [ngbNavItem]="home">
                 <a ngbNavLink routerLink="/">Home</a>
             </li>
-            <li [ngbNavItem]="2">
+            <li [ngbNavItem]="rules">
                 <a ngbNavLink routerLink="/rules">Rules</a>
             </li>
-            <li [ngbNavItem]="3">
+            <li [ngbNavItem]="categories">
                 <a ngbNavLink routerLink="/categories">Categories</a>
             </li>
-            <li *ngIf="(isVip | async) === false" [ngbNavItem]="4">
+            <li *ngIf="(isVip | async) === false" [ngbNavItem]="'becomeAVip'">
                 <a ngbNavLink routerLink="/vip">Become a VIP!</a>
             </li>
-            <li *ngIf="(isVip | async)" [ngbNavItem]="5">
+            <li *ngIf="(isVip | async)" [ngbNavItem]="'addNewQuestion'">
                 <a ngbNavLink routerLink="/add_new_question">Add new question</a>
             </li>
-            <li *ngIf="!(isLogged | async)" [ngbNavItem]="6">
+            <li *ngIf="!(isLogged | async)" [ngbNavItem]="login">
                 <a ngbNavLink routerLink="/login">Login</a>
             </li>
-            <li *ngIf="!(isLogged | async)" [ngbNavItem]="7">
+            <li *ngIf="!(isLogged | async)" [ngbNavItem]="register">
                 <a ngbNavLink routerLink="/register">Register</a>
             </li>
-            <li *ngIf="(isLogged | async)" [ngbNavItem]="8">
+            <li *ngIf="(isLogged | async)" [ngbNavItem]="profile">
                 <a ngbNavLink routerLink="/profile">Profile</a>
             </li>
-            <li *ngIf="(isLogged | async)" [ngbNavItem]="9">
+            <li *ngIf="(isLogged | async)" [ngbNavItem]="'logout'">
                 <a ngbNavLink routerLink="/logout">Logout</a>
             </li>
         </ul>

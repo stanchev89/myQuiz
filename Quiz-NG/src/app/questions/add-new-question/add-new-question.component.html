@@ -1,8 +1,5 @@
 <body>
 
-<app-page-title [pageTitle]="pageTitle"></app-page-title>
-
-
 <div class="container">
 
 
@@ -11,7 +8,7 @@
 
     <div>
     <select id="category" #category>
-        <option *ngFor="let category of categories" [ngValue]="category">
+        <option *ngFor="let category of (categories | async).length > 0 ? (categories | async) : alternateCategories" [ngValue]="category">
             {{ category }}
         </option>
     </select>

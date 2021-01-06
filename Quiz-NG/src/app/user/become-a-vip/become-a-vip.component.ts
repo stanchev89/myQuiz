@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {UserService} from "../user.service";
 import {IUser} from "../../interfaces";
 import {Router} from "@angular/router";
-import {map} from 'rxjs/operators'
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-become-a-vip',
@@ -10,10 +10,14 @@ import {map} from 'rxjs/operators'
   styleUrls: ['./become-a-vip.component.css']
 })
 export class BecomeAVipComponent implements OnInit {
-  pageTitle = 'Joining to our VIP club';
-  constructor(public userService: UserService, private router: Router) {}
+  constructor(public userService: UserService, private router: Router, private titleService: Title) {}
+
+  public setTitle(newTitle: string) {
+    this.titleService.setTitle(newTitle);
+  }
 
   ngOnInit(): void {
+    this.setTitle('myQuiz-Become a vip member');
   }
 
   onSubmit(data): void {

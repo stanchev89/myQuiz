@@ -1,6 +1,5 @@
-<app-page-title [pageTitle]="selectedCategory?.split('_').join(' ') + ' questions'"></app-page-title>
 
-<div class="container" *ngIf="!isLogged">
+<div class="container" *ngIf="!(user$ | async)">
 
     <p>You must be <a routerLink="/login">logged in</a> to answer the questions!
         If you don't have registration click <a routerLink="/register">here.</a>
@@ -8,10 +7,10 @@
 
 </div>
 
-<div class="question" *ngIf="isLogged">
+<div class="question" *ngIf="(user$ | async)">
     <div *ngIf="!regularUserAvailableQuestions" class="container">
         <h4>
-            You answered all {{selectedCategory}} category questions.
+            You answered or viewed all {{selectedCategory}} category questions.
             If you want unlimited access to all questions <a routerLink="/vip">Became a Vip member</a>!
         </h4>
     </div>
@@ -29,9 +28,9 @@
 
     <div *ngIf="!finished && regularUserAvailableQuestions" class="container">
             <div class="timer">
-                <span [class]="inSeconds(timeForAnswering) | getTimerClass"> {{inSeconds(reverseTimer)}}</span>
+                <span [class]="MsInSeconds(timeForAnswering) | getTimerClass"> {{MsInSeconds(reverseTimer)}}</span>
                 <p>
-                <ngb-progressbar [type]="setProgressbarColor(inSeconds(timeForAnswering))"
+                <ngb-progressbar [type]="setProgressbarColor(MsInSeconds(timeForAnswering))"
                                  [value]="timeForAnswering"
                                  [striped]="true"
                                  [animated]="true"
@@ -42,7 +41,7 @@
                 </p>
             </div>
         <div class="row justify-content-center">
-            <button (click)="nextButtonHandler()" *ngIf="!finished" class="btn btn-outline-primary">Next question</button>
+            <button (click)="nextQuestion()" *ngIf="!finished" class="btn btn-outline-primary">Next question</button>
         </div>
     </div>
 

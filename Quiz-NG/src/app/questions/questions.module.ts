@@ -12,6 +12,7 @@ import { QuestionComponent } from './question/question.component';
 import { FormsModule } from '@angular/forms';
 import {QuestionsResolver} from "../core/resolvers/questions-resolver";
 import { AddNewQuestionComponent } from './add-new-question/add-new-question.component';
+import {NavigationComponent} from "../core/navigation/navigation.component";
 
 
 @NgModule({
@@ -23,7 +24,7 @@ import { AddNewQuestionComponent } from './add-new-question/add-new-question.com
     SharedModule,
     FormsModule,
   ],
-  providers: [UserService, QuestionsService, QuestionsResolver],
+  providers: [UserService, QuestionsService, QuestionsResolver,NavigationComponent],
   exports: [CategoriesListComponent],
   bootstrap: []
 

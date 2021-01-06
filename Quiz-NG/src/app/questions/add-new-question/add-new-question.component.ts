@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {QuestionsService} from "../questions.service";
 import {IQuestion} from "../../interfaces";
 import { Router} from "@angular/router";
+import {Title} from "@angular/platform-browser";
+import {Store} from "@ngrx/store";
+import {IQuestionState} from "../+store/reducers";
 
 @Component({
   selector: 'app-add-new-question',
@@ -11,22 +14,30 @@ import { Router} from "@angular/router";
 export class AddNewQuestionComponent implements OnInit {
   pageTitle = 'Add new question';
 
+  categories = this.questionsService.categories$;
+
   // This is hardcode in case of empty Database to be able to add new question
-  categories:['Animals','Cartoon & Animations','Computers', 'Geography', 'Books',
+
+  alternateCategories = ['Animals','Cartoon & Animations','Computers', 'Geography', 'Books',
     'Comics', 'Film', 'History', 'Music', 'Mythology','Politics','Sports','Vehicles','Video Games'
-  ]
+  ];
 
 
-  constructor(private questionsService: QuestionsService, private route: Router) {
-    this.questionsService.loadCategories().subscribe(c =>  {
-      if(c.length > 0){
-        // If database is not empty rewrite the categories array
-        this.categories = c;
-      }
-    });
+  constructor(private questionsService: QuestionsService, private route: Router, private titleService: Title, private store: Store) {
+    // this.questionsService.loadCategories().subscribe(c =>  {
+    //   if(c.length > 0){
+    //     // If database is not empty rewrite the categories array
+    //     this.categories = c;
+    //   }
+    // });
+  }
+
+  public setTitle(newTitle: string) {
+    this.titleService.setTitle(newTitle);
   }
 
   ngOnInit(): void {
+    this.setTitle('myQuiz-Add new question');
   }
 
   onSubmit(data){

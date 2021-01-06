@@ -1,11 +1,12 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute, ActivatedRouteSnapshot} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {IQuestion, IUser} from 'src/app/interfaces';
 import {QuestionsService} from '../questions.service';
-import {tap, map} from 'rxjs/operators';
 import {interval, Subscription} from 'rxjs';
+import {first, map, tap} from 'rxjs/operators';
 import {UserService} from 'src/app/user/user.service';
-
+import {Store} from "@ngrx/store";
+import {AppRootState} from "../../+store";
 
 @Component({
     selector: 'app-questions-list',
@@ -14,37 +15,39 @@ import {UserService} from 'src/app/user/user.service';
 })
 export class QuestionsListComponent implements OnInit, OnDestroy {
     subscription: Subscription;
-    questionCounter = 1;
+    questionCounter = 0;
     timeForAnswering = 0;
     reverseTimer = 200;
     finished = false;
-    selectedCategory: string;
+    selectedCategory = this.route.snapshot.paramMap.get('category').split('_').join(' ');
     currentQuestion: IQuestion;
-    questions: IQuestion[];
+    categoryQuestions:Subscription;
     regularUserAvailableQuestions = true;
-    user: IUser;
-    isLogged$ = this.userService.isLogged$;
-    isLogged:boolean;
+    user$ = this.userService.currentUser$;
+    user:IUser;
+    availableQuestions: IQuestion[];
+    isVip = this.user$.pipe(map(user => user?.is_vip));
     currentSessionCorrectAnswers = 0;
     currentSessionIncorrectAnswers = 0;
 
-    constructor(private route: ActivatedRoute, private questionsService: QuestionsService, private userService: UserService) {
-        this.isLogged$.subscribe((loggedIn)=> {
-            this.isLogged = loggedIn;
-        })
-        this.route.data.subscribe((data) => {
-            this.questions = this.shuffleQuestions(data.questions);
-            return this.questions
-        } );
-        this.selectedCategory = this.route.snapshot.params.category;
-
+    constructor(private route: ActivatedRoute, private questionsService: QuestionsService, private userService: UserService, private store:Store<AppRootState>) {
+        this.user$.pipe(tap(user => {
+            this.user = user;
+        }));
     }
 
     shuffleQuestions(arr: IQuestion[]): IQuestion[] {
-        return arr.sort(() => Math.random() - 0.5);
+            const copy = arr.slice();
+            for (let i = copy.length - 1; i > 0; i--) {
+                let j = Math.floor(Math.random() * (i + 1));
+                let temp = copy[i];
+                copy[i] = copy[j];
+                copy[j] = temp;
+            }
+            return copy;
     }
 
-    inSeconds(ms) {
+    MsInSeconds(ms) {
         return Math.round(ms / 10);
     }
 
@@ -63,67 +66,81 @@ export class QuestionsListComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        if(this.isLogged){
-            this.userService.currentUser$.subscribe({
-                next:((user:IUser) => {
-                    if (user) {
-                        this.user = user;
+        this.categoryQuestions = this.store.select((state:AppRootState) => {
+            const user = state.auth.currentUser;
+            const allQuestions = state.questions.allQuestions;
+            let selectedCategoryQuestions:IQuestion[];
+            if(this.selectedCategory){
+                let rawCategoryName;
+                for (let i = 0; i < Object.keys(allQuestions).length ; i++) {
+                    if(Object.keys(allQuestions)[i].includes(this.selectedCategory)){
+                        rawCategoryName = Object.keys(allQuestions)[i];
                     }
-                })
-            })
-            if (!this.user.is_vip) {
-                this.questions = this.questions.filter((question: IQuestion) =>  !this.user.answered_questions.includes(question._id));
-            }
-            if(this.questions.length === 0) {
-                this.regularUserAvailableQuestions = false;
-                return this.finishCategoryQuestions()
-            }
-            this.currentQuestion = this.questions[0];
-            const secondsCounter = interval(100);
-            this.subscription = secondsCounter.subscribe(sec => {
-                this.timeForAnswering++;
-                this.reverseTimer--;
-                if (this.timeForAnswering === 200) {
-                    this.nextQuestion();
-                    return;
                 }
-            });
+                 selectedCategoryQuestions = allQuestions[rawCategoryName];
+            }
+            if(user) {
+                const output = user.is_vip
+                    ? this.shuffleQuestions(selectedCategoryQuestions)
+                    : this.shuffleQuestions(selectedCategoryQuestions.filter(question => !user.answered_questions.includes(question._id)));
+                if(!output || output.length === 0) {
+                    this.regularUserAvailableQuestions = false;
+                };
+                return output;
+            }
 
-        }
+        }).pipe(first()).subscribe((questions: IQuestion[]) => {
+            if(questions?.length > 0) {
+                this.startPlaying(questions)
+            }
+        });
 
     }
 
+    startPlaying(questions: IQuestion[]): void {
+        this.availableQuestions = questions;
+        this.currentQuestion = this.availableQuestions[this.questionCounter];
+        this.questionCounter++;
+        this.userService.updateProfileData({answered_question:this.currentQuestion}).subscribe();
+        const secondsCounter = interval(100);
+        this.subscription = secondsCounter.subscribe(sec => {
+            this.timeForAnswering++;
+            this.reverseTimer--;
+            if (this.timeForAnswering === 200) {
+                this.nextQuestion();
+                return;
+            }
+        });
+    }
+
+
     nextQuestion(): void {
-        this.currentQuestion = this.questions[this.questionCounter];
+        if(this.availableQuestions.length === 0) {
+            this.regularUserAvailableQuestions = false;
+            return;
+        }
+        this.currentQuestion = this.availableQuestions[this.questionCounter];
+        this.userService.updateProfileData({answered_question:this.currentQuestion}).pipe(first()).subscribe();
         this.timeForAnswering = 0;
         this.reverseTimer = 200;
-        if (this.questionCounter === this.questions.length) {
+        if (this.questionCounter === this.availableQuestions.length) {
             this.finishCategoryQuestions();
             return;
         }
         this.questionCounter++;
     }
 
-    nextButtonHandler(): void {
-        this.nextQuestion();
-    }
 
     givenAnswerHandler(answer): void {
-        const userDataForUpdate = {
-            answered_question: this.currentQuestion,
-            correct_answer: null
-        };
+
         if (this.currentQuestion.correct_answer === answer) {
-            userDataForUpdate.correct_answer = this.currentQuestion;
+            this.userService.updateProfileData({correct_answer:this.currentQuestion}).pipe(first()).subscribe();
             this.currentSessionCorrectAnswers++;
         }else {
             this.currentSessionIncorrectAnswers++;
         }
-        this.userService.updateProfileData(userDataForUpdate).subscribe(
-            ()=>{
-                this.nextQuestion();
-            }
-        );
+        this.nextQuestion();
+
     }
 
     finishCategoryQuestions(): void {

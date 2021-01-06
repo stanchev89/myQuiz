@@ -11,6 +11,6 @@ export class QuestionsResolver implements Resolve<Observable<IQuestion[]>> {
     }
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IQuestion[]>{
         const category = route.paramMap.get('category')
-        return this.questionsService.loadQuestionsByCategory(category.split('_').join(' '));
+        return this.questionsService.loadAllQuestions();
     }
 }
