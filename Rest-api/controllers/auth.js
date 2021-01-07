@@ -127,11 +127,11 @@ function editProfileInfo(req, res, next) {
 		update.$set.username = username;
 	}
 	if (correct_answer) {
-		update.$addToSet = {'correct_answers':correct_answer._id};
+		update.$addToSet.correct_answer = correct_answer._id;
 
 	}
 	if (answered_question) {
-		update.$addToSet = {'answered_questions': answered_question._id};
+		update.$addToSet.answered_questions = answered_question._id;
 
 	}
 	userModel.findOneAndUpdate({_id: userId}, update, {new: true})

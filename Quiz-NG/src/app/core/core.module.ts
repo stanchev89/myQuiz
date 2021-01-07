@@ -6,7 +6,7 @@ import { FooterComponent } from './footer/footer.component';
 import {RouterModule} from '@angular/router';
 import { UserService } from '../user/user.service';
 import {appInterceptorProvider} from './app.interceptor';
-import {QuestionsResolver} from './resolvers/questions-resolver';
+// import {QuestionsResolver} from './resolvers/questions-resolver';
 import { AboutComponent } from './about/about.component';
 import { ContactsComponent } from './contacts/contacts.component'
 import {SharedModule} from "../shared/shared.module";
@@ -18,7 +18,7 @@ import { NoResponseComponent } from './no-response/no-response.component';
   imports: [
     CommonModule, NgbModule, RouterModule, SharedModule
   ],
-  providers: [ UserService, appInterceptorProvider, QuestionsResolver],
+  providers: [ UserService, appInterceptorProvider],
   exports: [ NavigationComponent, FooterComponent ],
   bootstrap: [NavigationComponent]
 })

@@ -10,7 +10,6 @@ import { SharedModule } from '../shared/shared.module';
 import { QuestionsListComponent } from './questions-list/questions-list.component';
 import { QuestionComponent } from './question/question.component';
 import { FormsModule } from '@angular/forms';
-import {QuestionsResolver} from "../core/resolvers/questions-resolver";
 import { AddNewQuestionComponent } from './add-new-question/add-new-question.component';
 import {NavigationComponent} from "../core/navigation/navigation.component";
 
@@ -24,7 +23,7 @@ import {NavigationComponent} from "../core/navigation/navigation.component";
     SharedModule,
     FormsModule,
   ],
-  providers: [UserService, QuestionsService, QuestionsResolver,NavigationComponent],
+  providers: [UserService, QuestionsService,NavigationComponent],
   exports: [CategoriesListComponent],
   bootstrap: []
 
