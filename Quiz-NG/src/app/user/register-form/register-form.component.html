@@ -64,8 +64,8 @@
        </div>
        <button class="btn btn-success" [disabled]="!userForm.valid">Submit</button>
 
-    <div class="alert alert-danger" role="alert" *ngIf="isError.message">
-        {{this.isError.message}}
+    <div class="alert alert-danger" role="alert" *ngIf="(error | async)">
+        {{this.error | async}}
     </div>
 
     </form>

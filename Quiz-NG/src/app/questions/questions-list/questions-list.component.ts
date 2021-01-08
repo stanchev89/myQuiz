@@ -7,6 +7,7 @@ import {first, map} from 'rxjs/operators';
 import {UserService} from 'src/app/user/user.service';
 import {Store} from "@ngrx/store";
 import {AppRootState} from "../../+store";
+import {finishedCategory, regularUserAvailableQuestions} from "../+store/actions";
 
 @Component({
     selector: 'app-questions-list',
@@ -18,13 +19,13 @@ export class QuestionsListComponent implements OnInit, OnDestroy {
     questionCounter = 0;
     timeForAnswering = 0;
     reverseTimer = 200;
-    finished = false;
+    finished = this.store.select((state:AppRootState) => state.questions.finishedCategory);
     selectedCategory = this.route.snapshot.paramMap.get('category').split('_').join(' ');
     currentQuestion: IQuestion;
-    categoryQuestions:Subscription;
-    regularUserAvailableQuestions = true;
+    categoryQuestions: Subscription;
+    regularUserAvailableQuestions = this.store.select((state:AppRootState) => state.questions.regularUserAvailableQuestions);
     user$ = this.userService.currentUser$;
-    availableQuestions: IQuestion[];
+    questions: IQuestion[];
     isVip = this.user$.pipe(map(user => user?.is_vip));
     currentSessionCorrectAnswers = 0;
     currentSessionIncorrectAnswers = 0;
@@ -79,7 +80,7 @@ export class QuestionsListComponent implements OnInit, OnDestroy {
                     ? this.shuffleQuestions(selectedCategoryQuestions)
                     : this.shuffleQuestions(selectedCategoryQuestions.filter(question => !user.answered_questions.includes(question._id)));
                 if(!output || output.length === 0) {
-                    this.regularUserAvailableQuestions = false;
+                    this.store.dispatch(regularUserAvailableQuestions({regularUserAvailableQuestions: false}))
                 };
                 return output;
             }
@@ -92,8 +93,8 @@ export class QuestionsListComponent implements OnInit, OnDestroy {
     }
 
     startPlaying(questions: IQuestion[]): void {
-        this.availableQuestions = questions;
-        this.currentQuestion = this.availableQuestions[this.questionCounter];
+        this.questions = questions;
+        this.currentQuestion = this.questions[this.questionCounter];
         this.questionCounter++;
         this.userService.updateProfileData({answered_question:this.currentQuestion}).pipe(first()).subscribe();
         const secondsCounter = interval(100);
@@ -109,15 +110,15 @@ export class QuestionsListComponent implements OnInit, OnDestroy {
 
 
     nextQuestion(): void {
-        if(this.availableQuestions.length === 0) {
-            this.regularUserAvailableQuestions = false;
+        if(this.questions.length === 0) {
+            this.store.dispatch(regularUserAvailableQuestions({regularUserAvailableQuestions: false}))
             return;
         }
-        this.currentQuestion = this.availableQuestions[this.questionCounter];
+        this.currentQuestion = this.questions[this.questionCounter];
         this.userService.updateProfileData({answered_question:this.currentQuestion}).pipe(first()).subscribe();
         this.timeForAnswering = 0;
         this.reverseTimer = 200;
-        if (this.questionCounter === this.availableQuestions.length) {
+        if (this.questionCounter === this.questions.length) {
             this.finishCategoryQuestions();
             return;
         }
@@ -138,12 +139,14 @@ export class QuestionsListComponent implements OnInit, OnDestroy {
     }
 
     finishCategoryQuestions(): void {
-        this.finished = true;
+        this.store.dispatch(finishedCategory({finishedCategory:true}));
         this.questionCounter = 0;
         this.subscription?.unsubscribe();
     }
 
     ngOnDestroy(): void {
+        this.store.dispatch(regularUserAvailableQuestions({regularUserAvailableQuestions: true}));
+        this.store.dispatch(finishedCategory({finishedCategory: false}));
         this.subscription?.unsubscribe();
     }
 }

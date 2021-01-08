@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {IQuestion} from '../interfaces';
 import {Observable} from 'rxjs';
-import {map, tap} from 'rxjs/operators';
+import {tap} from 'rxjs/operators';
 import {UserService} from '../user/user.service';
 import {Store} from "@ngrx/store";
 import {loadAllQuestions, setCategories} from "./+store/actions";
@@ -37,9 +37,6 @@ export class QuestionsService {
         )
     }
 
-    loadQuestionsByCategory(category: string): Observable<IQuestion[]> {
-        return this.http.get<IQuestion[]>(`/questions/${category.split('_').join(' ')}`);
-    }
 
     addNewQuestion(newQuestion): Observable<any> {
         return this.http.post<IQuestion>('/questions/add-new-question', newQuestion);

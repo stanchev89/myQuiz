@@ -8,14 +8,14 @@
 </div>
 
 <div class="question" *ngIf="(user$ | async)">
-    <div *ngIf="!regularUserAvailableQuestions" class="container">
+    <div *ngIf="!(regularUserAvailableQuestions | async)" class="container">
         <h4>
             You answered or viewed all {{selectedCategory}} questions.
             If you want unlimited access to all questions <a routerLink="/vip">Became a Vip member</a>!
         </h4>
     </div>
 
-    <div *ngIf="finished && regularUserAvailableQuestions" class="complete">
+    <div *ngIf="(finished | async) && regularUserAvailableQuestions" class="complete">
         <div class="container">
                 <div class="card-body">
                     <h3 class="card-title">All questions in "{{selectedCategory | withSpaces}}" category was displayed!</h3>
@@ -26,7 +26,7 @@
         </div>
     </div>
 
-    <div *ngIf="!finished && regularUserAvailableQuestions" class="container">
+    <div *ngIf="!(finished | async) && (regularUserAvailableQuestions | async)" class="container">
             <div class="timer">
                 <span [class]="MsInSeconds(timeForAnswering) | getTimerClass"> {{MsInSeconds(reverseTimer)}}</span>
                 <p>
@@ -41,11 +41,11 @@
                 </p>
             </div>
         <div class="row justify-content-center">
-            <button (click)="nextQuestion()" *ngIf="!finished" class="btn btn-outline-primary">Next question</button>
+            <button (click)="nextQuestion()" class="btn btn-outline-primary">Next question</button>
         </div>
     </div>
 
-    <app-question (sendGivenAnswer)="givenAnswerHandler($event)" *ngIf="currentQuestion && !finished"
+    <app-question (sendGivenAnswer)="givenAnswerHandler($event)" *ngIf="currentQuestion && !(finished | async)"
                   [questionData]="currentQuestion"></app-question>
 
 </div>

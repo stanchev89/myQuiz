@@ -1,20 +1,21 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { UserService } from '../user.service';
 import {Router} from "@angular/router";
 import {Title} from "@angular/platform-browser";
+import {Store} from "@ngrx/store";
+import {AppRootState} from "../../+store";
+import {error} from '../+store/actions'
 
 @Component({
   selector: 'app-register-form',
   templateUrl: './register-form.component.html',
   styleUrls: ['./register-form.component.css']
 })
-export class RegisterFormComponent implements OnInit{
+export class RegisterFormComponent implements OnInit, OnDestroy{
   submitted = false;
   pageTitle = 'Register new user';
-  isError = {
-      message:null
-  }
-  constructor(private userService: UserService, private router: Router, private titleService: Title) { }
+  error = this.store.select((state:AppRootState) => state.auth.errorMessage);
+  constructor(private userService: UserService, private router: Router, private titleService: Title, private store: Store) { }
 
     public setTitle(newTitle: string) {
         this.titleService.setTitle(newTitle);
@@ -31,9 +32,13 @@ export class RegisterFormComponent implements OnInit{
             this.router.navigate(['/login']);
           },
           error: (err) => {
-              this.isError.message = err.error.message
+              this.store.dispatch(error({errorMessage: err.error.message}));
           }
         }
     );
+  }
+
+  ngOnDestroy() {
+      this.store.dispatch(error({errorMessage: ''}));
   }
 }

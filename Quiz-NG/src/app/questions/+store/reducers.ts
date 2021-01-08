@@ -1,8 +1,7 @@
 import {createReducer, on} from '@ngrx/store';
 import * as questionsActions from './actions';
 import {IQuestion} from "../../interfaces";
-import * as userActions from "../../user/+store/actions";
-import {IUserState} from "../../user/+store/reducers";
+
 interface IQuestionObject {
     category:IQuestion[]
 }
@@ -10,11 +9,15 @@ interface IQuestionObject {
 export interface IQuestionState {
     allQuestions: IQuestionObject | {};
     categories: string[];
+    regularUserAvailableQuestions: boolean,
+    finishedCategory: boolean
 };
 
 const initialState: IQuestionState = {
     allQuestions:{},
-    categories:[]
+    categories:[],
+    regularUserAvailableQuestions: true,
+    finishedCategory: false
 };
 
 
@@ -30,6 +33,18 @@ export const reducers = createReducer<IQuestionState>(
         return {
             ...state,
             categories:action.categories
+        }
+    })),
+    on(questionsActions.regularUserAvailableQuestions,((state:IQuestionState,action:ReturnType<typeof questionsActions.regularUserAvailableQuestions>) => {
+        return {
+            ...state,
+            regularUserAvailableQuestions: action.regularUserAvailableQuestions
+        }
+    })),
+    on(questionsActions.finishedCategory,((state:IQuestionState,action:ReturnType<typeof questionsActions.finishedCategory>) => {
+        return {
+            ...state,
+            finishedCategory: action.finishedCategory
         }
     }))
 )

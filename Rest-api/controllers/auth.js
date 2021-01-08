@@ -84,7 +84,7 @@ function changeUserPassword(req,res,next) {
 			user.password = newPassword;
 			user.save()
 			res.clearCookie(authCookieName).status(200).send(user);
-		})
+		});
 
 	}).catch(next);
 }
@@ -127,7 +127,7 @@ function editProfileInfo(req, res, next) {
 		update.$set.username = username;
 	}
 	if (correct_answer) {
-		update.$addToSet.correct_answer = correct_answer._id;
+		update.$addToSet.correct_answers = correct_answer._id;
 
 	}
 	if (answered_question) {

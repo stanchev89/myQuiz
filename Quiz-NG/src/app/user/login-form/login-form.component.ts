@@ -13,9 +13,7 @@ import {Title} from "@angular/platform-browser";
   styleUrls: ['./login-form.component.css']
 })
 export class LoginFormComponent implements OnInit, OnDestroy{
-  // isError = {
-  //   message:null
-  // }
+
   constructor(private userService: UserService, private router: Router, private store: Store, private titleService: Title) {
   }
   public setTitle(newTitle: string) {
