@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {UserService} from "../../user/user.service";
-import {IUser} from "../../interfaces";
+import {IUserPoints} from "../../user/+store/reducers";
+import {Store} from "@ngrx/store";
+import {AppRootState} from "../../+store";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-top-players-rank',
@@ -8,16 +11,12 @@ import {IUser} from "../../interfaces";
   styleUrls: ['./top-players-rank.component.css']
 })
 export class TopPlayersRankComponent implements OnInit {
-  topFiveUsers:IUser[];
+  topFiveUsers:Observable<IUserPoints[]> = this.store.select((state:AppRootState) => state.auth.allUsers.slice(0,5));
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private store: Store) { }
 
   ngOnInit(): void {
-    this.userService.getAllUsers().subscribe(
-        users => {
-          this.topFiveUsers = users.sort((a,b) => b.correct_answers.length - a.correct_answers.length).slice(0,5);
-        }
-    )
+
   }
 
 }

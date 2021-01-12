@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {UserService} from "../../user/user.service";
 import {IUser} from "../../interfaces";
+import {Input} from '@angular/core'
+import {Store} from "@ngrx/store";
+import {map} from 'rxjs/operators'
+import {AppRootState} from "../../+store";
+import {IUserPoints} from "../../user/+store/reducers";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-personal-rank',
@@ -8,28 +14,19 @@ import {IUser} from "../../interfaces";
   styleUrls: ['./personal-rank.component.css']
 })
 export class PersonalRankComponent implements OnInit {
-  currentUser$ = this.userService.currentUser$;
-  currentUser: IUser;
-  sortedAllUsers: IUser[];
-  countUsers: number;
-  myRank:number;
-  myPoints: number;
-  constructor(private userService: UserService) { }
+  @Input() currentUser:IUser;
+  allUsers: Observable<IUserPoints[]> = this.store.select((state:AppRootState) => state.auth.allUsers);
+  myRank:Observable<number>;
+  myPoints: Observable<number>;
+  constructor(private userService: UserService, private store: Store) { }
 
   ngOnInit(): void {
-      this.currentUser$.subscribe(user => {
-        this.currentUser = user;
-      });
-      if(this.currentUser) {
-          this.userService.getAllUsers().subscribe({
-              next: (users: IUser[]) => {
-                  this.sortedAllUsers = users.sort((a, b) => b.correct_answers.length - a.correct_answers.length);
-                  this.myRank = this.sortedAllUsers.findIndex((curUser) => curUser.username === this.currentUser.username) + 1;
-                  this.countUsers = this.sortedAllUsers.length;
-                  this.myPoints = this.currentUser.correct_answers.length;
-              }
-          })
-      };
+      if(this.currentUser){
+          this.myRank = this.allUsers.pipe(map((users:IUserPoints[]) => users.findIndex((curUser:IUserPoints) => curUser.username === this.currentUser.username) + 1));
+          this.myPoints = this.allUsers.pipe(
+              map((users:IUserPoints[]) => users.find((user:IUserPoints) => user.username === this.currentUser.username)?.points)
+          );
+      }
   }
 
 }

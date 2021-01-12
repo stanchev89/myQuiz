@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {IQuestion} from '../interfaces';
-import {Observable} from 'rxjs';
-import {tap} from 'rxjs/operators';
+import {Observable, of, Subscription} from 'rxjs';
+import {tap,first} from 'rxjs/operators';
 import {UserService} from '../user/user.service';
 import {Store} from "@ngrx/store";
 import {loadAllQuestions, setCategories} from "./+store/actions";
@@ -12,7 +12,7 @@ import {AppRootState} from "../+store";
 @Injectable()
 export class QuestionsService {
     categories$ = this.store.select((state:AppRootState) => state.questions.categories);
-    allQuestions$ = this.store.select((state:AppRootState) => state.questions.allQuestions);
+    isLoaded = false;
     constructor(private http: HttpClient, private userService: UserService, private store: Store) {
     }
 
@@ -29,7 +29,8 @@ export class QuestionsService {
                     }
                     acc[category].push(curr);
                     return acc
-                }, {})
+                }, {});
+                this.isLoaded = true;
                 const sortedCategories = Object.keys(questionsByCategory).sort((a: string, b: string) => a.localeCompare(b));
                 this.store.dispatch(loadAllQuestions({allQuestions: questionsByCategory}));
                 this.store.dispatch(setCategories({categories: sortedCategories.map(cat => cat.split('_').join(' '))}));

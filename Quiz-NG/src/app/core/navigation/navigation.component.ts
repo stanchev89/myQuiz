@@ -1,9 +1,9 @@
 import {Component} from '@angular/core';
 import {UserService} from '../../user/user.service';
-import {map} from "rxjs/operators";
 import {Store} from "@ngrx/store";
 import {AppRootState} from "../../+store";
-import {BehaviorSubject} from 'rxjs'
+import {tap} from 'rxjs/operators'
+import {ActivatedRoute} from "@angular/router";
 
 
 @Component({
@@ -19,21 +19,15 @@ export class NavigationComponent {
 	profile: 'profile';
 	categories: 'categories';
 
-	active$:  BehaviorSubject<number | string | undefined> = new BehaviorSubject('1');
-	active = this.active$.pipe(map(n => n));
-	// active$ = this.store.select(state => state.globals.activeHeader);
-	// active = this.active$.pipe(
-	// 	map(activeHeader => {
-	// 		if(activeHeader === 'categories') {
-	// 			return 3;
-	// 		}
-	// 		return 1;
-	// 	})
-	// )
-
 	isLogged = this.userService.isLogged$;
 	isVip = this.userService.isVip$;
 
-	constructor(private userService: UserService, private store: Store<AppRootState>) {}
+	constructor(private userService: UserService,public route: ActivatedRoute) {
+		route.queryParams.subscribe(res => {
+			console.log(res);
+		})
+	}
+
+
 
 }

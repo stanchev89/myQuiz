@@ -2,14 +2,21 @@ import { createReducer, on} from "@ngrx/store";
 import * as userActions from './actions';
 import {IUser} from "../../interfaces";
 
+export interface IUserPoints {
+    username: string,
+    points: number
+}
+
 export interface IUserState {
     currentUser: IUser | null | undefined;
     errorMessage: string | undefined;
+    allUsers: IUserPoints[]
 }
 
 const initialState: IUserState = {
     currentUser: null,
-    errorMessage: ''
+    errorMessage: '',
+    allUsers: []
 };
 
 
@@ -35,6 +42,12 @@ export const reducers = createReducer<IUserState>(
         return {
             ...state,
             errorMessage: action.errorMessage
+        }
+    })),
+    on(userActions.allUsers,((state:IUserState,action:ReturnType<typeof userActions.allUsers>) => {
+        return {
+            ...state,
+            allUsers: action.allUsers
         }
     }))
 )

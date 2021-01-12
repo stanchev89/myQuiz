@@ -145,6 +145,7 @@ export class QuestionsListComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
+        this.userService.getAllUsers().pipe(first()).subscribe();
         this.store.dispatch(regularUserAvailableQuestions({regularUserAvailableQuestions: true}));
         this.store.dispatch(finishedCategory({finishedCategory: false}));
         this.subscription?.unsubscribe();

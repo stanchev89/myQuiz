@@ -2,25 +2,25 @@ import { Routes, RouterModule } from '@angular/router';
 import { CategoriesComponent } from './categories/categories.component';
 import { QuestionsListComponent } from './questions-list/questions-list.component';
 import {AuthGuard} from '../core/auth.guard';
-// import {QuestionsResolver} from "../core/resolvers/questions-resolver";
+import {QuestionsResolver} from "../core/resolvers/questions-resolver";
 import {AddNewQuestionComponent} from "./add-new-question/add-new-question.component";
 
 const routes: Routes = [
     {
         path: 'categories',
         component: CategoriesComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
+        resolve:{
+            subscription: QuestionsResolver
+        }
     },
     {
         path: 'categories/:category',
         component: QuestionsListComponent,
         canActivate: [AuthGuard],
-        // resolve: {
-        //     questions:QuestionsResolver
-        // },
-        // data: {
-        //     mustBeLoggedIn: true
-        // }
+        resolve: {
+            subscription:QuestionsResolver
+        },
     },
     {
         path: 'add_new_question',

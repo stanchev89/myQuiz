@@ -5,7 +5,7 @@ import { Observable, of} from 'rxjs';
 import { catchError, tap, map } from 'rxjs/operators';
 import {Store} from "@ngrx/store";
 import {AppRootState} from "../+store";
-import {login, logout} from "./+store/actions";
+import {login, logout,allUsers} from "./+store/actions";
 @Injectable()
 export class UserService {
     // private _currentUser: BehaviorSubject<IUser | null> = new BehaviorSubject(undefined);
@@ -30,6 +30,7 @@ export class UserService {
     isLogged$ = this.currentUser$.pipe(map(currentUser => currentUser !== null));
     isVip$ = this.currentUser$.pipe(map(currentUser => currentUser?.is_vip));
     isReady$ = this.currentUser$.pipe(map(currentUser => currentUser !== undefined));
+    allUsersAreLoaded = false;
 
     constructor(private http: HttpClient, private store: Store<AppRootState>) {
 
@@ -106,7 +107,21 @@ export class UserService {
   }
 
   getAllUsers(): Observable<any> {
-      return this.http.get<any>('/users/all-users');
+      return this.http.get<any>('/users/all-users').pipe(
+          tap((users:IUser[]) => {
+              const objUserPoints = users.reduce((acc:{username:string,points:number}[],curr:IUser) => {
+                  const {username,correct_answers} = curr;
+                  const points = correct_answers.length;
+                  const currentUser = {username:username,points:points};
+                  acc.push(currentUser);
+                  return acc;
+              },[]);
+              this.allUsersAreLoaded = true;
+              const sortedUsers = objUserPoints.sort((a,b) => b.points - a.points);
+              this.store.dispatch(allUsers({allUsers:sortedUsers}));
+              return sortedUsers;
+          })
+      )
   }
 
 }
