@@ -107,21 +107,22 @@ export class UserService {
   }
 
   getAllUsers(): Observable<any> {
-      return this.http.get<any>('/users/all-users').pipe(
-          tap((users:IUser[]) => {
-              const objUserPoints = users.reduce((acc:{username:string,points:number}[],curr:IUser) => {
-                  const {username,correct_answers} = curr;
-                  const points = correct_answers.length;
-                  const currentUser = {username:username,points:points};
-                  acc.push(currentUser);
-                  return acc;
-              },[]);
-              this.allUsersAreLoaded = true;
-              const sortedUsers = objUserPoints.sort((a,b) => b.points - a.points);
-              this.store.dispatch(allUsers({allUsers:sortedUsers}));
-              return sortedUsers;
-          })
-      )
+          return this.http.get<any>('/users/all-users').pipe(
+              tap((users: IUser[]) => {
+                  const objUserPoints = users.reduce((acc: { username: string, points: number }[], curr: IUser) => {
+                      const {username, correct_answers} = curr;
+                      const points = correct_answers.length;
+                      const currentUser = {username: username, points: points};
+                      acc.push(currentUser);
+                      return acc;
+                  }, []);
+                  this.allUsersAreLoaded = true;
+                  const sortedUsers = objUserPoints.sort((a, b) => b.points - a.points);
+                  this.store.dispatch(allUsers({allUsers: sortedUsers}));
+                  return sortedUsers;
+              })
+          )
+
   }
 
 }

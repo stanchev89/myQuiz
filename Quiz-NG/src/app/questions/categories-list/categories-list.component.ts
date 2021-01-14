@@ -4,10 +4,12 @@ import {UserService} from "../../user/user.service";
 import {IUser} from "../../interfaces";
 import {Title} from "@angular/platform-browser";
 import {Store} from "@ngrx/store";
-import {first,tap} from 'rxjs/operators'
+import {first, map, tap} from 'rxjs/operators'
 import {setActiveHeader} from "../../+store/actions";
 import {ActivatedRoute} from "@angular/router";
 import {AppRootState} from "../../+store";
+import {IUserPoints} from "../../user/+store/reducers";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-categories-list',
@@ -18,6 +20,8 @@ export class CategoriesListComponent implements OnInit {
   categories = this.questionService.categories$;
   currentUser = this.userService.currentUser$;
   usersWithPoints =  this.store.select((state:AppRootState) => state.auth.allUsers);
+  myRank: Observable<any>;
+  myPoints: Observable<any>;
 
   constructor(private questionService: QuestionsService, private userService:UserService, private titleService: Title, private store:Store,public route: ActivatedRoute) {
   }
@@ -35,13 +39,15 @@ export class CategoriesListComponent implements OnInit {
           }
         })
     ).subscribe();
-    // if(this.currentUser){
-    //   this.userService.getAllUsers().subscribe(users => {
-    //     this.allUsers = users;
-    //     this.topFiveUsers = this.allUsers.sort((a,b) => b.correct_answers.length - a.correct_answers.length)
-    //         .slice(0,5);
-    //   })
-    // }
+    this.currentUser.subscribe((user:IUser) => {
+      if(user) {
+          this.myRank = this.usersWithPoints.pipe(map((users:IUserPoints[]) => users.findIndex((curUser:IUserPoints) => curUser.username === user.username) + 1));
+          this.myPoints = this.usersWithPoints.pipe(
+              map((users:IUserPoints[]) => users.find((u:IUserPoints) => u.username === user.username)?.points)
+          );
+      }
+    })
+
   }
 
 }

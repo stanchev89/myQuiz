@@ -1,5 +1,8 @@
 <div class="row">
-    <app-personal-rank class="col-2" *ngIf="currentUser" [currentUser]="currentUser | async"></app-personal-rank>
+    <app-personal-rank class="col-2" *ngIf="currentUser | async; else guest" [currentUser]="currentUser | async" [myPoints]="myPoints" [myRank]="myRank"></app-personal-rank>
+    <ng-template #guest>
+        <div class="col-2"></div>
+    </ng-template>
     <div class="col-8">
         <div class="container question-list overflow-auto">
             <ul>

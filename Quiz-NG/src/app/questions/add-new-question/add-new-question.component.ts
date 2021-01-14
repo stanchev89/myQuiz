@@ -71,6 +71,7 @@ export class AddNewQuestionComponent implements OnInit, OnDestroy {
       }
       this.questionsService.addNewQuestion(newQuestion).pipe(first()).subscribe(() => {
         this.store.dispatch(error({errorMessage:''}));
+        this.questionsService.loadAllQuestions().pipe(first()).subscribe();
        return  this.route.navigate(['/categories'])
       })
     }).pipe(first()).subscribe();

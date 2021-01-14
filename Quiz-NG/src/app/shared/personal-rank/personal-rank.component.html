@@ -1,6 +1,6 @@
     <div class="container" *ngIf="currentUser">
         <p>My position:</p>
-        <h2>{{(myRank | async)|numberRanking}}</h2>
+        <h2>{{(myRank | async)| numberRanking}}</h2>
         <p>with</p>
         <h3>{{myPoints | async}} points.</h3>
     </div>
