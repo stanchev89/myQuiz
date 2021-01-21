@@ -132,4 +132,7 @@
     <img src="/assets/profile.png" alt="default user">
     <h3>{{(currentUser.username | uppercase)}} Info:</h3>
     <ng-container *ngTemplateOutlet="inEditMode ? editMode : defaultMode"></ng-container>
+    <div class="alert alert-danger" role="alert" *ngIf="(errorMessage | async)">
+        {{errorMessage | async}}
+    </div>
 </div>

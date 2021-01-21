@@ -1,27 +1,35 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {UserService} from "../user.service";
 import {IUser} from "../../interfaces";
 import {Router} from "@angular/router";
 import {Title} from "@angular/platform-browser";
+import {setActiveHeader} from "../../+store/actions";
+import {Store} from "@ngrx/store";
+import {error} from "../+store/actions";
+import {AppRootState} from "../../+store";
+import {tap} from "rxjs/operators";
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit,OnDestroy {
   currentUser: IUser;
   inEditMode = false;
   inChangePasswordMode = false;
   pageTitle = 'My profile';
   registeredBefore:string;
   myRank:number;
+  errorMessage = this.store.select((state:AppRootState) => state.auth.errorMessage);
 
-  constructor(private userService: UserService, private router: Router, private titleService: Title) {
+  constructor(private userService: UserService, private router: Router, private titleService: Title,private store: Store) {
   }
 
   public setTitle(newTitle: string) {
     this.titleService.setTitle(newTitle);
+    this.store.dispatch(setActiveHeader({activeHeader:'profile'}));
+
   }
 
   ngOnInit(): void {
@@ -37,18 +45,32 @@ export class ProfileComponent implements OnInit {
   }
 
   toggleEditMode() {
+    this.store.dispatch(error({errorMessage:''}));
     this.inEditMode = !this.inEditMode;
     if(this.inChangePasswordMode) {
       this.inChangePasswordMode = !this.inChangePasswordMode;
     }
   }
   toggleEditPasswordMode() {
+    this.store.dispatch(error({errorMessage:''}));
+
     this.inChangePasswordMode = !this.inEditMode;
     this.inEditMode = !this.inEditMode;
   }
 
   onSubmit(data:{}) {
-    this.userService.updateProfileData(data).subscribe(() => this.inEditMode = false)
+    this.userService.updateProfileData(data).pipe(
+        tap(data => {
+          if(data.error) {
+            this.store.dispatch(error({errorMessage:'Username is already used!'}));
+          }
+          return data;
+        })
+    ).subscribe((data) => {
+      if(!data.error) {
+        this.inEditMode = false;
+      }
+    } )
   }
 
   submitChangePassword(data) {
@@ -59,9 +81,10 @@ export class ProfileComponent implements OnInit {
         if(this.inChangePasswordMode) {
           this.toggleEditPasswordMode();
         }
+        this.store.dispatch(error({errorMessage:''}));
         this.router.navigate(['login']);
       }, error: (err) => {
-        console.error(err);
+          this.store.dispatch(error({errorMessage:err.error.errorMessage}));
       }
     });
   }
@@ -97,6 +120,11 @@ export class ProfileComponent implements OnInit {
       }
     })
     return output.join(' : ') + ' ago';
+  }
+
+  ngOnDestroy() {
+    this.store.dispatch(setActiveHeader({activeHeader:''}));
+    this.store.dispatch(error({errorMessage:''}));
   }
 
 }

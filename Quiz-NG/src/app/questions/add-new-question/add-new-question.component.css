@@ -9,17 +9,27 @@ label {
     color: rgb(21, 127, 251);
     font-family: sans-serif;
     font-weight: lighter;
+    padding-top: 20px;
 }
 select{
+    outline: none;
     width: 100%;
     text-align-last:center;
     display: block;
     align-content: center;
     text-align: center;
     padding: 8px 16px;
+    border-radius: 10px;
+    border-color: rgb(146, 185, 248);
+    color: rgb(21, 127, 251);
 }
+
+input {
+    border-radius: 10px;
+}
+
 .container{
-    width:500px;
+    width:25%;
 }
 
 

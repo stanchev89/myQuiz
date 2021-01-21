@@ -1,16 +1,43 @@
-.list-group-item{
-    width: 100%;
-    text-align: center;
-    padding:20px;
-    border-radius: 10px;
 
+.list-group-item{
+    text-align: center;
+    border-radius: 10px;
 }
 .question-list{
-    max-width: 100%;
+    max-width: 70%;
     margin-bottom: 10rem;
     padding-left: 1rem;
     padding-right: 1rem;
+    padding-bottom: 0px;
 }
 ul{
-    padding: 10px;
+    padding: 1px 5px;
+}
+a{
+    display: block;
+    text-decoration: none;
+}
+li{
+    display: inline;
+}
+
+.content {
+    margin-top: 50px;
+    display: flex;
+}
+
+li:hover {
+    background-color:  rgb(52, 145, 250);
+}
+
+li:hover a {
+    color:white;
+}
+.container.question-list {
+    padding-bottom: 0px;
+}
+
+.categories {
+    margin-left: auto;
+    margin-right: auto;
 }

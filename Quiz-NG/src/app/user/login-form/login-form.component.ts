@@ -6,6 +6,7 @@ import {Store} from "@ngrx/store";
 import {error} from "../+store/actions";
 import {AppRootState} from "../../+store";
 import {Title} from "@angular/platform-browser";
+import {setActiveHeader} from "../../+store/actions";
 
 @Component({
   selector: 'app-login-form',
@@ -23,6 +24,7 @@ export class LoginFormComponent implements OnInit, OnDestroy{
 
   ngOnInit() {
     this.setTitle('myQuiz-Login');
+    this.store.dispatch(setActiveHeader({activeHeader:'login'}));
   }
 
   onSubmit(data: IUser): void {
@@ -44,5 +46,6 @@ export class LoginFormComponent implements OnInit, OnDestroy{
 
     ngOnDestroy() {
       this.store.dispatch(error({errorMessage: ''}));
+      this.store.dispatch(setActiveHeader({activeHeader:'login'}));
     }
 }

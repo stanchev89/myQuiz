@@ -8,5 +8,9 @@ h3{
 }
 .title {
     background-color: rgb(21, 127, 251);
-    opacity: 25%;
+}
+
+.already-vip-player {
+    font-weight: bold;
+    color:green;
 }

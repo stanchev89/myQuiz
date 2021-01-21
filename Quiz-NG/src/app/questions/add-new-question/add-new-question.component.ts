@@ -6,6 +6,7 @@ import {Store} from "@ngrx/store";
 import {first,tap} from 'rxjs/operators'
 import {AppRootState} from "../../+store";
 import {error} from '../../user/+store/actions'
+import {setActiveHeader} from "../../+store/actions";
 
 
 @Component({
@@ -30,6 +31,7 @@ export class AddNewQuestionComponent implements OnInit, OnDestroy {
 
   public setTitle(newTitle: string) {
     this.titleService.setTitle(newTitle);
+    this.store.dispatch(setActiveHeader({activeHeader:'addNewQuestion'}));
   }
 
   ngOnInit(): void {
@@ -80,5 +82,6 @@ export class AddNewQuestionComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.store.dispatch(error({errorMessage:''}));
+    this.store.dispatch(setActiveHeader({activeHeader:''}));
   }
 }

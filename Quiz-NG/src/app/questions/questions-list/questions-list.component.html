@@ -26,7 +26,7 @@
         </div>
     </div>
 
-    <div *ngIf="!(finished | async) && (regularUserAvailableQuestions | async)" class="container">
+    <div *ngIf="!(finished | async) && (regularUserAvailableQuestions | async)" class="container timer">
             <div class="timer">
                 <span [class]="MsInSeconds(timeForAnswering) | getTimerClass"> {{MsInSeconds(reverseTimer)}}</span>
                 <p>
@@ -41,7 +41,7 @@
                 </p>
             </div>
         <div class="row justify-content-center">
-            <button (click)="nextQuestion()" class="btn btn-outline-primary">Next question</button>
+            <button (click)="nextQuestion()" class="btn btn-outline-primary next">Next question</button>
         </div>
     </div>
 

@@ -12,6 +12,7 @@
     background-color: hsla(0, 0%, 94.1%, .8);
     box-shadow: 0 0 1em 0 #000;
     text-align: center;
+    margin-bottom: 150px;
 }
 button{
     margin: 5px;

@@ -81,7 +81,10 @@ export class UserService {
         tap((user: IUser) => {
             this.store.dispatch(login({currentUser:user}));
             return;
-        })
+        }),
+          catchError((err: Observable<any>) => {
+              return of(err)
+          })
     );
   }
 

@@ -6,7 +6,6 @@ import {Title} from "@angular/platform-browser";
 import {Store} from "@ngrx/store";
 import {first, map, tap} from 'rxjs/operators'
 import {setActiveHeader} from "../../+store/actions";
-import {ActivatedRoute} from "@angular/router";
 import {AppRootState} from "../../+store";
 import {IUserPoints} from "../../user/+store/reducers";
 import {Observable} from "rxjs";
@@ -23,30 +22,35 @@ export class CategoriesListComponent implements OnInit {
   myRank: Observable<any>;
   myPoints: Observable<any>;
 
-  constructor(private questionService: QuestionsService, private userService:UserService, private titleService: Title, private store:Store,public route: ActivatedRoute) {
+  constructor(private questionService: QuestionsService, private userService:UserService, private titleService: Title, private store:Store) {
   }
   public setTitle(newTitle: string) {
     this.titleService.setTitle(newTitle);
   }
 
   ngOnInit(): void {
-    this.setTitle('myQuiz-Categories');
-    this.store.dispatch(setActiveHeader({activeHeader: 'categories'}));
-    this.usersWithPoints.pipe(
-        tap(users => {
-          if(users.length === 0) {
-            this.userService.getAllUsers().pipe(first()).subscribe();
+      this.currentUser.subscribe(user => {
+          if(user) {
+              this.setTitle('myQuiz-Categories');
+              this.store.dispatch(setActiveHeader({activeHeader: 'categories'}));
+              this.usersWithPoints.pipe(
+                  tap(users => {
+                      if(users.length === 0) {
+                          this.userService.getAllUsers().pipe(first()).subscribe();
+                      }
+                  })
+              ).subscribe();
+              this.currentUser.subscribe((user:IUser) => {
+                  if(user) {
+                      this.myRank = this.usersWithPoints.pipe(map((users:IUserPoints[]) => users.findIndex((curUser:IUserPoints) => curUser.username === user.username) + 1));
+                      this.myPoints = this.usersWithPoints.pipe(
+                          map((users:IUserPoints[]) => users.find((u:IUserPoints) => u.username === user.username)?.points)
+                      );
+                  }
+              })
           }
-        })
-    ).subscribe();
-    this.currentUser.subscribe((user:IUser) => {
-      if(user) {
-          this.myRank = this.usersWithPoints.pipe(map((users:IUserPoints[]) => users.findIndex((curUser:IUserPoints) => curUser.username === user.username) + 1));
-          this.myPoints = this.usersWithPoints.pipe(
-              map((users:IUserPoints[]) => users.find((u:IUserPoints) => u.username === user.username)?.points)
-          );
-      }
-    })
+      })
+
 
   }
 

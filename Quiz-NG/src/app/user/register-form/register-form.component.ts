@@ -5,6 +5,7 @@ import {Title} from "@angular/platform-browser";
 import {Store} from "@ngrx/store";
 import {AppRootState} from "../../+store";
 import {error} from '../+store/actions'
+import {setActiveHeader} from "../../+store/actions";
 
 @Component({
   selector: 'app-register-form',
@@ -22,7 +23,8 @@ export class RegisterFormComponent implements OnInit, OnDestroy{
     }
 
     ngOnInit() {
-      this.setTitle('myQuiz-Register');
+        this.store.dispatch(setActiveHeader({activeHeader:'register'}));
+        this.setTitle('myQuiz-Register');
     }
 
     onSubmit(data): void{
@@ -40,5 +42,7 @@ export class RegisterFormComponent implements OnInit, OnDestroy{
 
   ngOnDestroy() {
       this.store.dispatch(error({errorMessage: ''}));
+      this.store.dispatch(setActiveHeader({activeHeader:''}));
+
   }
 }

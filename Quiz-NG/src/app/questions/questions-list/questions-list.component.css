@@ -1,6 +1,6 @@
 
 .container {
-    padding-top: 40px;
+    margin-bottom: 50px;
 }
 
 .complete {
@@ -16,4 +16,15 @@ a.incorrect{
 }
 .font-16{
     font-size: 16px;
+}
+
+.container.timer {
+    width: 400px;
+    padding-bottom: 5px;
+    margin-bottom: 0px;
+    margin-top: 70px;
+}
+
+.next {
+    border-radius: 10px;
 }

@@ -1,18 +1,17 @@
-<div class="row">
-    <app-personal-rank class="col-2" *ngIf="currentUser | async; else guest" [currentUser]="currentUser | async" [myPoints]="myPoints" [myRank]="myRank"></app-personal-rank>
+<div class="content">
+    <app-personal-rank *ngIf="currentUser | async; else guest" [currentUser]="currentUser | async" [myPoints]="myPoints" [myRank]="myRank"></app-personal-rank>
     <ng-template #guest>
-        <div class="col-2"></div>
     </ng-template>
-    <div class="col-8">
-        <div class="container question-list overflow-auto">
+    <div class="categories">
+        <div class="container question-list">
             <ul>
                 <div class="row row-cols-2">
-                    <li type="button" class="list-group-item list-group-item-action" *ngFor="let category of (categories | async)">
+                    <li type="button" class="list-group-item" *ngFor="let category of (categories | async)">
                         <a routerLink="/categories/{{category.split(' ').join('_')}}">{{category}}</a>
                     </li>
                 </div>
             </ul>
         </div>
     </div>
-    <app-top-players-rank class="col-2"></app-top-players-rank>
+    <app-top-players-rank *ngIf="currentUser | async"></app-top-players-rank>
 </div>
