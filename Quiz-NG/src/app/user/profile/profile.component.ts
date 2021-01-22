@@ -58,19 +58,21 @@ export class ProfileComponent implements OnInit,OnDestroy {
     this.inEditMode = !this.inEditMode;
   }
 
-  onSubmit(data:{}) {
-    this.userService.updateProfileData(data).pipe(
-        tap(data => {
-          if(data.error) {
-            this.store.dispatch(error({errorMessage:'Username is already used!'}));
-          }
-          return data;
-        })
-    ).subscribe((data) => {
-      if(!data.error) {
-        this.inEditMode = false;
-      }
-    } )
+  onSubmit(data:{username:string}) {
+    if(data.username !== this.currentUser.username) {
+      this.userService.updateProfileData(data).pipe(
+          tap(data => {
+            if(data.error) {
+              this.store.dispatch(error({errorMessage:'Username is already used!'}));
+            }
+            return data;
+          })
+      ).subscribe((data) => {
+        if(!data.error) {
+          this.inEditMode = false;
+        }
+      } )
+    }
   }
 
   submitChangePassword(data) {

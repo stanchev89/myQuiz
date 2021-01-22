@@ -69,7 +69,10 @@
 
 .green-button {
     background-color: green;
+    cursor:pointer;
 }
+
 .edit-button {
-    background-color: rgb(146, 185, 248);
+    background-color: rgb(153, 185, 243);
+    font-weight: bolder;
 }

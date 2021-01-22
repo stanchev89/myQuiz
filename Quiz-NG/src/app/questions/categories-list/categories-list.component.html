@@ -1,8 +1,7 @@
 <div class="content">
-    <app-personal-rank *ngIf="currentUser | async; else guest" [currentUser]="currentUser | async" [myPoints]="myPoints" [myRank]="myRank"></app-personal-rank>
-    <ng-template #guest>
-    </ng-template>
     <div class="categories">
+        <app-personal-rank *ngIf="currentUser | async; else guest" [currentUser]="currentUser | async" [myPoints]="myPoints" [myRank]="myRank"></app-personal-rank>
+        <ng-template #guest></ng-template>
         <div class="container question-list">
             <ul>
                 <div class="row row-cols-2">
@@ -12,6 +11,6 @@
                 </div>
             </ul>
         </div>
+        <app-top-players-rank *ngIf="currentUser | async"></app-top-players-rank>
     </div>
-    <app-top-players-rank *ngIf="currentUser | async"></app-top-players-rank>
 </div>

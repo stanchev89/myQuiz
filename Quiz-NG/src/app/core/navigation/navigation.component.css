@@ -3,6 +3,8 @@
 } */
 .nav-bar{
     text-align: center;
+    width:max-content;
+    margin:auto;
 }
 .nav-bar ul{
     display: inline-flex;
