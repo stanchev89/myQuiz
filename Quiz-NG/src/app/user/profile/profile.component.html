@@ -70,20 +70,17 @@
 
         <form #f="ngForm" (ngSubmit)="submitChangePassword(f.value)">
             <div class="flex">
-                <p>Old password: </p>
-                <input type="password" name="oldPassword" id="oldPassword"
+                <input type="password" name="oldPassword" placeholder="Old password" id="oldPassword"
                 required  minlength="5"  #oldPassword="ngModel"  ngModel
                 >
             </div>
             <div class="flex">
-                <p>Set new password: </p>
-                <input type="password" name="newPassword" id="newPassword"
+                <input type="password" name="newPassword" placeholder="Set new password" id="newPassword"
                 required  minlength="5"  #newPassword="ngModel"  ngModel
                 >
             </div>
             <div class="flex">
-                <p>Repeat new password: </p>
-                <input type="password" name="repeatNewPassword" id="repeatNewPassword"
+                <input type="password" name="repeatNewPassword" placeholder="Repeat new password" id="repeatNewPassword"
                  required  minlength="5"  pattern="{{newPassword.value}}" #repeatOldPassword="ngModel"  ngModel
                 >
             </div>

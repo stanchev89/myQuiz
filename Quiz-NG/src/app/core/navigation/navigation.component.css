@@ -1,10 +1,16 @@
 /* ul{
     padding-left: 15%;
 } */
+.header{
+    min-width: 1200px;
+    display:flex;
+}
+
 .nav-bar{
+    padding:40px 134px 40px 40px;
     text-align: center;
-    width:max-content;
-    margin:auto;
+    display:inline-block;
+    margin: 0 auto;
 }
 .nav-bar ul{
     display: inline-flex;
@@ -12,6 +18,7 @@
 img{
     padding-top: 10px;
     padding-left: 30px;
+    autofocus:none;
 }
 a{
     font-size: larger;

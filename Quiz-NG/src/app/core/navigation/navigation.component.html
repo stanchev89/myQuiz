@@ -1,4 +1,7 @@
-<img src="/assets/Assets.xcassets/AppIcon.appiconset/64.png" alt="myQuiz" type="button" routerLink="/">
+<div class="header">
+    <a routerLink="/" class="image">
+        <img src="/assets/Assets.xcassets/AppIcon.appiconset/64.png" alt="myQuiz" type="button" >
+    </a>
 
 <div  class="nav-bar">
         <ul ngbNav #nav="ngbNav" [activeId]="(active$|async)"  class="nav-tabs">
@@ -31,6 +34,7 @@
             </li>
         </ul>
     </div>
+</div>
 
 <!--<router-outlet></router-outlet>-->
 <!--&lt;!&ndash; Navigation &ndash;&gt;-->

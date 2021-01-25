@@ -1,5 +1,4 @@
 .profile {
-    width: 100%;
     max-width: 500px;
     margin: 2em auto 1rem;
     padding: .5em;
@@ -50,9 +49,9 @@
 }
 
 .flex > input, .flex > div {
-    width: 55%;
+    width: 40%;
     text-align: left;
-    margin: .5em;
+    margin: 0.5em auto;
 }
 
 .flex > div > input {
@@ -75,4 +74,12 @@
 .edit-button {
     background-color: rgb(153, 185, 243);
     font-weight: bolder;
+}
+
+input {
+    border-radius: 5px;
+}
+
+#username {
+    margin-left: 0px;
 }

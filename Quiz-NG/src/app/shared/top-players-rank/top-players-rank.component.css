@@ -1,4 +1,4 @@
 .container {
-    width: 250px;
-    margin-right: 100px;
+    max-width: 250px;
+    /*margin-right: 100px;*/
 }
