@@ -1,5 +1,4 @@
 import { IBase } from './base';
-import { IQuestion } from './question';
 
 export interface IUser extends IBase {
   correct_answers: string[];

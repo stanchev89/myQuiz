@@ -1,6 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {UserService} from "../user.service";
-import {IUser} from "../../interfaces";
 import {Router} from "@angular/router";
 import {Title} from "@angular/platform-browser";
 import {setActiveHeader} from "../../+store/actions";
@@ -8,6 +7,7 @@ import {Store} from "@ngrx/store";
 import {error} from "../+store/actions";
 import {AppRootState} from "../../+store";
 import {tap} from "rxjs/operators";
+import {IUserNoPassword} from "../../interfaces/IUserNoPassword";
 
 @Component({
   selector: 'app-profile',
@@ -15,7 +15,7 @@ import {tap} from "rxjs/operators";
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit,OnDestroy {
-  currentUser: IUser;
+  currentUser: IUserNoPassword;
   inEditMode = false;
   inChangePasswordMode = false;
   pageTitle = 'My profile';

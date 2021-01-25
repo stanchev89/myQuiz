@@ -43,7 +43,8 @@ export class UserService {
   login(username: string, password: string): Observable<IUser> {
     return this.http.post<IUser>(`/users/login`, { username, password}).pipe(
       tap((user: IUser): void => {
-        this.store.dispatch(login({currentUser: user}));
+          const {password,...userData} = user;
+        this.store.dispatch(login({currentUser: userData}));
       }), catchError(() => {
         return of (null);
       })
@@ -99,7 +100,8 @@ export class UserService {
   getProfileInfo(): Observable<any>{
      return this.http.get<IUser>(`/users/profile`).pipe(
        tap(user =>  {
-           this.store.dispatch(login({currentUser:user}));
+           const {password,...userData} = user;
+           this.store.dispatch(login({currentUser:userData}));
          return user;
         }),
        catchError(() => {

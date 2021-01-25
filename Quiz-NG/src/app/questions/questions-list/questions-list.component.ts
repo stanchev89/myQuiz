@@ -127,7 +127,6 @@ export class QuestionsListComponent implements OnInit, OnDestroy {
 
 
     givenAnswerHandler(answer): void {
-
         if (this.currentQuestion.correct_answer === answer) {
             this.userService.updateProfileData({correct_answer:this.currentQuestion}).pipe(first()).subscribe();
             this.currentSessionCorrectAnswers++;

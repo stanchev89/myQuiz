@@ -39,6 +39,10 @@ export class QuestionComponent implements OnChanges,OnInit {
     return arr.sort(() => Math.random() - 0.5);
   }
 
+  stopPropagation(event:Event) {
+    event.stopPropagation();
+  }
+
   onSubmit(givenAnswer): void {
 
       this.sendGivenAnswer.emit(givenAnswer);

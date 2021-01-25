@@ -1,6 +1,6 @@
 import { createReducer, on} from "@ngrx/store";
 import * as userActions from './actions';
-import {IUser} from "../../interfaces";
+import {IUserNoPassword} from "../../interfaces/IUserNoPassword";
 
 export interface IUserPoints {
     username: string,
@@ -8,7 +8,7 @@ export interface IUserPoints {
 }
 
 export interface IUserState {
-    currentUser: IUser | null | undefined;
+    currentUser: IUserNoPassword | null | undefined;
     errorMessage: string | undefined;
     allUsers: IUserPoints[]
 }

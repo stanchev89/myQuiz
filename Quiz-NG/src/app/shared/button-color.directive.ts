@@ -12,11 +12,12 @@ export class ButtonColorDirective{
   @Input() questionData: IQuestion;
   @Output() sendGivenAnswer = new EventEmitter<string>();
 
-
   constructor(private elementRef:ElementRef) { }
 
-  @HostListener('click')
-  onClick() {
+  @HostListener('click',['$event'])
+  onClick(event:Event) {
+    event.stopImmediatePropagation();
+    event.preventDefault();
     const givenAnswer = this.elementRef.nativeElement.text;
     const buttonColorMustBe = givenAnswer === this.questionData.correct_answer ? 'green' : 'red';
     const pause = timer(1000);

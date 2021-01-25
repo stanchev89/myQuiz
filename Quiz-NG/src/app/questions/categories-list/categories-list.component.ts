@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { QuestionsService } from '../../questions/questions.service';
 import {UserService} from "../../user/user.service";
 import {IUser} from "../../interfaces";
@@ -15,7 +15,7 @@ import {Observable} from "rxjs";
   templateUrl: './categories-list.component.html',
   styleUrls: ['./categories-list.component.css']
 })
-export class CategoriesListComponent implements OnInit {
+export class CategoriesListComponent implements OnInit,OnDestroy {
   categories = this.questionService.categories$;
   currentUser = this.userService.currentUser$;
   usersWithPoints =  this.store.select((state:AppRootState) => state.auth.allUsers);
@@ -50,8 +50,10 @@ export class CategoriesListComponent implements OnInit {
               })
           }
       })
+  }
 
-
+  ngOnDestroy() {
+      this.store.dispatch(setActiveHeader({activeHeader: ''}));
   }
 
 }

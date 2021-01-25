@@ -25,3 +25,8 @@ a{
     color:white;
     border-radius: 10px;
 }
+
+
+/*:host  a  {*/
+/*    pointer-events: none;*/
+/*}*/
