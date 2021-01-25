@@ -41,11 +41,6 @@ li:hover a {
     color:white;
 }
 
-.container{
-    margin-right: 100px;
-    margin-left: 100px;
-    font-weight: 500;
-}
 
 .categories {
     display: flex;

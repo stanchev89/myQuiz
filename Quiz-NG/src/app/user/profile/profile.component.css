@@ -51,7 +51,7 @@
 .flex > input, .flex > div {
     width: 40%;
     text-align: left;
-    margin: 0.5em auto;
+    margin: 1em auto;
 }
 
 .flex > div > input {
@@ -81,5 +81,13 @@ input {
 }
 
 #username {
+    margin: .3em;
     margin-left: 0px;
+}
+#repeatNewPassword{
+    margin-bottom: 3em;
+}
+
+#oldPassword {
+    margin-top: 2em;
 }
