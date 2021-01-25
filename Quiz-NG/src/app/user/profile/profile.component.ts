@@ -4,10 +4,11 @@ import {Router} from "@angular/router";
 import {Title} from "@angular/platform-browser";
 import {setActiveHeader} from "../../+store/actions";
 import {Store} from "@ngrx/store";
-import {error} from "../+store/actions";
+import {allUsers, error} from "../+store/actions";
 import {AppRootState} from "../../+store";
-import {tap} from "rxjs/operators";
+import {tap,first,map} from "rxjs/operators";
 import {IUserNoPassword} from "../../interfaces/IUserNoPassword";
+import {IUserPoints} from "../+store/reducers";
 
 @Component({
   selector: 'app-profile',
@@ -18,7 +19,6 @@ export class ProfileComponent implements OnInit,OnDestroy {
   currentUser: IUserNoPassword;
   inEditMode = false;
   inChangePasswordMode = false;
-  pageTitle = 'My profile';
   registeredBefore:string;
   myRank:number;
   errorMessage = this.store.select((state:AppRootState) => state.auth.errorMessage);
@@ -28,11 +28,10 @@ export class ProfileComponent implements OnInit,OnDestroy {
 
   public setTitle(newTitle: string) {
     this.titleService.setTitle(newTitle);
-    this.store.dispatch(setActiveHeader({activeHeader:'profile'}));
-
   }
 
   ngOnInit(): void {
+    this.store.dispatch(setActiveHeader({activeHeader:'profile'}));
     this.setTitle('myQuiz-Profile');
     this.userService.currentUser$.subscribe(user => {
       this.currentUser = user;
@@ -58,18 +57,34 @@ export class ProfileComponent implements OnInit,OnDestroy {
     this.inEditMode = !this.inEditMode;
   }
 
-  onSubmit(data:{username:string}) {
-    if(data.username !== this.currentUser.username) {
+  submitChangeUsername(data:{username:string}) {
+    const oldUsername = this.currentUser.username;
+    if(data.username !== oldUsername) {
       this.userService.updateProfileData(data).pipe(
-          tap(data => {
-            if(data.error) {
+          tap(req => {
+            if(req.error) {
               this.store.dispatch(error({errorMessage:'Username is already used!'}));
             }
-            return data;
+            return req;
           })
-      ).subscribe((data) => {
-        if(!data.error) {
+      ).subscribe((req) => {
+        if(!req.error) {
           this.inEditMode = false;
+          const allUsers$ = this.store.select((state:AppRootState) => state.auth.allUsers).pipe(first());
+          allUsers$.subscribe((users:IUserPoints[]) => {
+            if(users.length > 0) {
+              const index = users.findIndex((obj:IUserPoints) => obj.username === oldUsername);
+              const oldUsernameObj = users[index];
+              const newUsernameObj: IUserPoints = {
+                username: data.username,
+                points:oldUsernameObj.points
+              };
+              const copyUsers = users.slice();
+              copyUsers.splice(index,1,newUsernameObj);
+              this.store.dispatch(allUsers({allUsers:copyUsers}));
+            }
+          })
+          // this.userService.getAllUsers().pipe(first()).subscribe();
         }
       } )
     }

@@ -27,7 +27,7 @@
 
 <ng-template #editMode>
     <div *ngIf="!inChangePasswordMode">
-    <form #f="ngForm" (ngSubmit)="onSubmit(f.value)">
+    <form #f="ngForm" (ngSubmit)="submitChangeUsername(f.value)">
         <div class="flex">
             <p>Username: </p>
             <input type="text" name="username" id="username" [ngModel]="currentUser.username"

@@ -1,6 +1,5 @@
 import {createReducer,on} from '@ngrx/store';
 import {setActiveHeader} from './actions';
-import {AppRootState} from "./index";
 
 export interface IGlobalState {
     activeHeader:string;

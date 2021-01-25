@@ -8,24 +8,7 @@ import {AppRootState} from "../+store";
 import {login, logout,allUsers} from "./+store/actions";
 @Injectable()
 export class UserService {
-    // private _currentUser: BehaviorSubject<IUser | null> = new BehaviorSubject(undefined);
-    // currentUser$: Observable<IUser | null> = this._currentUser.asObservable();
-    // isReady$ = this.currentUser$.pipe(map(user => user !== undefined));
-    //
-    // isLogged$ = this.currentUser$.pipe(
-    //     map(user => !!user),
-    //     catchError(err => {
-    //         console.log(err);
-    //         return of(null);
-    //     })
-    //     );
-    // isVip$ = this.currentUser$.pipe(
-    //     map(user => user?.is_vip),
-    //     catchError(err => {
-    //         console.log(err);
-    //         return of(null);
-    //     })
-    // );
+
     currentUser$ = this.store.select((state: AppRootState) => state.auth.currentUser);
     isLogged$ = this.currentUser$.pipe(map(currentUser => currentUser !== null));
     isVip$ = this.currentUser$.pipe(map(currentUser => currentUser?.is_vip));
@@ -127,7 +110,6 @@ export class UserService {
                   return sortedUsers;
               })
           )
-
   }
 
 }

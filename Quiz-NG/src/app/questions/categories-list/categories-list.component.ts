@@ -15,10 +15,16 @@ import {Observable} from "rxjs";
   templateUrl: './categories-list.component.html',
   styleUrls: ['./categories-list.component.css']
 })
-export class CategoriesListComponent implements OnInit,OnDestroy {
+export class CategoriesListComponent implements OnInit {
   categories = this.questionService.categories$;
   currentUser = this.userService.currentUser$;
-  usersWithPoints =  this.store.select((state:AppRootState) => state.auth.allUsers);
+  usersWithPoints =  this.store.select((state:AppRootState) => state.auth.allUsers).pipe(
+      tap(users => {
+          if(users.length === 0) {
+              this.userService.getAllUsers().pipe(first()).subscribe();
+          }
+      })
+  );
   myRank: Observable<any>;
   myPoints: Observable<any>;
 
@@ -32,28 +38,14 @@ export class CategoriesListComponent implements OnInit,OnDestroy {
       this.currentUser.subscribe(user => {
           if(user) {
               this.setTitle('myQuiz-Categories');
-              this.store.dispatch(setActiveHeader({activeHeader: 'categories'}));
-              this.usersWithPoints.pipe(
-                  tap(users => {
-                      if(users.length === 0) {
-                          this.userService.getAllUsers().pipe(first()).subscribe();
-                      }
-                  })
-              ).subscribe();
-              this.currentUser.subscribe((user:IUser) => {
-                  if(user) {
-                      this.myRank = this.usersWithPoints.pipe(map((users:IUserPoints[]) => users.findIndex((curUser:IUserPoints) => curUser.username === user.username) + 1));
-                      this.myPoints = this.usersWithPoints.pipe(
-                          map((users:IUserPoints[]) => users.find((u:IUserPoints) => u.username === user.username)?.points)
-                      );
-                  }
-              })
+              this.usersWithPoints.subscribe();
+              this.myRank = this.usersWithPoints.pipe(map((users:IUserPoints[]) => users.findIndex((curUser:IUserPoints) => curUser.username === user.username) + 1));
+              this.myPoints = this.usersWithPoints.pipe(
+                  map((users:IUserPoints[]) => users.find((u:IUserPoints) => u.username === user.username)?.points)
+              );
           }
       })
   }
 
-  ngOnDestroy() {
-      this.store.dispatch(setActiveHeader({activeHeader: ''}));
-  }
 
 }
