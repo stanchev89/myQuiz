@@ -8,6 +8,8 @@ import {
 import { IQuestion } from '../../interfaces';
 import {UserService} from '../../user/user.service';
 import {Title} from "@angular/platform-browser";
+import {Store} from "@ngrx/store";
+import {AppRootState} from "../../+store";
 
 @Component({
   selector: 'app-question',
@@ -15,8 +17,9 @@ import {Title} from "@angular/platform-browser";
   styleUrls: ['./question.component.css']
 })
 export class QuestionComponent implements OnChanges,OnInit {
+  isClicked$ = this.store.select((state:AppRootState) => state.questions.answerIsClicked);
   isLogged = this.userService.isLogged$;
-  constructor(private userService: UserService, private titleService: Title) { }
+  constructor(private userService: UserService, private titleService: Title,private store: Store) { }
 
   @Input() questionData: IQuestion;
   @Output() sendGivenAnswer = new EventEmitter();
@@ -39,9 +42,6 @@ export class QuestionComponent implements OnChanges,OnInit {
     return arr.sort(() => Math.random() - 0.5);
   }
 
-  stopPropagation(event:Event) {
-    event.stopPropagation();
-  }
 
   onSubmit(givenAnswer): void {
 

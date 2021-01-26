@@ -7,7 +7,7 @@ import {first, map} from 'rxjs/operators';
 import {UserService} from 'src/app/user/user.service';
 import {Store} from "@ngrx/store";
 import {AppRootState} from "../../+store";
-import {finishedCategory, regularUserAvailableQuestions} from "../+store/actions";
+import {answerIsClicked, finishedCategory, regularUserAvailableQuestions} from "../+store/actions";
 
 @Component({
     selector: 'app-questions-list',
@@ -133,8 +133,8 @@ export class QuestionsListComponent implements OnInit, OnDestroy {
         }else {
             this.currentSessionIncorrectAnswers++;
         }
+        this.store.dispatch(answerIsClicked({answerIsClicked:false}));
         this.nextQuestion();
-
     }
 
     finishCategoryQuestions(): void {

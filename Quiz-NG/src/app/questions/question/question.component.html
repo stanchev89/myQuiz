@@ -1,20 +1,21 @@
     <div class="container" >
+
       <div class="card-body" *ngIf="isLogged | async">
         <h1 class="card-title mb-5">{{questionData.question | fixHtmlSymbols}}</h1>
         <div class="row">
           <div class="col-6 mb-2">
-            <a appButtonColor [questionData]="questionData" (sendGivenAnswer)="onSubmit($event)"  class="btn btn-primary">{{answers[0] | fixHtmlSymbols}}</a>
+            <button [disabled]="isClicked$|async" appButtonColor [questionData]="questionData" (sendGivenAnswer)="onSubmit($event)"  class="btn btn-primary" value="{{answers[0] | fixHtmlSymbols}}">{{answers[0] | fixHtmlSymbols}}</button>
           </div>
           <div class="col-6">
-            <a appButtonColor [questionData]="questionData" (sendGivenAnswer)="onSubmit($event)"  class="btn btn-primary">{{answers[1] | fixHtmlSymbols}}</a>
-          </div>
-          <div class="w-100"></div>
-          <div class="col-6 mt-1">
-            <a *ngIf="answers[2]" appButtonColor [questionData]="questionData" (sendGivenAnswer)="onSubmit($event)"  class="btn btn-primary">{{answers[2] | fixHtmlSymbols}}</a>
+            <button [disabled]="isClicked$|async" appButtonColor [questionData]="questionData" (sendGivenAnswer)="onSubmit($event)"  class="btn btn-primary" value = "{{answers[1] | fixHtmlSymbols}}">{{answers[1] | fixHtmlSymbols}}</button>
           </div>
           <div class="col-6 mt-1">
-            <a *ngIf="answers[3]" appButtonColor [questionData]="questionData" (sendGivenAnswer)="onSubmit($event)"  class="btn btn-primary">{{answers[3] | fixHtmlSymbols}}</a>
+            <button *ngIf="answers[2]" [disabled]="isClicked$|async" appButtonColor [questionData]="questionData" (sendGivenAnswer)="onSubmit($event)"  class="btn btn-primary" value = "{{answers[2] | fixHtmlSymbols}}">{{answers[2] | fixHtmlSymbols}}</button>
+          </div>
+          <div class="col-6 mt-1">
+            <button *ngIf="answers[3]" [disabled]="isClicked$|async" appButtonColor [questionData]="questionData" (sendGivenAnswer)="onSubmit($event)"  class="btn btn-primary" value = "{{answers[3] | fixHtmlSymbols}}">{{answers[3] | fixHtmlSymbols}}</button>
           </div>
         </div>
+
       </div>
     </div>

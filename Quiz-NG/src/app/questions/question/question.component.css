@@ -5,28 +5,29 @@ h1{
 .btn-primary{
     width: 100%;
 }
-.btn-primary:hover,.btn-primary:active{
+.btn-primary:hover:enabled,.btn-primary:active:enabled{
     background-color: white;
     color:rgb(52, 145, 250);
-    border-color: rgb(52, 145, 250);
-    border-style: solid;
-}
-.btn-primary:focus{
-    background-color: white;
-    color:midnightblue;
-    border-color: rgb(52, 145, 250);
-    border-style: solid;
-    font-weight: bolder;
-    font-style: italic;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    outline: none;
+    /*border-color: rgb(52, 145, 250);*/
+    /*border-style: solid;*/
 }
 
-a{
-    color:white;
-    border-radius: 10px;
+.btn-primary:disabled {
+    opacity: 1;
+
 }
 
-
-/*:host  a  {*/
-/*    pointer-events: none;*/
+/*.btn-primary:focus{*/
+/*    background-color: white;*/
+/*    color:darkblue;*/
+/*    border-color: white;*/
+/*    border-style: solid;*/
+/*    font-weight: bolder;*/
+/*    font-style: italic;*/
+/*    font-family: Verdana, Geneva, Tahoma, sans-serif;*/
 /*}*/
+
+:host /deep/ a span {
+    pointer-events: none;
+}

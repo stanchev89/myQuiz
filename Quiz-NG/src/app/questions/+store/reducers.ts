@@ -10,14 +10,16 @@ export interface IQuestionState {
     allQuestions: IQuestionObject | {};
     categories: string[];
     regularUserAvailableQuestions: boolean,
-    finishedCategory: boolean
+    finishedCategory: boolean,
+    answerIsClicked:boolean
 };
 
 const initialState: IQuestionState = {
     allQuestions:{},
     categories:[],
     regularUserAvailableQuestions: true,
-    finishedCategory: false
+    finishedCategory: false,
+    answerIsClicked:false
 };
 
 
@@ -45,6 +47,12 @@ export const reducers = createReducer<IQuestionState>(
         return {
             ...state,
             finishedCategory: action.finishedCategory
+        }
+    })),
+    on(questionsActions.answerIsClicked,((state:IQuestionState,action:ReturnType<typeof questionsActions.answerIsClicked>) => {
+        return {
+            ...state,
+            answerIsClicked: action.answerIsClicked
         }
     }))
 )
