@@ -29,6 +29,7 @@ export class QuestionsListComponent implements OnInit, OnDestroy {
     isVip = this.user$.pipe(map(user => user?.is_vip));
     currentSessionCorrectAnswers = 0;
     currentSessionIncorrectAnswers = 0;
+    answerIsClicked$ = this.store.select((state:AppRootState) => state.questions.answerIsClicked);
 
     constructor(private route: ActivatedRoute, private questionsService: QuestionsService, private userService: UserService, private store:Store<AppRootState>) {}
 
@@ -110,8 +111,10 @@ export class QuestionsListComponent implements OnInit, OnDestroy {
 
 
     nextQuestion(): void {
+        this.store.dispatch(answerIsClicked({answerIsClicked:false}));
         if(this.questions.length === 0) {
-            this.store.dispatch(regularUserAvailableQuestions({regularUserAvailableQuestions: false}))
+            this.store.dispatch(regularUserAvailableQuestions({regularUserAvailableQuestions: false}));
+            this.store.dispatch(answerIsClicked({answerIsClicked:false}));
             return;
         }
         this.currentQuestion = this.questions[this.questionCounter];
@@ -120,9 +123,11 @@ export class QuestionsListComponent implements OnInit, OnDestroy {
         this.reverseTimer = 200;
         if (this.questionCounter === this.questions.length) {
             this.finishCategoryQuestions();
+            this.store.dispatch(answerIsClicked({answerIsClicked:false}));
             return;
         }
         this.questionCounter++;
+        this.store.dispatch(answerIsClicked({answerIsClicked:false}));
     }
 
 
@@ -133,7 +138,6 @@ export class QuestionsListComponent implements OnInit, OnDestroy {
         }else {
             this.currentSessionIncorrectAnswers++;
         }
-        this.store.dispatch(answerIsClicked({answerIsClicked:false}));
         this.nextQuestion();
     }
 

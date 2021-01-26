@@ -22,9 +22,13 @@ a.incorrect{
     width: 400px;
     padding-bottom: 5px;
     margin-bottom: 0px;
-    margin-top: 70px;
+    margin-top: 20px;
 }
 
 .next {
     border-radius: 10px;
+}
+
+.next:disabled {
+    opacity: 1;
 }

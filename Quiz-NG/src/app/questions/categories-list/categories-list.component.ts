@@ -9,6 +9,7 @@ import {setActiveHeader} from "../../+store/actions";
 import {AppRootState} from "../../+store";
 import {IUserPoints} from "../../user/+store/reducers";
 import {Observable} from "rxjs";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-categories-list',
@@ -28,7 +29,7 @@ export class CategoriesListComponent implements OnInit {
   myRank: Observable<any>;
   myPoints: Observable<any>;
 
-  constructor(private questionService: QuestionsService, private userService:UserService, private titleService: Title, private store:Store) {
+  constructor(private questionService: QuestionsService, private userService:UserService, private titleService: Title, private store:Store,private router:Router) {
   }
   public setTitle(newTitle: string) {
     this.titleService.setTitle(newTitle);
@@ -45,6 +46,12 @@ export class CategoriesListComponent implements OnInit {
               );
           }
       })
+  }
+
+  onClick(event) {
+      const selectedCategoryRaw = event.target.innerText;
+      const selectedCategory = selectedCategoryRaw.split(' ').join('_');
+      this.router.navigate(['categories',selectedCategory]);
   }
 
 

@@ -3,10 +3,11 @@
         <app-personal-rank *ngIf="currentUser | async; else guest" [currentUser]="currentUser | async" [myPoints]="myPoints" [myRank]="myRank"></app-personal-rank>
         <ng-template #guest></ng-template>
         <div class="container question-list">
-            <ul>
+            <ul (click)="onClick($event)">
                 <div class="row row-cols-2">
                     <li type="button" class="list-group-item" *ngFor="let category of (categories | async)">
-                        <a routerLink="/categories/{{category.split(' ').join('_')}}">{{category}}</a>
+<!--                        <a routerLink="/categories/{{category.split(' ').join('_')}}">{{category}}</a>-->
+                        {{category}}
                     </li>
                 </div>
             </ul>

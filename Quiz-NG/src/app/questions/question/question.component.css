@@ -4,6 +4,7 @@ h1{
 }
 .btn-primary{
     width: 100%;
+    border-radius: 20px;
 }
 .btn-primary:hover:enabled,.btn-primary:active:enabled{
     background-color: white;
@@ -15,7 +16,6 @@ h1{
 
 .btn-primary:disabled {
     opacity: 1;
-
 }
 
 /*.btn-primary:focus{*/

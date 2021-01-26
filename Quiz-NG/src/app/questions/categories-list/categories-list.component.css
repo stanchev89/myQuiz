@@ -16,13 +16,12 @@ ul{
     margin-bottom: 7px;
     display: flex;
 }
-a{
-    display: block;
-    text-decoration: none;
-}
+
 li{
     display: block;
     width: 100px;
+    font-weight: bold;
+    color:rgb(52, 145, 250);
 }
 
 .content {
@@ -35,11 +34,10 @@ li{
 
 li:hover {
     background-color:  rgb(52, 145, 250);
+    color:white;
+
 }
 
-li:hover a {
-    color:white;
-}
 
 
 .categories {

@@ -23,7 +23,7 @@ export class ButtonColorDirective{
     // const givenAnswer = this.elementRef.nativeElement.text;
     const givenAnswer = event.target.value;
     const buttonColorMustBe = givenAnswer === this.questionData.correct_answer ? 'green' : 'red';
-    const pause = timer(1000);
+    const pause = timer(800);
     this.elementRef.nativeElement.style.backgroundColor = buttonColorMustBe;
     this.elementRef.nativeElement.style.color = 'white';
     pause.subscribe(() => {
