@@ -47,6 +47,7 @@ export class CategoriesListComponent implements OnInit {
                       if(!points) {
                           return 0;
                       }
+                      return points;
                   })
               );
           }
