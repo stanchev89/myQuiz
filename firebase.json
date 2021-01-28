@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/quiz",
+    "public": "Quiz-NG/dist/quiz",
     "ignore": [
       "firebase.json",
       "**/.*",
