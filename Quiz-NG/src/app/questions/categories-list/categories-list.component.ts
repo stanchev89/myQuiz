@@ -42,7 +42,12 @@ export class CategoriesListComponent implements OnInit {
               this.usersWithPoints.subscribe();
               this.myRank = this.usersWithPoints.pipe(map((users:IUserPoints[]) => users.findIndex((curUser:IUserPoints) => curUser.username === user.username) + 1));
               this.myPoints = this.usersWithPoints.pipe(
-                  map((users:IUserPoints[]) => users.find((u:IUserPoints) => u.username === user.username)?.points)
+                  map((users:IUserPoints[]) => users.find((u:IUserPoints) => u.username === user.username)?.points),
+                  map(points =>  {
+                      if(!points) {
+                          return 0;
+                      }
+                  })
               );
           }
       })
