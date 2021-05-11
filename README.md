@@ -8,7 +8,7 @@ Only registered users can play.
 Correct answer is equal to 1 point.
 Regular users can answer only once each question. After answering all the questions in category, the category will be inaccessible until the user become a VIP player.
 VIP players can answering unlimited times all the questions but he can't get more than 1 point from a question.
-Every user challange with the others in our general ranking table.
+Every user compete with the others in our general ranking table.
 
 ## Installing
 Open "Quiz-NG" directory and run 'npm install'.
