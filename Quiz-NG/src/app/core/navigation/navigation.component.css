@@ -5,6 +5,7 @@
 .logo {
     max-width: 100px;
     padding: 0;
+    margin: 10px;
 }
 .header{
     min-width: 1200px;
