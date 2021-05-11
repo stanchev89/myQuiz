@@ -1,15 +1,26 @@
 
 .list-group-item{
     text-align: center;
-    border-radius: 10px;
+    border-radius: 4px;
+    margin: 5px;
+    width: 48%;
+    border: 3px solid #91B7F6;
 }
 .question-list{
-    max-width: 55%;
+    text-align: center;
+    max-width: 60%;
     min-width: 250px;
     margin-bottom: 10rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    padding-bottom: 0px;
+    padding: 0 1rem;
+    font-weight: bold;
+    color:rgb(52, 145, 250);
+}
+.question-list ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
 }
 ul{
     padding: 5px 7px;
@@ -17,12 +28,6 @@ ul{
     display: flex;
 }
 
-li{
-    display: block;
-    width: 100px;
-    font-weight: bold;
-    color:rgb(52, 145, 250);
-}
 
 .content {
     width: 80%;
@@ -33,13 +38,12 @@ li{
 }
 
 li:hover {
-    background-color:  rgb(52, 145, 250);
-    color:white;
-
+    border: 1px solid #91B7F6;
+    text-decoration: underline;
+    color: darkblue;
 }
-
-
 
 .categories {
     display: flex;
+    justify-content: space-between;
 }

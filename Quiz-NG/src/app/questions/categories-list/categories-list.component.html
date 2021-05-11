@@ -4,12 +4,10 @@
         <ng-template #guest></ng-template>
         <div class="container question-list">
             <ul (click)="onClick($event)">
-                <div class="row row-cols-2">
                     <li type="button" class="list-group-item" *ngFor="let category of (categories | async)">
 <!--                        <a routerLink="/categories/{{category.split(' ').join('_')}}">{{category}}</a>-->
                         {{category}}
                     </li>
-                </div>
             </ul>
         </div>
         <app-top-players-rank *ngIf="currentUser | async"></app-top-players-rank>
